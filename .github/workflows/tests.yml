@@ -12,15 +12,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check .env is not tracked
+        run: |
+          if git ls-files --error-unmatch .env > /dev/null 2>&1; then
+            echo ".env must not be committed"
+            exit 1
+          fi
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: mbstring, pdo_mysql
           coverage: none
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
 
       - name: Prepare environment
         run: cp .env.example .env
@@ -30,6 +49,9 @@ jobs:
 
       - name: Migrate fresh with seed
         run: php artisan migrate:fresh --seed
+
+      - name: Run tests
+        run: php artisan test
 
       - name: Migrate refresh
         run: php artisan migrate:refresh

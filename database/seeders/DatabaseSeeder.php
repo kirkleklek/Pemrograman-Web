@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Admin KampusLMS',
             'email' => 'admin@kampuslms.test',
-            'password' => Hash::make('Admin@123'),
+            'password' => Hash::make('password'),
             'role' => 'admin',
             'nim_nip' => null,
         ]);
@@ -40,21 +40,21 @@ class DatabaseSeeder extends Seeder
                 [
                     'name' => 'Dosen Demo 1',
                     'email' => 'dosen@kampuslms.test',
-                    'password' => Hash::make('Dosen1@123'),
+                    'password' => Hash::make('password'),
                     'role' => 'dosen',
                     'nim_nip' => '198001001',
                 ],
                 [
                     'name' => 'Dosen Demo 2',
                     'email' => 'dosen2@kampuslms.test',
-                    'password' => Hash::make('Dosen2@123'),
+                    'password' => Hash::make('password'),
                     'role' => 'dosen',
                     'nim_nip' => '198001002',
                 ],
                 [
                     'name' => 'Dosen Demo 3',
                     'email' => 'dosen3@kampuslms.test',
-                    'password' => Hash::make('Dosen3@123'),
+                    'password' => Hash::make('password'),
                     'role' => 'dosen',
                     'nim_nip' => '198001003',
                 ],
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         $demoStudent = User::factory()->create([
             'name' => 'Mahasiswa Demo',
             'email' => 'mahasiswa@kampuslms.test',
-            'password' => Hash::make('Mhs@123'),
+            'password' => Hash::make('password'),
             'role' => 'mahasiswa',
             'nim_nip' => '202500001',
         ]);
@@ -152,13 +152,49 @@ class DatabaseSeeder extends Seeder
              *
              * 5 course x 3 assignment = 15 assignment
              */
-            $assignments = Assignment::factory()
-                ->count(3)
-                ->create([
+            $assignments = collect();
+
+            /*
+            * Assignment 1:
+            * Sudah lewat deadline
+            */
+            $assignments->push(
+                Assignment::factory()->create([
                     'course_id' => $course->id,
                     'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 1 - Materi Dasar',
+                    'due_at' => now()->subDays(7),
                     'status' => 'published',
-                ]);
+                ])
+            );
+
+            /*
+            * Assignment 2:
+            * Masih aktif
+            */
+            $assignments->push(
+                Assignment::factory()->create([
+                    'course_id' => $course->id,
+                    'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 2 - Implementasi',
+                    'due_at' => now()->addDays(7),
+                    'status' => 'published',
+                ])
+            );
+
+            /*
+            * Assignment 3:
+            * Draft
+            */
+            $assignments->push(
+                Assignment::factory()->create([
+                    'course_id' => $course->id,
+                    'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 3 - Project',
+                    'due_at' => now()->addDays(14),
+                    'status' => 'draft',
+                ])
+            );
 
             /*
              * Hanya mahasiswa yang terdaftar di course
@@ -168,11 +204,16 @@ class DatabaseSeeder extends Seeder
              */
             foreach ($assignments as $assignment) {
                 foreach ($courseStudents as $student) {
+                    $isLate = fake()->boolean(20);
+                    $submittedAt = $isLate
+                        ? $assignment->due_at->copy()->addDays(1)
+                        : $assignment->due_at->copy()->subDays(1);
                     $submission = Submission::factory()->create([
                         'assignment_id' => $assignment->id,
                         'user_id' => $student->id,
+                        'submitted_at' => $submittedAt,
+                        'is_late' => $isLate,
                     ]);
-
                     $allSubmissions->push($submission);
                 }
             }

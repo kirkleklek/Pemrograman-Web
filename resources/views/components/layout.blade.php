@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title>{{ $title ?? 'KampusLMS' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+    <meta charset="UTF-8">
 
+    <title>{{ $title ?? 'KampusLMS' }}</title>
+</head>
 <body>
     <nav>
         <a href="{{ route('dashboard') }}">Dashboard</a> |
@@ -15,5 +15,6 @@
     <main>
         {{ $slot }}
     </main>
+
 </body>
 </html>
