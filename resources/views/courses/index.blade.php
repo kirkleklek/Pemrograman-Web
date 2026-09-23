@@ -10,6 +10,7 @@
         <a href="{{ route('courses.create') }}">Tambah Mata Kuliah</a>
     </p>
 
+<<<<<<< HEAD
     <form action="{{ route('courses.index') }}" method="GET">
         <label for="q">Cari Mata Kuliah</label>
         <input
@@ -32,6 +33,8 @@
         <a href="{{ route('courses.index') }}">Reset</a>
     </form>
 
+=======
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
     <table border="1">
         <tr>
             <th>Kode</th>
@@ -67,6 +70,9 @@
         @endforelse
     </table>
 
+<<<<<<< HEAD
     {{ $courses->links() }}
 
+=======
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
 </x-layout>

@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+<<<<<<< HEAD
     public function index(Request $request)
     {
         $users = User::query()
@@ -30,6 +31,13 @@ class UserController extends Controller
             'users' => $users,
             'roles' => $this->roles(),
         ]);
+=======
+    public function index()
+    {
+        $users = User::orderBy('name')->get();
+
+        return view('users.index', compact('users'));
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
     }
 
     public function create()

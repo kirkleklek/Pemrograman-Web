@@ -10,6 +10,7 @@
         <a href="{{ route('users.create') }}">Tambah Pengguna</a>
     </p>
 
+<<<<<<< HEAD
     <form action="{{ route('users.index') }}" method="GET">
         <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari nama atau email">
 
@@ -24,6 +25,8 @@
         <a href="{{ route('users.index') }}">Reset</a>
     </form>
 
+=======
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
     <table border="1">
         <tr>
             <th>Nama</th>
@@ -57,6 +60,9 @@
         @endforelse
     </table>
 
+<<<<<<< HEAD
     {{ $users->links() }}
 
+=======
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
 </x-layout>

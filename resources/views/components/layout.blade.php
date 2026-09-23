@@ -12,6 +12,7 @@
         <a href="{{ route('tentang') }}">Tentang</a>
     </nav>
     <hr>
+<<<<<<< HEAD
 
     @if (session('success'))
         <div>
@@ -25,6 +26,8 @@
         </div>
     @endif
 
+=======
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
     <main>
         {{ $slot }}
     </main>

@@ -10,6 +10,7 @@
 ## Ringkasan
 
 ### Migrasi: riwayat versi untuk struktur database
+<<<<<<< HEAD
 Migrasi adalah kode yang mendeskripsikan perubahan struktur database yang menjadi solusi permaslaahan isi database yang tidak sama dalam satu proyek yang sama. Dengan migrasi, struktur database ikut ke repository. Sehingga anggota lain hanya perlu menjalankan `php artisan migrate:fresh --seed` dan akan mendapatkan database yang sama persis satu sama lain.
 
 Dalam migration sendiri memiliki yang namanya `up()` dan `down()`, yang dimana isi `up()` dan isi `down()` saling berlawanan. Misalnya jikalau `up()` adalah membuat tabel, maka isi `down()` adalah menghapus tabel. Jika salah satu tidak memiliki isi, migrasi tesebut akan dianggap sebagai migrasi rusa dan akan ketahuan saat CI menjalankan `migrate:refresh`
@@ -133,3 +134,8 @@ Hasil : Kurang lebih sama dengan prediksi, design yang belum di `npm run build `
 8. Prediksi awal : Akan error karena laravel tidak tau parameter yang dipanggil user
 
 Hasil : `syntax error, unexpected token ";", expecting ")"`, nah disini nilai`id` tidak ada.
+=======
+Migrasi adalah kode yang mendeskripsikan perubahan struktur database yang menjadi solusi , dibanding
+
+---
+>>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
