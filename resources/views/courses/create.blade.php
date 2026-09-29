@@ -1,98 +1,73 @@
 <x-layout title="Tambah Mata Kuliah">
 
-    <h1>Tambah Mata Kuliah</h1>
+    <div class="mx-auto max-w-3xl space-y-6">
 
-    @if ($errors->any())
+        {{-- Header --}}
         <div>
-            <p>Data belum valid:</p>
-<<<<<<< HEAD
+            <p class="text-sm font-medium text-slate-500">
+                Manajemen Akademik
+            </p>
 
-=======
->>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+                Tambah Mata Kuliah
+            </h1>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Tambahkan data mata kuliah baru ke dalam sistem.
+            </p>
         </div>
-    @endif
 
-    <form action="{{ route('courses.store') }}" method="POST">
-        @csrf
 
-<<<<<<< HEAD
-        <x-courses.form :lecturers="$lecturers" />
+        {{-- Validation Error --}}
+        @if ($errors->any())
+            <div class="rounded-xl border border-red-200 bg-red-50 px-5 py-4">
+                <p class="font-semibold text-red-700">
+                    Data belum valid
+                </p>
 
-        <button type="submit">Simpan</button>
+                <ul class="mt-2 space-y-1 text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <a href="{{ route('courses.index') }}">Batal</a>
-    </form>
 
-</x-layout>
-=======
-        <p>
-            <label for="code">Kode</label><br>
-            <input type="text" id="code" name="code" value="{{ old('code') }}">
-            @error('code')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+        {{-- Form --}}
+        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
-        <p>
-            <label for="name">Nama Mata Kuliah</label><br>
-            <input type="text" id="name" name="name" value="{{ old('name') }}">
-            @error('name')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+            <form
+                action="{{ route('courses.store') }}"
+                method="POST"
+                class="space-y-6"
+            >
+                @csrf
 
-        <p>
-            <label for="description">Deskripsi</label><br>
-            <textarea id="description" name="description" rows="4">{{ old('description') }}</textarea>
-            @error('description')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+                <x-courses.form :lecturers="$lecturers" />
 
-        <p>
-            <label for="sks">SKS</label><br>
-            <input type="number" id="sks" name="sks" min="1" max="6" value="{{ old('sks') }}">
-            @error('sks')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+                <div class="flex items-center justify-end gap-3 border-t border-slate-200 pt-6">
 
-        <p>
-            <label for="lecturer_id">Dosen</label><br>
-            <select id="lecturer_id" name="lecturer_id">
-                <option value="">Pilih Dosen</option>
-                @foreach ($lecturers as $lecturer)
-                    <option value="{{ $lecturer->id }}" @selected(old('lecturer_id') == $lecturer->id)>
-                        {{ $lecturer->name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('lecturer_id')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+                    <a
+                        href="{{ route('courses.index') }}"
+                        class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                    >
+                        Batal
+                    </a>
 
-        <p>
-            <label for="status">Status</label><br>
-            <select id="status" name="status">
-                <option value="">Pilih Status</option>
-                <option value="draft" @selected(old('status') === 'draft')>Draft</option>
-                <option value="active" @selected(old('status') === 'active')>Active</option>
-                <option value="archived" @selected(old('status') === 'archived')>Archived</option>
-            </select>
-            @error('status')
-                <br><span>{{ $message }}</span>
-            @enderror
-        </p>
+                    <button
+                        type="submit"
+                        class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+                    >
+                        Simpan
+                    </button>
 
-        <button type="submit">Simpan</button>
-        <a href="{{ route('courses.index') }}">Batal</a>
-    </form>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </x-layout>
->>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521

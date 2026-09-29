@@ -1,13 +1,33 @@
 <x-layout title="Halaman Tidak Ditemukan">
 
-    <h1>404</h1>
+    <div class="flex min-h-[60vh] items-center justify-center">
 
-    <h2>Halaman Tidak Ditemukan</h2>
+        <div class="max-w-md text-center">
 
-    <p>Halaman yang Anda cari tidak tersedia.</p>
+            <p class="text-7xl font-bold tracking-tight text-slate-900">
+                404
+            </p>
 
-    <a href="{{ route('dashboard') }}">
-        Kembali ke Dashboard
-    </a>
+            <h1 class="mt-4 text-2xl font-bold text-slate-900">
+                Halaman Tidak Ditemukan
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-slate-500">
+                Halaman yang Anda cari tidak tersedia atau mungkin
+                sudah dipindahkan.
+            </p>
+
+            <div class="mt-6">
+                <a
+                    href="{{ route('dashboard') }}"
+                    class="inline-flex rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                >
+                    Kembali ke Dashboard
+                </a>
+            </div>
+
+        </div>
+
+    </div>
 
 </x-layout>

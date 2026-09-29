@@ -2,34 +2,86 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ $title ?? 'KampusLMS' }}</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <nav>
-        <a href="{{ route('dashboard') }}">Dashboard</a> |
-        <a href="{{ route('courses.index') }}">Mata Kuliah</a> |
-        <a href="{{ route('tentang') }}">Tentang</a>
+
+<body class="min-h-screen bg-slate-100 text-slate-800">
+
+    <nav class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+            <a
+                href="{{ route('dashboard') }}"
+                class="{{ request()->routeIs('dashboard')
+                    ? 'font-semibold text-slate-900'
+                    : 'text-slate-600 hover:text-slate-900' }}
+                    transition"
+            >
+                KampusLMS
+            </a>
+
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a
+                    href="{{ route('dashboard') }}"
+                    class="text-slate-600 transition hover:text-slate-900"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ route('courses.index') }}"
+                    class="{{ request()->routeIs('courses.*')
+                        ? 'font-semibold text-slate-900'
+                        : 'text-slate-600 hover:text-slate-900' }}
+                        transition"
+                >
+                    Mata Kuliah
+                </a>
+
+                <a
+                    href="{{ route('users.index') }}"
+                    class="{{ request()->routeIs('users.*')
+                        ? 'font-semibold text-slate-900'
+                        : 'text-slate-600 hover:text-slate-900' }}
+                        transition"
+                >
+                    Pengguna
+                </a>
+
+                <a
+                    href="{{ route('tentang') }}"
+                    class="{{ request()->routeIs('tentang')
+                        ? 'font-semibold text-slate-900'
+                        : 'text-slate-600 hover:text-slate-900' }}
+                        transition"
+                >
+                    Tentang
+                </a>
+            </div>
+
+        </div>
     </nav>
-    <hr>
-<<<<<<< HEAD
 
-    @if (session('success'))
-        <div>
-            {{ session('success') }}
-        </div>
-    @endif
+    <main class="mx-auto max-w-7xl px-6 py-8">
 
-    @if (session('error'))
-        <div>
-            {{ session('error') }}
-        </div>
-    @endif
+        @if (session('success'))
+            <div class="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {{ session('success') }}
+            </div>
+        @endif
 
-=======
->>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
-    <main>
+        @if (session('error'))
+            <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {{ session('error') }}
+            </div>
+        @endif
+
         {{ $slot }}
+
     </main>
 
 </body>

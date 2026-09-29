@@ -18,7 +18,7 @@ class StoreCourseRequest extends FormRequest
             'code' => ['required', 'string', 'max:20', 'unique:courses,code'],
             'name' => ['required', 'string', 'max:150'],
             'description' => ['nullable', 'string'],
-            'sks' => ['required', 'integer', 'between:1,6'],
+            'sks' => ['required', 'integer', 'between:1,100'],
             'lecturer_id' => ['required', 'exists:users,id'],
             'status' => ['required', 'in:draft,active,archived'],
         ];

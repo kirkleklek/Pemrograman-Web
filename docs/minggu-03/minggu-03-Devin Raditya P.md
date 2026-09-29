@@ -10,7 +10,6 @@
 ## Ringkasan
 
 ### Migrasi: riwayat versi untuk struktur database
-<<<<<<< HEAD
 Migrasi adalah kode yang mendeskripsikan perubahan struktur database yang menjadi solusi permaslaahan isi database yang tidak sama dalam satu proyek yang sama. Dengan migrasi, struktur database ikut ke repository. Sehingga anggota lain hanya perlu menjalankan `php artisan migrate:fresh --seed` dan akan mendapatkan database yang sama persis satu sama lain.
 
 Dalam migration sendiri memiliki yang namanya `up()` dan `down()`, yang dimana isi `up()` dan isi `down()` saling berlawanan. Misalnya jikalau `up()` adalah membuat tabel, maka isi `down()` adalah menghapus tabel. Jika salah satu tidak memiliki isi, migrasi tesebut akan dianggap sebagai migrasi rusa dan akan ketahuan saat CI menjalankan `migrate:refresh`
@@ -88,10 +87,108 @@ public function definition(): array
 
 2. Untuk setiap foreign key, tentukan perilaku onDelete-nya dan tuliskan alasannya.
 
+   1. `courses.lecturer_id`
+    ```php
+    $table->foreignId('lecturer_id')
+        ->constrained('users')
+        ->restrictOnDelete();
+    ```
+    Dari kode ini kita bisa tau kalau data dosen tidak bisa di hapus kalau masih digunakan oleh course.
 
-3. View yang dikembalikan adalah view `/tentang` di path `tentang.blade.php`
+    Kenapa pakai `restrictOnDelete()` ? agar course tidak kehilangan dosen yang menjadi referensinya
 
-4. Layout yang membungkus tentang adalah file `layout.blade.php`, karna bisa dilihat di file `tentang.blade.php` layout di bungkus menggunakan `<x-layout>`
+   2. `materials.course_id`
+    ```php
+    $table->foreignId('course_id')
+        ->constrained('courses')
+        ->cascadeOnDelete();
+    ```
+    Dari kode ini kita bisa tau kalau course dihapus, semua material yang course punya akan ikut terhapus
+
+    Kenapa pakai `cascadeOnDelete()` ? karna material bergantung pada course, kalau course tidak ada material tidak lagi punya konteks yang dibutuhkan
+
+   3. `materials.uploaded_by`
+    ```php
+    $table->foreignId('uploaded_by')
+        ->constrained('users');
+    ```
+    Kenapa nggak ada `restrictOnDelete()` dan `cascadeOnDelete()` karena perilaku `onDelete` tidak ditentutkan secara eksplisit. Yang ditentukan adlaah `upload_by` adalah foreign key yang mengarah ke tabel `users`
+
+   4. `assignments.course_id`
+    ```php
+    $table->foreignId('course_id')
+        ->constrained('courses')
+        ->cascadeOnDelete();
+    ```
+    Dari kode ini kita bisa tau kalau course dihapus, semua assignment/tugas yang terkait dengan course itu ikut kehapus
+
+    Kenapa begitu ? karna assignment adalah data yang bergantung pada course, kalau course tidak ada tugasnya juga tidak diperlukan lagi
+
+   5. `assignments.created_by`
+    ```php
+    $table->foreignId('created_by')
+        ->constrained('users');
+    ```
+    Kenapa nggak ada `restrictOnDelete()` dan `cascadeOnDelete()` karena perilaku `onDelete` tidak ditentutkan secara eksplisit.
+
+    Jadi `created_by` dipakai untuk nyimpan user yang buat assignment
+
+   6. `submissions.assignment_id`
+    ```php
+    $table->foreignId('assignment_id')
+        ->constrained('assignments')
+        ->cascadeOnDelete();
+    ```
+    Dari kode ini kita tau kalau sebuah asignment/tugas dihapus, semua submission yang terkait dengan tugas itu juga ikut dihapus.
+
+    Kenapa begitu ? karna submission tergantung pada assignment, kalau tugasnya sudah tidak ada submission juga tidak memiliki induk lagi
+
+   7. `submissions.user_id`
+    ```php
+    $table->foreignId('user_id')
+        ->constrained('users');
+    ```
+    Kenapa nggak ada `restrictOnDelete()` dan `cascadeOnDelete()` karena perilaku `onDelete` tidak ditentutkan secara eksplisit.
+
+   8. `grades.submission_id`
+    ```php
+    $table->foreignId('submission_id')
+        ->unique()
+        ->constrained('submissions')
+        ->cascadeOnDelete();
+    ```
+   * `constrained('submissions')` menghubungkan `submission_id` ke `submissions.id`.
+   * `cascadeOnDelete()` kalau submission dihapus, grade-nya ikut dihapus.
+
+   9. `grades.graded_by`
+    ```php
+    $table->foreignId('graded_by')
+        ->constrained('users');
+    ```
+    `graded_by` menyiman user yang memberikan nilai pada submission dan tidak ada `onDelete` yang ditulis secara eksplisit.
+
+   10.  `course_user.course_id`
+    ```php
+    $table->foreignId('course_id')
+        ->constrained('courses')
+        ->cascadeOnDelete();
+    ```
+    Dari kode ini kita tau kalau `course_id` menghubungkan `course_user` dengan `courses.id`. `course_user` itu tabel penghubung mahasiswa dengan mata kuliah.
+
+   11.  `course_user.user_id`
+    ```php
+    $table->foreignId('user_id')
+        ->constrained('users')
+        ->cascadeOnDelete();
+    ```
+    Dari kode ini kita tau kalau `user_id` menghubungkan `course_user` dengan `users.id`. Karna data di `course_user` hanya nunjukkin hubungan user sama mata kuliah. Kalau user sudah tidak ada, hubungan itu tidak di perlukan
+
+3. Jawab: kalau seorang dosen dihapus, apa yang terjadi pada mata kuliahnya? Kenapa dirancang begitu?
+Kalau dosen dalam status mengajar suatu matkul, database bakal menolak untuk menghapus karena masih ada course yang manggil `lecture_id` dosen.
+
+4. Jawab: kenapa grades.submission_id bersifat unique, bukan sekadar index biasa?
+Agar satu submission hanya bisa di miliki satu data grade
+
 
 5. sesuai dengan gambar
 ![Deskripsi gambar](foto/image.png)
@@ -103,39 +200,22 @@ bisa dilihat bahwa hasil dari `php artisan route:list --path=tentang` sama seper
 
 ## Break
 
-1. Prediksi awal : Method `POST` digunakan untuk menambah, sedangkan method tersebut terletak di route index yang harusnya menampilkan bukan menambah data sehingga akan menampilkan pesan error.
+1. Prediksi awal : Mahasiswa yang sama akan terdaftar 2 kali dalam satu matakuliah yang sama
 
-Hasil : 405 Error muncul ketika mencoba mengkases `course.index`, hal tersebut terjadi karena browser itu selalu mengirimkan method `GET` ke laravel ketika kita mengakses suatu laman atau mengklik suatu button. Nah karena tidak serasi antara request method browser dengan mehtod route, Laravel menampilkan pesan bahwa program error.
+Hasil : Data ganda berhasil masuk karena database tidak lagi mencegah kombinasi `course_id` dan `user_id` yang sama.
 
-2. Prediksi awal : Laravel akan memunculkan pesan error karena tujuan viewnya tidak ada atau tidak ditemukan didalam struktur file
+2. Prediksi awal : User yang awalnya role selain admin, berubah menjadi role admin dan mendapatkan akses yang hanya role admin dapatkan.
 
-Hasil : Kurang lebih sama dengan prediksi saya, yaitu laravel akan menampilkan error berupa viewargumentexception berupa `View [] not found.`.
+Hasil : User berhasil dibuat sebagai admin meskipun `role` tidak berasal dari field formulir.
 
-3. Prediksi awal : Laman yang menampilkan `course.index` akan error dikarenakan dalam view `index.blade.php` terdapat button yang ngedirect ke view `show.blade.php`. Ketika route `course.show` tidak didefiniskan maka laravel akan bingung.
+3. Prediksi awal : Field yang bisa diisi user tidak terkontrol sehingga user bisa mengubah data yang bersifat private/khusus misalnya role, jadi user bisa mengisi rolenya sendiri lewat field.
 
-Hasil : Error muncul karena dalam view `course.index` itu memanggil `course.show` sedangkan di `web.php` itu `cours.show` tidak ada.
+Hasil : Field role dapat diisi melalui mass assignment karena tidak ada atribut yang dilindungi.
 
-4. Prediksi awal : error dikarenakan route `course.create` akan dibaca sebagai id oleh sistem, sehingga sistem mencari data dengan id `create` 
+4. Prediksi awal : Jika posisi ada tabel dan data di tabel dalam database, tabel dan data tersebut tidak terefresh namun sistem tetap menganggap berhasil dan terjadilah migration reversible.
 
-Hasil : Error 404 muncul, dikarenakan file laravel membaca route dari urutan atas ke bawah. Nah karena `course.show` berada di atas `course.create` dan `course.show` menggunakan parameter dinamis yaitu`{id}`, maka nilai `create` dibaca sebagai id oleh laravel.
+Hasil : Migration tidak dapat membalik perubahan `up()` dengan benar sehingga migration menjadi tidak reversible.
 
-5. Prediksi awal : ketika `{{  }}` diganti menjadi `{!!  !!}` dan diisi degan script js, program akan membaca itu sebagai HTML mentah dari program dan menjalankan script tersebut.
+5. Prediksi awal : Saat hendak menghapus satu dosen apalagi dosen tersebut masih mengajar suatu mata kuliah/course, yang kehapus bukan hanya dosen namun course ataupun data yang masih berhubungan dengan dosen tersebut.
 
-Hasil : `{{ }}` melakukan escape sehingga HTML/JavaScript dari variabel `$nama` tidak di eksekusi, kalau pakai `{!! !!}` laravel bakal menganggap HTML mentah. Karna mengandung `<script>` dan menggunakan `{!! !!}`, browser menjalankannya dan menyebabkan XSS.
-
-6. Prediksi awal : ketika `@vite` dihapus, design tidak akan muncul dikarenakan pemanggilnya yaitu `@vite` tidak ada di file `layout.blade.php`
-
-Hasil : Sama dengan prediksi, design tidak akan muncul dikarenakan pemanggilnya yaitu `@vite` tidak ada di file `layout.blade.php`
-
-7. Prediksi awal : Design tidak akan ke update, namun selagi sudah `npm run build` maka design tersimpan
-
-Hasil : Kurang lebih sama dengan prediksi, design yang belum di `npm run build ` tidak ke update.
-
-8. Prediksi awal : Akan error karena laravel tidak tau parameter yang dipanggil user
-
-Hasil : `syntax error, unexpected token ";", expecting ")"`, nah disini nilai`id` tidak ada.
-=======
-Migrasi adalah kode yang mendeskripsikan perubahan struktur database yang menjadi solusi , dibanding
-
----
->>>>>>> 1ab157c195b3f37e9d83bf200db789f7c6fa3521
+Hasil : `restrictOnDelete` diubah menjadi `cascadeOnDelete`, lalu dosen dihapus. Course yang menggunakan dosen tersebut ikut terhapus sehingga terjadi kehilangan data berantai.
