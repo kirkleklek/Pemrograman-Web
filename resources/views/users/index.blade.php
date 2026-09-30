@@ -19,7 +19,7 @@
             </div>
 
             <a
-                href="{{ route('users.create') }}"
+                href="{{ route('admin.users.create') }}"
                 class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
             >
                 + Tambah Pengguna
@@ -31,7 +31,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
 
             <form
-                action="{{ route('users.index') }}"
+                action="{{ route('admin.users.index') }}"
                 method="GET"
                 class="grid gap-4 md:grid-cols-[1fr_220px_auto_auto]"
             >
@@ -94,7 +94,7 @@
 
                 <div class="flex items-end">
                     <a
-                        href="{{ route('users.index') }}"
+                        href="{{ route('admin.users.index') }}"
                         class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
                         Reset
@@ -179,21 +179,21 @@
                                     <div class="flex items-center justify-end gap-2">
 
                                         <a
-                                            href="{{ route('users.show', $user) }}"
+                                            href="{{ route('admin.users.show', $user) }}"
                                             class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
                                         >
                                             Detail
                                         </a>
 
                                         <a
-                                            href="{{ route('users.edit', $user) }}"
+                                            href="{{ route('admin.users.edit', $user) }}"
                                             class="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
                                         >
                                             Edit
                                         </a>
 
                                         <form
-                                            action="{{ route('users.destroy', $user) }}"
+                                            action="{{ route('admin.users.destroy', $user) }}"
                                             method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')"
                                         >

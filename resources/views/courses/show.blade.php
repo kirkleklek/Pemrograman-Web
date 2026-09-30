@@ -109,14 +109,14 @@
             <div class="flex flex-col gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4 sm:flex-row sm:justify-end">
 
                 <a
-                    href="{{ route('courses.index') }}"
+                    href="{{ route('admin.courses.index') }}"
                     class="rounded-lg border border-slate-300 px-4 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:bg-white"
                 >
                     Kembali
                 </a>
 
                 <a
-                    href="{{ route('courses.edit', $course) }}"
+                    href="{{ route('admin.courses.edit', $course) }}"
                     class="rounded-lg bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
                     Edit Mata Kuliah

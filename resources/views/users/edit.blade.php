@@ -38,7 +38,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
             <form
-                action="{{ route('users.update', $user) }}"
+                action="{{ route('admin.users.update', $user) }}"
                 method="POST"
                 class="space-y-6"
             >
@@ -208,7 +208,7 @@
                 <div class="flex items-center justify-end gap-3 border-t border-slate-200 pt-6">
 
                     <a
-                        href="{{ route('users.show', $user) }}"
+                        href="{{ route('admin.users.show', $user) }}"
                         class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
                         Batal

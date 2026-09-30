@@ -19,7 +19,7 @@
             </div>
 
             <a
-                href="{{ route('courses.create') }}"
+                href="{{ route('admin.courses.create') }}"
                 class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
             >
                 + Tambah Mata Kuliah
@@ -31,7 +31,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
 
             <form
-                action="{{ route('courses.index') }}"
+                action="{{ route('admin.courses.index') }}"
                 method="GET"
                 class="grid gap-4 md:grid-cols-[1fr_220px_auto_auto]"
             >
@@ -103,7 +103,7 @@
 
                 <div class="flex items-end">
                     <a
-                        href="{{ route('courses.index') }}"
+                        href="{{ route('admin.courses.index') }}"
                         class="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
                         Reset
@@ -195,21 +195,21 @@
                                     <div class="flex items-center justify-end gap-2">
 
                                         <a
-                                            href="{{ route('courses.show', $course) }}"
+                                            href="{{ route('admin.courses.show', $course) }}"
                                             class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
                                         >
                                             Detail
                                         </a>
 
                                         <a
-                                            href="{{ route('courses.edit', $course) }}"
+                                            href="{{ route('admin.courses.edit', $course) }}"
                                             class="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
                                         >
                                             Edit
                                         </a>
 
                                         <form
-                                            action="{{ route('courses.destroy', $course) }}"
+                                            action="{{ route('admin.courses.destroy', $course) }}"
                                             method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus mata kuliah ini?')"
                                         >
