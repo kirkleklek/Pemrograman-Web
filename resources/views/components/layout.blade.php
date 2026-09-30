@@ -33,8 +33,8 @@
                 </a>
 
                 <a
-                    href="{{ route('courses.index') }}"
-                    class="{{ request()->routeIs('courses.*')
+                    href="{{ route('admin.courses.index') }}"
+                    class="{{ request()->routeIs('admin.courses.*')
                         ? 'font-semibold text-slate-900'
                         : 'text-slate-600 hover:text-slate-900' }}
                         transition"
@@ -43,8 +43,8 @@
                 </a>
 
                 <a
-                    href="{{ route('users.index') }}"
-                    class="{{ request()->routeIs('users.*')
+                    href="{{ route('admin.users.index') }}"
+                    class="{{ request()->routeIs('admin.users.*')
                         ? 'font-semibold text-slate-900'
                         : 'text-slate-600 hover:text-slate-900' }}
                         transition"

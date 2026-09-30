@@ -34,32 +34,46 @@ Nama cookie session Laravel di proyek kami adalah laravel-session. Ini nama defa
 
 ### BREAK
 
-### 1. Hapus middleware web dari route form (pakai Route::withoutMiddleware), lalu submit form
+### BREAK — Tujuh Kerusakan
 
-Prediksi: middleware web itu yang nanganin session dan CSRF token. Kalau dihapus, form gak akan punya akses ke session dan token CSRF valid.
+### 1. Hapus @csrf dari form, lalu kirim
 
-Hasil: submit form bakal gagal dengan error 419 Page Expired, karena token CSRF gak bisa diverifikasi tanpa middleware web yang aktifin session.
+Prediksi: tanpa token CSRF, Laravel bakal nolak request POST karena gak bisa verifikasi token yang cocok.
 
-### 2. Hapus @csrf dari form, submit
+Hasil: sesuai prediksi, muncul error 419 Page Expired. Ini bukti @csrf mencegah serangan CSRF, situs jahat gak bisa masang form tersembunyi yang otomatis ngirim POST pakai session korban yang login, karena token itu unik dan cuma valid dari form asli aplikasi kita.
 
-Prediksi: form gak bakal ngirim token CSRF sama sekali.
+### 2. Ganti $request->validated() jadi $request->all(), kirim field liar lewat curl
 
-Hasil: muncul error 419 Page Expired juga, karena Laravel nolak semua request POST yang gak nyertain token CSRF valid, ini proteksi bawaan biar form gak bisa disubmit dari situs lain.
+Prediksi: kalau pake all(), semua data yang dikirim bakal diterima mentah, termasuk field yang gak ada di form asli.
 
-### 3. Hapus validasi max:20 dari SKS, isi 99, submit
+Hasil: field liar yang disisipin (misalnya field yang gak ada di form) bakal ikut kesimpen ke database kalau kebetulan ada di $fillable model. Ini bukti mass assignment kembali terbuka kalau validated() diganti all(), soalnya all() gak nyaring data sama sekali, beda sama validated() yang cuma ngasih field yang emang didaftarin di rules().
 
-Prediksi: tanpa validasi itu, data SKS 99 (yang gak masuk akal) bakal lolos masuk ke database.
+### 3. Hapus validasi exists:users,id pada lecturer_id, kirim lecturer_id=99999
 
-Hasil: data dengan SKS 99 beneran kesimpen, padahal secara logika gak ada mata kuliah SKS segitu, bukti kalau validasi itu satu-satunya penjaga data masuk yang masuk akal, database sendiri gak otomatis nolak angka yang "gak wajar" kalau kolomnya emang bertipe angka biasa.
+Prediksi: tanpa exists:users,id, Laravel gak bakal ngecek apakah id yang dikirim beneran ada di tabel users.
 
-### 4. Ganti redirect di controller jadi return view(...) langsung (bukan redirect)
+Hasil: data course bakal kesimpen dengan lecturer_id=99999 walau user dengan id itu gak pernah ada. Ini bikin data yatim, course yang nunjuk ke dosen yang gak eksis, bikin relasi jadi rusak kalau nanti dipanggil lewat $course->lecturer.
 
-Prediksi: ini ngelanggar pola PRG (Post-Redirect-Get). Kalau langsung return view(...) abis proses POST, browser bakal nampilin hasil submit di URL yang sama kayak form tadi.
+### 4. Hapus validasi in:... pada status, kirim status=superadmin
 
-Hasil: kalau user nge-refresh halaman abis submit berhasil, browser bakal nanya "Resubmit form?" atau bahkan langsung ngirim ulang data yang sama tanpa nanya (submit ganda), soalnya browser mikirnya itu masih halaman hasil POST, bukan halaman baru. Makanya pola PRG penting, biar abis POST selalu di-redirect ke GET, jadi refresh aman.
+Prediksi: tanpa in:draft,active,archived, Laravel bakal nerima nilai apa aja buat field status.
 
-### 5. Panggil session()->flash() manual dengan key yang sama kayak yang dipakai Laravel buat errors
+Hasil: data course kesimpen dengan status=superadmin, padahal itu bukan salah satu dari tiga pilihan yang seharusnya. Ini bikin enum jebol, aplikasi bisa error atau berperilaku aneh di tempat lain yang ngasumsiin status cuma tiga pilihan itu.
 
-Prediksi: kalau kamu flash data manual ke key errors yang sama, itu bakal nimpa/bentrok sama mekanisme error bawaan Laravel.
+### 5. Hapus ->withQueryString(), cari lalu klik halaman 2
 
-Hasil: data error yang seharusnya muncul dari validasi normal bisa ketimpa atau malah error, karena Laravel sendiri pakai key errors buat nyimpen MessageBag validasi, bukan buat data flash biasa. Ini nunjukkin kenapa penting gak asal pakai nama key yang udah dipakai sistem.
+Prediksi: tanpa withQueryString(), link pagination gak bakal bawa parameter filter yang lagi aktif.
+
+Hasil: begitu klik halaman 2, filter pencarian yang tadi diisi ilang, balik nampilin semua data tanpa filter. Ini bug klasik, user harus ngulang isi filter lagi tiap pindah halaman, padahal harusnya filter itu nempel terus.
+
+### 6. Ganti return redirect() jadi return view() di store, tekan F5 setelah simpan
+
+Prediksi: ini ngelanggar pola PRG (Post-Redirect-Get). Kalau abis POST langsung return view(), browser masih nganggep halaman itu hasil dari request POST tadi.
+
+Hasil: pas ditekan F5, browser bakal nanya "Confirm Form Resubmission" atau langsung ngirim ulang data yang sama, bikin data ke-submit dua kali. Ini alasan kenapa pola PRG penting, redirect abis POST bikin browser pindah ke state GET yang aman buat di-refresh.
+
+### 7. Hapus old(...) dari semua input, kirim form dengan satu kesalahan
+
+Prediksi: tanpa old(), input yang gagal validasi gak bakal nyimpen nilai yang tadi diisi user.
+
+Hasil: begitu form gagal validasi dan redirect balik, semua field kosong lagi, padahal cuma satu field yang salah (misalnya SKS = 99). User harus ngetik ulang SEMUA data dari awal, bukan cuma benerin satu field yang error. Ini pengalaman buruk yang bikin old() penting buat dipasang di setiap input.

@@ -38,7 +38,7 @@
                 </p>
 
                 <a
-                    href="{{ route('courses.index') }}"
+                    href="{{ route('admin.courses.index') }}"
                     class="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
                     Lihat Mata Kuliah
@@ -62,7 +62,7 @@
                 </p>
 
                 <a
-                    href="{{ route('users.index') }}"
+                    href="{{ route('admin.users.index') }}"
                     class="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
                     Lihat Pengguna
@@ -82,14 +82,14 @@
             <div class="mt-4 flex flex-wrap gap-3">
 
                 <a
-                    href="{{ route('courses.create') }}"
+                    href="{{ route('admin.courses.create') }}"
                     class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                 >
                     + Tambah Mata Kuliah
                 </a>
 
                 <a
-                    href="{{ route('users.create') }}"
+                    href="{{ route('admin.users.create') }}"
                     class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                 >
                     + Tambah Pengguna

@@ -52,7 +52,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()
-            ->route('users.show', $user)
+            ->route('admin.users.show', $user)
             ->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
@@ -85,7 +85,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()
-            ->route('users.show', $user)
+            ->route('admin.users.show', $user)
             ->with('success', 'Pengguna berhasil diperbarui.');
     }
 
@@ -94,7 +94,7 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()
-            ->route('users.index')
+            ->route('admin.users.index')
             ->with('success', 'Pengguna berhasil dihapus.');
     }
 

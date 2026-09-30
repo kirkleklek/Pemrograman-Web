@@ -35,7 +35,9 @@ class CourseController extends Controller
 
     public function create()
     {
-        $lecturers = User::where('role', 'dosen')->orderBy('name')->get();
+        $lecturers = User::where('role', 'dosen')
+            ->orderBy('name')
+            ->get();
 
         return view('courses.create', compact('lecturers'));
     }
@@ -45,12 +47,18 @@ class CourseController extends Controller
         $course = Course::create($request->validated());
 
         return redirect()
-            ->route('courses.show', $course)
+            ->route('admin.courses.show', $course)
             ->with('success', 'Mata kuliah berhasil ditambahkan.');
     }
 
     public function show(Course $course)
     {
+        abort_unless(
+            auth()->user()->role === 'admin'
+                || $course->lecturer_id === auth()->id(),
+            403
+        );
+
         $course->load('lecturer');
 
         return view('courses.show', compact('course'));
@@ -58,26 +66,48 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        $lecturers = User::where('role', 'dosen')->orderBy('name')->get();
+        abort_unless(
+            auth()->user()->role === 'admin'
+                || $course->lecturer_id === auth()->id(),
+            403
+        );
+
+        $lecturers = User::where('role', 'dosen')
+            ->orderBy('name')
+            ->get();
 
         return view('courses.edit', compact('course', 'lecturers'));
     }
 
-    public function update(UpdateCourseRequest $request, Course $course)
-    {
+    public function update(
+        UpdateCourseRequest $request,
+        Course $course
+    ) {
+        abort_unless(
+            auth()->user()->role === 'admin'
+                || $course->lecturer_id === auth()->id(),
+            403
+        );
+
         $course->update($request->validated());
 
         return redirect()
-            ->route('courses.show', $course)
+            ->route('admin.courses.show', $course)
             ->with('success', 'Mata kuliah berhasil diperbarui.');
     }
 
     public function destroy(Course $course)
     {
+        abort_unless(
+            auth()->user()->role === 'admin'
+                || $course->lecturer_id === auth()->id(),
+            403
+        );
+
         $course->delete();
 
         return redirect()
-            ->route('courses.index')
+            ->route('admin.courses.index')
             ->with('success', 'Mata kuliah berhasil dihapus.');
     }
 }
