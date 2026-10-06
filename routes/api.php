@@ -4,6 +4,9 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\AssignmentController;
+use App\Http\Controllers\Api\SubmissionController;
+use App\Http\Controllers\Api\GradeController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -30,6 +33,28 @@ Route::prefix('v1')->group(function () {
             [AssignmentController::class, 'update']
         );
 
+        Route::get(
+            '/assignments/{assignment}/submissions',
+            [SubmissionController::class, 'index']
+        );
+
+        Route::post(
+            '/assignments/{assignment}/submissions',
+            [SubmissionController::class, 'store']
+        );
+
+        Route::put(
+            '/submissions/{submission}/grade',
+            [GradeController::class, 'update']
+        );
+
         Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy']);
+
+        Route::get('/notifications', [NotificationController::class, 'index']);
+
+        Route::post(
+            '/notifications/{notification}/read',
+            [NotificationController::class, 'read']
+        );
     });
 });
