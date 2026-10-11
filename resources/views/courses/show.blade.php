@@ -115,6 +115,15 @@
                     Kembali
                 </a>
 
+            @can('manageEnrollments', $course)
+                <a
+                    href="{{ route('admin.courses.enrollments.index', $course) }}"
+                    class="rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-700"
+                >
+                    Kelola Peserta
+                </a>
+            @endcan
+
             @can('update', $course)
                 <a
                     href="{{ route('admin.courses.edit', $course) }}"

@@ -31,6 +31,7 @@ class PolicyAuthorizationTest extends TestCase
             'lecturer_id' => $owner->id,
         ]);
 
+        // Admin boleh melihat daftar dan membuat mata kuliah.
         $this->assertTrue(
             Gate::forUser($admin)->allows('viewAny', Course::class)
         );
@@ -39,22 +40,33 @@ class PolicyAuthorizationTest extends TestCase
             Gate::forUser($admin)->allows('create', Course::class)
         );
 
+        // Admin boleh melihat, mengubah, dan menghapus mata kuliah.
         $this->assertTrue(
             Gate::forUser($admin)->allows('view', $course)
         );
 
         $this->assertTrue(
+            Gate::forUser($admin)->allows('update', $course)
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows('delete', $course)
+        );
+
+        // Dosen pemilik hanya boleh melihat mata kuliahnya.
+        $this->assertTrue(
             Gate::forUser($owner)->allows('view', $course)
         );
 
-        $this->assertTrue(
+        $this->assertFalse(
             Gate::forUser($owner)->allows('update', $course)
         );
 
-        $this->assertTrue(
+        $this->assertFalse(
             Gate::forUser($owner)->allows('delete', $course)
         );
 
+        // Dosen lain tidak boleh melihat, mengubah, atau menghapus.
         $this->assertFalse(
             Gate::forUser($otherLecturer)->allows('view', $course)
         );

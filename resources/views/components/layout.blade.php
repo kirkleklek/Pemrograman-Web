@@ -32,35 +32,58 @@
                     Dashboard
                 </a>
 
-                <a
-                    href="{{ route('admin.courses.index') }}"
-                    class="{{ request()->routeIs('admin.courses.*')
-                        ? 'font-semibold text-slate-900'
-                        : 'text-slate-600 hover:text-slate-900' }}
-                        transition"
-                >
-                    Mata Kuliah
-                </a>
+                @auth
+                    @if (auth()->user()->role === 'admin')
+                        <a
+                            href="{{ route('admin.courses.index') }}"
+                            class="{{ request()->routeIs('admin.courses.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Mata Kuliah
+                        </a>
 
-                <a
-                    href="{{ route('admin.users.index') }}"
-                    class="{{ request()->routeIs('admin.users.*')
-                        ? 'font-semibold text-slate-900'
-                        : 'text-slate-600 hover:text-slate-900' }}
-                        transition"
-                >
-                    Pengguna
-                </a>
+                        <a
+                            href="{{ route('admin.users.index') }}"
+                            class="{{ request()->routeIs('admin.users.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Pengguna
+                        </a>
+                    @elseif (auth()->user()->role === 'dosen')
+                        <a
+                            href="{{ route('dosen.courses.index') }}"
+                            class="{{ request()->routeIs('dosen.courses.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Mata Kuliah Saya
+                        </a>
+                    @endif
+                @endauth
 
                 <a
                     href="{{ route('tentang') }}"
                     class="{{ request()->routeIs('tentang')
                         ? 'font-semibold text-slate-900'
-                        : 'text-slate-600 hover:text-slate-900' }}
-                        transition"
+                        : 'text-slate-600 hover:text-slate-900' }} transition"
                 >
                     Tentang
                 </a>
+
+                @auth
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="text-slate-600 transition hover:text-red-600"
+                        >
+                            Logout
+                        </button>
+                    </form>
+                @endauth
             </div>
 
         </div>

@@ -36,6 +36,28 @@ class CourseController extends Controller
         return view('courses.index', compact('courses'));
     }
 
+    public function lecturerIndex(Request $request)
+    {
+        Gate::authorize('viewTeaching', Course::class);
+
+        $search = trim($request->input('q', ''));
+
+        $courses = auth()->user()
+            ->taughtCourses()
+            ->with('lecturer')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('code', 'like', "%{$search}%")
+                        ->orWhere('name', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('code')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('courses.lecturer-index', compact('courses'));
+    }
+
     public function create()
     {
         Gate::authorize('create', Course::class);

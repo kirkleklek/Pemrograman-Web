@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -462,6 +463,72 @@ class UserManagementTest extends TestCase
         $this->assertDatabaseHas('users', [
             'id' => $target->id,
             'deleted_at' => null,
+        ]);
+    }
+
+    public function test_admin_cannot_delete_lecturer_who_still_teaches_course(): void
+{
+    $admin = User::factory()->create([
+        'role' => 'admin',
+    ]);
+
+    $lecturer = User::factory()->create([
+        'role' => 'dosen',
+    ]);
+
+    $course = Course::factory()->create([
+        'lecturer_id' => $lecturer->id,
+    ]);
+
+    $this->actingAs($admin)
+        ->delete(route('admin.users.destroy', $lecturer))
+        ->assertRedirect(route('admin.users.index'))
+        ->assertSessionHas('error');
+
+    $this->assertDatabaseHas('users', [
+        'id' => $lecturer->id,
+        'deleted_at' => null,
+    ]);
+
+    $this->assertDatabaseHas('courses', [
+        'id' => $course->id,
+        'lecturer_id' => $lecturer->id,
+    ]);
+}
+
+    public function test_admin_cannot_change_role_of_lecturer_who_still_teaches_course(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $lecturer = User::factory()->create([
+            'role' => 'dosen',
+        ]);
+
+        $course = Course::factory()->create([
+            'lecturer_id' => $lecturer->id,
+        ]);
+
+        $this->actingAs($admin)
+            ->put(route('admin.users.update', $lecturer), [
+                'name' => $lecturer->name,
+                'email' => $lecturer->email,
+                'nim_nip' => $lecturer->nim_nip,
+                'role' => 'mahasiswa',
+            ])
+            ->assertRedirect(route('admin.users.edit', $lecturer))
+            ->assertSessionHasErrors('role');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $lecturer->id,
+            'role' => 'dosen',
+            'deleted_at' => null,
+        ]);
+
+        $this->assertDatabaseHas('courses', [
+            'id' => $course->id,
+            'lecturer_id' => $lecturer->id,
         ]);
     }
 }

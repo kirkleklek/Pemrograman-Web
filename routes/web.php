@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Middleware\EnsurePublishedAssignment;
 use Illuminate\Support\Facades\Route;
 
@@ -74,12 +75,51 @@ Route::middleware('auth')->group(function () {
             Route::resource('users', UserController::class);
 
             Route::resource('courses', CourseController::class);
+
+            Route::scopeBindings()->group(function () {
+                Route::get(
+                    'courses/{course}/enrollments',
+                    [EnrollmentController::class, 'index']
+                )->name('courses.enrollments.index');
+
+                Route::post(
+                    'courses/{course}/enrollments',
+                    [EnrollmentController::class, 'store']
+                )->name('courses.enrollments.store');
+
+                Route::delete(
+                    'courses/{course}/enrollments/{student}',
+                    [EnrollmentController::class, 'destroy']
+                )->name('courses.enrollments.destroy');
+            });
         });
+
+    //Route::scopeBindings()->group(function () {
+        //Route::get(
+            //'courses/{course}/enrollments',
+            //[EnrollmentController::class, 'index']
+        //)->name('courses.enrollments.index');
+
+        //Route::post(
+            //'courses/{course}/enrollments',
+            //[EnrollmentController::class, 'store']
+        //)->name('courses.enrollments.store');
+
+        //Route::delete(
+            //'courses/{course}/enrollments/{student}',
+            //[EnrollmentController::class, 'destroy']
+        //)->name('courses.enrollments.destroy');
+    //});
 
     Route::middleware('role:dosen')
         ->prefix('dosen')
         ->name('dosen.')
         ->group(function () {
+
+    Route::get(
+        'courses',
+        [CourseController::class, 'lecturerIndex']
+    )->name('courses.index');
 
             Route::scopeBindings()->group(function () {
 
@@ -88,6 +128,22 @@ Route::middleware('auth')->group(function () {
                     'courses.materials',
                     MaterialController::class
                 )->shallow();
+
+                // Mengelola mahasiswa yang terdaftar pada mata kuliah
+                Route::get(
+                    'courses/{course}/enrollments',
+                    [EnrollmentController::class, 'index']
+                )->name('courses.enrollments.index');
+
+                Route::post(
+                    'courses/{course}/enrollments',
+                    [EnrollmentController::class, 'store']
+                )->name('courses.enrollments.store');
+
+                Route::delete(
+                    'courses/{course}/enrollments/{student}',
+                    [EnrollmentController::class, 'destroy']
+                )->name('courses.enrollments.destroy');
 
                 // Tugas dalam mata kuliah
                 Route::resource(
