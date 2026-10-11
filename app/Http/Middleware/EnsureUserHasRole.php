@@ -8,10 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserHasRole
 {
-    public function handle(Request $request, Closure $next, string ...$roles): Response
-    {
+    public function handle(
+        Request $request,
+        Closure $next,
+        string ...$roles
+    ): Response {
+        $user = $request->user();
+
+        // Pengguna yang belum terautentikasi.
+        abort_unless($user, 401, 'Unauthenticated.');
+
+        // Pengguna sudah login, tetapi role tidak sesuai.
         abort_unless(
-            $request->user() && in_array($request->user()->role, $roles),
+            in_array($user->role, $roles, true),
             403
         );
 

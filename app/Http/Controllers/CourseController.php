@@ -7,11 +7,14 @@ use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', Course::class);
+
         $search = trim($request->input('q', ''));
         $status = $request->input('status');
 
@@ -35,6 +38,8 @@ class CourseController extends Controller
 
     public function create()
     {
+        Gate::authorize('create', Course::class);
+
         $lecturers = User::where('role', 'dosen')
             ->orderBy('name')
             ->get();
@@ -44,6 +49,8 @@ class CourseController extends Controller
 
     public function store(StoreCourseRequest $request)
     {
+        Gate::authorize('create', Course::class);
+
         $course = Course::create($request->validated());
 
         return redirect()
@@ -53,11 +60,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        abort_unless(
-            auth()->user()->role === 'admin'
-                || $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('view', $course);
 
         $course->load('lecturer');
 
@@ -66,11 +69,7 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        abort_unless(
-            auth()->user()->role === 'admin'
-                || $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('update', $course);
 
         $lecturers = User::where('role', 'dosen')
             ->orderBy('name')
@@ -83,11 +82,7 @@ class CourseController extends Controller
         UpdateCourseRequest $request,
         Course $course
     ) {
-        abort_unless(
-            auth()->user()->role === 'admin'
-                || $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('update', $course);
 
         $course->update($request->validated());
 
@@ -98,11 +93,7 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
-        abort_unless(
-            auth()->user()->role === 'admin'
-                || $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('delete', $course);
 
         $course->delete();
 

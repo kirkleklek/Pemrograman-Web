@@ -1,0 +1,18 @@
+Run ID: 20261011-194633102201-regression-d0f79478
+Stage: regression
+Time (Asia/Makassar): 2026-10-11 19:46:33.102201 +08:00
+Evidence: docs/testing/evidence/runs/20261011-194633102201-regression-d0f79478
+PHP: 8.3.26; DB: 8.4.3; database: kampuslms_testing; APP_ENV: testing
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.26
+Configuration: C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\phpunit.xml
+
+................................................................. 65 / 86 ( 75%)
+.....................                                             86 / 86 (100%)
+
+Time: 00:07.668, Memory: 56.00 MB
+
+OK (86 tests, 689 assertions)
+
+Exit code: 0

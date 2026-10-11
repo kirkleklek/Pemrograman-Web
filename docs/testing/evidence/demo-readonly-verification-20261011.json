@@ -1,0 +1,199 @@
+{
+    "verification": "read-only SQL and file existence checks; no migration/seeding rerun",
+    "time": "2026-10-11T20:05:20+08:00",
+    "app_env": "testing",
+    "database": "kampuslms_uts_demo",
+    "mysql_version": "8.4.3",
+    "users": [
+        {
+            "id": "1",
+            "email": "admin@audit.example.test",
+            "role": "admin"
+        },
+        {
+            "id": "2",
+            "email": "mahasiswa-a@audit.example.test",
+            "role": "mahasiswa"
+        },
+        {
+            "id": "3",
+            "email": "dosen-a@audit.example.test",
+            "role": "dosen"
+        },
+        {
+            "id": "4",
+            "email": "mahasiswa-b@audit.example.test",
+            "role": "mahasiswa"
+        },
+        {
+            "id": "5",
+            "email": "dosen-b@audit.example.test",
+            "role": "dosen"
+        }
+    ],
+    "courses": [
+        {
+            "id": "1",
+            "code": "AUDIT-A",
+            "lecturer_id": "3"
+        },
+        {
+            "id": "2",
+            "code": "AUDIT-B",
+            "lecturer_id": "5"
+        },
+        {
+            "id": "3",
+            "code": "AUDIT-SHARED",
+            "lecturer_id": "3"
+        }
+    ],
+    "enrollment": [
+        {
+            "course_id": "1",
+            "user_id": "2"
+        },
+        {
+            "course_id": "2",
+            "user_id": "4"
+        },
+        {
+            "course_id": "3",
+            "user_id": "2"
+        },
+        {
+            "course_id": "3",
+            "user_id": "4"
+        }
+    ],
+    "materials": [
+        {
+            "id": "1",
+            "course_id": "1",
+            "uploaded_by": "3"
+        },
+        {
+            "id": "2",
+            "course_id": "2",
+            "uploaded_by": "5"
+        }
+    ],
+    "assignments": [
+        {
+            "id": "1",
+            "course_id": "1",
+            "created_by": "3",
+            "status": "published"
+        },
+        {
+            "id": "2",
+            "course_id": "2",
+            "created_by": "5",
+            "status": "published"
+        },
+        {
+            "id": "3",
+            "course_id": "3",
+            "created_by": "3",
+            "status": "published"
+        }
+    ],
+    "submissions": [
+        {
+            "id": "1",
+            "assignment_id": "1",
+            "user_id": "2"
+        },
+        {
+            "id": "2",
+            "assignment_id": "2",
+            "user_id": "4"
+        },
+        {
+            "id": "3",
+            "assignment_id": "3",
+            "user_id": "2"
+        },
+        {
+            "id": "4",
+            "assignment_id": "3",
+            "user_id": "4"
+        }
+    ],
+    "notifications": [
+        {
+            "id": "6faab711-bff4-40e8-bf07-73bfef76b500",
+            "notifiable_id": "2",
+            "notifiable_type": "App\\Models\\User"
+        },
+        {
+            "id": "0247c897-587c-4cd1-bab5-0e782a2e3e23",
+            "notifiable_id": "3",
+            "notifiable_type": "App\\Models\\User"
+        },
+        {
+            "id": "a59694ce-77b9-4c95-b4c5-354e84826dd4",
+            "notifiable_id": "4",
+            "notifiable_type": "App\\Models\\User"
+        },
+        {
+            "id": "76076679-fec2-46d8-9688-8e629340643f",
+            "notifiable_id": "5",
+            "notifiable_type": "App\\Models\\User"
+        }
+    ],
+    "migrations": [
+        "0001_01_01_000000_create_users_table",
+        "0001_01_01_000001_create_cache_table",
+        "0001_01_01_000002_create_jobs_table",
+        "2026_09_13_060902_create_courses_table",
+        "2026_09_13_064930_create_materials_table",
+        "2026_09_13_065654_create_assignments_table",
+        "2026_09_13_065958_create_submissions_table",
+        "2026_09_13_070213_create_grades_table",
+        "2026_09_13_070321_create_notifications_table",
+        "2026_09_13_085315_create_course_user_table",
+        "2026_10_04_084539_create_personal_access_tokens_table",
+        "2026_10_10_030327_create_feedback_templates_table"
+    ],
+    "submission_files": [
+        {
+            "id": 1,
+            "exists": true,
+            "size_matches": true
+        },
+        {
+            "id": 2,
+            "exists": true,
+            "size_matches": true
+        },
+        {
+            "id": 3,
+            "exists": true,
+            "size_matches": true
+        },
+        {
+            "id": 4,
+            "exists": true,
+            "size_matches": true
+        }
+    ],
+    "assignments_due_at": [
+        {
+            "id": 1,
+            "due_at": "2026-10-18 12:00:34",
+            "allow_late": 0
+        },
+        {
+            "id": 2,
+            "due_at": "2026-10-18 12:00:35",
+            "allow_late": 0
+        },
+        {
+            "id": 3,
+            "due_at": "2026-10-18 12:00:35",
+            "allow_late": 1
+        }
+    ],
+    "result": "PASS"
+}

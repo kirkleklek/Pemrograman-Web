@@ -115,12 +115,14 @@
                     Kembali
                 </a>
 
+            @can('update', $course)
                 <a
                     href="{{ route('admin.courses.edit', $course) }}"
                     class="rounded-lg bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
                     Edit Mata Kuliah
                 </a>
+            @endcan
 
             </div>
 

@@ -1,0 +1,23 @@
+﻿php -l tests/Feature/AccessIntegrationTest.php : exit 0
+No syntax errors detected in tests/Feature/AccessIntegrationTest.php
+php -l tests/Feature/IdorIntegrationTest.php : exit 0
+No syntax errors detected in tests/Feature/IdorIntegrationTest.php
+php -l tests/Feature/Week6RegressionTest.php : exit 0
+No syntax errors detected in tests/Feature/Week6RegressionTest.php
+php -l tests/Support/IntegrationFixture.php : exit 0
+No syntax errors detected in tests/Support/IntegrationFixture.php
+php -l scripts/run-bulan-tests.php : exit 0
+No syntax errors detected in scripts/run-bulan-tests.php
+php -l scripts/prepare-bulan-demo.php : exit 0
+No syntax errors detected in scripts/prepare-bulan-demo.php
+php -l database/seeders/BulanAuditDemoSeeder.php : exit 0
+No syntax errors detected in database/seeders/BulanAuditDemoSeeder.php
+Pint --test (seven PHP files): exit 0
+{"tool":"pint","result":"passed"}
+git diff --check: exit 0
+git -c core.safecrlf=false diff --no-index --check NUL <file>: no whitespace diagnostics for 21 new files (exit 1 means added content differs from NUL)
+php scripts/prepare-bulan-demo.php: exit 2
+BLOCKED: create and verify the dedicated MySQL database kampuslms_uts_demo first.
+No demo migrations/seeding executed; missing dedicated database blocked preparation.
+Tracked-file diff:
+(empty; existing tracked files unchanged)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\Course;
+use App\Rules\MaxTextBytes;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -25,6 +26,7 @@ class AssignmentController extends Controller
         }
 
         $assignments = $course->assignments()
+            ->when($user->role === 'mahasiswa', fn ($query) => $query->where('status', 'published'))
             ->orderBy('due_at')
             ->get();
 
@@ -52,7 +54,7 @@ class AssignmentController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'instructions' => ['required', 'string'],
+            'instructions' => ['required', 'string', new MaxTextBytes],
             'due_at' => ['required', 'date'],
             'max_score' => ['required', 'integer', 'between:0,100'],
             'allow_late' => ['required', 'boolean'],
@@ -91,6 +93,8 @@ class AssignmentController extends Controller
             );
         }
 
+        abort_if($user->role === 'mahasiswa' && $assignment->status !== 'published', 403);
+
         return view('assignments.show', compact('course', 'assignment'));
     }
 
@@ -119,7 +123,7 @@ class AssignmentController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'instructions' => ['required', 'string'],
+            'instructions' => ['required', 'string', new MaxTextBytes],
             'due_at' => ['required', 'date'],
             'max_score' => ['required', 'integer', 'between:0,100'],
             'allow_late' => ['required', 'boolean'],

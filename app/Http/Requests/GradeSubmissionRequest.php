@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ReturnsApiValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GradeSubmissionRequest extends FormRequest
 {
+    use ReturnsApiValidationErrors;
+
     public function authorize(): bool
     {
         return true;
@@ -30,15 +31,5 @@ class GradeSubmissionRequest extends FormRequest
             'score.max' => 'Nilai tidak boleh lebih dari 100.',
             'feedback.string' => 'Feedback harus berupa teks.',
         ];
-    }
-
-    protected function failedValidation(Validator $validator): void
-    {
-        throw new HttpResponseException(
-            response()->json([
-                'message' => 'Data yang diberikan tidak valid.',
-                'errors' => $validator->errors(),
-            ], 422)
-        );
     }
 }

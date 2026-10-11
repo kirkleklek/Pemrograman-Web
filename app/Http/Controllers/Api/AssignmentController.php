@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\IndexAssignmentRequest;
 use App\Http\Requests\StoreAssignmentRequest;
 use App\Http\Requests\UpdateAssignmentRequest;
 use App\Http\Resources\AssignmentResource;
@@ -12,7 +13,7 @@ use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
 {
-    public function index(Request $request, Course $course)
+    public function index(IndexAssignmentRequest $request, Course $course)
     {
         $user = $request->user();
 
@@ -33,6 +34,7 @@ class AssignmentController extends Controller
         );
 
         $assignments = $course->assignments()
+            ->when($user->role === 'mahasiswa', fn ($query) => $query->where('status', 'published'))
             ->when(
                 $request->filled('status'),
                 fn ($query) => $query->where(
@@ -87,7 +89,8 @@ class AssignmentController extends Controller
         Assignment $assignment
     ) {
         abort_unless(
-            $assignment->course->lecturer_id === $request->user()->id,
+            $request->user()->role === 'dosen'
+                && (int) $assignment->course->lecturer_id === (int) $request->user()->id,
             403,
             'Anda tidak memiliki akses ke sumber daya ini.'
         );
@@ -102,7 +105,8 @@ class AssignmentController extends Controller
         Assignment $assignment
     ) {
         abort_unless(
-            $assignment->course->lecturer_id === $request->user()->id,
+            $request->user()->role === 'dosen'
+                && (int) $assignment->course->lecturer_id === (int) $request->user()->id,
             403,
             'Anda tidak memiliki akses ke sumber daya ini.'
         );

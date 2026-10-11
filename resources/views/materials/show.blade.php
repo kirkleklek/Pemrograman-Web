@@ -90,14 +90,14 @@
                 Kembali
             </a>
 
-            @if(auth()->user()->role === 'dosen')
+            @can('update', $material)
                 <a
                     href="{{ route('dosen.materials.edit', $material) }}"
                     class="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
                 >
                     Edit Materi
                 </a>
-            @endif
+            @endcan
 
         </div>
     </div>

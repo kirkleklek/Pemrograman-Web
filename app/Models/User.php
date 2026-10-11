@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->hasMany(Submission::class);
     }
 
+    public function feedbackTemplates(): HasMany
+    {
+        return $this->hasMany(FeedbackTemplate::class, 'lecturer_id');
+    }
+
     public function gradesGiven(): HasMany
     {
         return $this->hasMany(Grade::class, 'graded_by');

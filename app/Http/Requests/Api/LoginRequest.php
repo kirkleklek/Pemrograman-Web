@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\Concerns\ReturnsApiValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
+    use ReturnsApiValidationErrors;
     public function authorize(): bool
     {
         return true;

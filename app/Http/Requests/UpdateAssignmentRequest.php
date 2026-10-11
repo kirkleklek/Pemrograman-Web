@@ -2,15 +2,20 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ReturnsApiValidationErrors;
+use App\Rules\MaxTextBytes;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateAssignmentRequest extends FormRequest
 {
+    use ReturnsApiValidationErrors;
+
     public function authorize(): bool
     {
-        return $this->user()?->role === 'dosen';
+        return $this->user()?->role === 'dosen'
+            && (int) $this->route('assignment')->course->lecturer_id === (int) $this->user()->id;
     }
 
     protected function failedAuthorization(): void
@@ -25,29 +30,36 @@ class UpdateAssignmentRequest extends FormRequest
         return [
             'title' => [
                 'sometimes',
+                'required',
                 'string',
                 'max:255',
             ],
             'instructions' => [
                 'sometimes',
+                'required',
                 'string',
+                new MaxTextBytes,
             ],
             'due_at' => [
                 'sometimes',
+                'required',
                 'date',
             ],
             'max_score' => [
                 'sometimes',
+                'required',
                 'integer',
                 'min:1',
                 'max:100',
             ],
             'allow_late' => [
                 'sometimes',
+                'required',
                 'boolean',
             ],
             'status' => [
                 'sometimes',
+                'required',
                 Rule::in(['draft', 'published']),
             ],
         ];

@@ -1,0 +1,1933 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\phpunit.xml" tests="72" assertions="30082" errors="0" failures="6" skipped="0" time="9.535865">
+    <testsuite name="Unit" tests="8" assertions="26" errors="0" failures="0" skipped="0" time="0.113225">
+      <testsuite name="Tests\Unit\JsonPrivacyAssertionTest" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" tests="8" assertions="26" errors="0" failures="0" skipped="0" time="0.113225">
+        <testcase name="test_actual_error_contract_contains_no_private_target_values" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="17" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="2" time="0.034777"/>
+        <testcase name="test_escaped_path_that_evades_raw_text_search_is_detected" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="26" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="5" time="0.077150"/>
+        <testsuite name="Tests\Unit\JsonPrivacyAssertionTest::test_leaks_in_decoded_keys_and_values_are_rejected" tests="6" assertions="19" errors="0" failures="0" skipped="0" time="0.001298">
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;nested path&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="5" time="0.000456"/>
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;path embedded in message&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="3" time="0.000197"/>
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;path in key&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="2" time="0.000148"/>
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;unicode value&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="4" time="0.000177"/>
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;escaped quotes&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="3" time="0.000166"/>
+          <testcase name="test_leaks_in_decoded_keys_and_values_are_rejected with data set &quot;scalar JSON string&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Unit\JsonPrivacyAssertionTest.php" line="50" class="Tests\Unit\JsonPrivacyAssertionTest" classname="Tests.Unit.JsonPrivacyAssertionTest" assertions="2" time="0.000154"/>
+        </testsuite>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="64" assertions="30056" errors="0" failures="6" skipped="0" time="9.422640">
+      <testsuite name="Tests\Feature\AccessIntegrationTest" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" tests="38" assertions="155" errors="0" failures="0" skipped="0" time="5.822239">
+        <testsuite name="Tests\Feature\AccessIntegrationTest::test_guest_api_requests_are_rejected_without_data_or_writes" tests="15" assertions="45" errors="0" failures="0" skipped="0" time="3.616935">
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;logout&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="2.362168"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;me&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.086746"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;courses&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.077525"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;course detail&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.110840"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;materials&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.109404"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;assignments list&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.082152"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;assignment create&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.072768"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;assignment put&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.088146"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;assignment patch&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.073328"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;assignment delete&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.097643"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;submission list&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.095821"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;submission create&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.082986"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;grade&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.092644"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;notifications&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.091151"/>
+          <testcase name="test_guest_api_requests_are_rejected_without_data_or_writes with data set &quot;notification read&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="42" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.093614"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\AccessIntegrationTest::test_guest_web_requests_redirect_to_login_without_data" tests="8" assertions="56" errors="0" failures="0" skipped="0" time="0.713921">
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;dashboard&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.097149"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;admin users&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.074282"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;admin courses&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.084314"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;lecturer material&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.093464"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;lecturer assignment&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.089124"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;student material&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.088008"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;student assignment&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.096619"/>
+          <testcase name="test_guest_web_requests_redirect_to_login_without_data with data set &quot;student submission&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="69" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="7" time="0.090962"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\AccessIntegrationTest::test_missing_bound_resource_returns_404_without_writes" tests="14" assertions="42" errors="0" failures="0" skipped="0" time="1.282160">
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;course&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.099836"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;materials list&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.070832"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;assignments list&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.085468"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;assignment put&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.088873"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;assignment patch&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.088336"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;assignment delete&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.092426"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;submission list&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.092604"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;submission create&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.103736"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;grade&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.076421"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;notification&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.085658"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;web material&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.072306"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;web assignment&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.094760"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;web student submission&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.090550"/>
+          <testcase name="test_missing_bound_resource_returns_404_without_writes with data set &quot;web lecturer submission&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="105" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="3" time="0.140354"/>
+        </testsuite>
+        <testcase name="test_admin_read_permissions_do_not_grant_assignment_or_grading_writes" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\AccessIntegrationTest.php" line="116" class="Tests\Feature\AccessIntegrationTest" classname="Tests.Feature.AccessIntegrationTest" assertions="12" time="0.209223"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\IdorIntegrationTest" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" tests="18" assertions="29675" errors="0" failures="6" skipped="0" time="2.676880">
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_student_submission_ownership_in_shared_course" tests="2" assertions="22" errors="0" failures="0" skipped="0" time="0.213941">
+          <testcase name="test_student_submission_ownership_in_shared_course with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="106" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="11" time="0.112550"/>
+          <testcase name="test_student_submission_ownership_in_shared_course with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="106" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="11" time="0.101391"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_students_read_enrolled_resources_but_cannot_swap_course_or_resource_id" tests="2" assertions="3522" errors="0" failures="0" skipped="0" time="0.316773">
+          <testcase name="test_students_read_enrolled_resources_but_cannot_swap_course_or_resource_id with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="126" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="1761" time="0.173292"/>
+          <testcase name="test_students_read_enrolled_resources_but_cannot_swap_course_or_resource_id with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="126" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="1761" time="0.143481"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_student_role_cannot_create_update_delete_or_grade" tests="2" assertions="10984" errors="0" failures="2" skipped="0" time="0.863599">
+          <testcase name="test_student_role_cannot_create_update_delete_or_grade with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="164" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="5492" time="0.772119">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_student_role_cannot_create_update_delete_or_grade with data set "A to B"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+ '{\n
+-    "message": "Anda tidak memiliki akses ke sumber daya ini."\n
++    "exception": "Symfony\\Component\\HttpKernel\\Exception\\HttpException",\n
++    "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php",\n
++    "line": 1440,\n
++    "message": "",\n
++    "trace": {\n
++        "0": {\n
++            "class": "Illuminate\\Foundation\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php",\n
++            "function": "abort",\n
++            "line": 67,\n
++            "type": "-&gt;"\n
++        },\n
++        "1": {\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php",\n
++            "function": "abort",\n
++            "line": 104\n
++        },\n
++        "10": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 48,\n
++            "type": "-&gt;"\n
++        },\n
++        "11": {\n
++            "class": "Illuminate\\View\\Middleware\\ShareErrorsFromSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "12": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 120,\n
++            "type": "-&gt;"\n
++        },\n
++        "13": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "handleStatefulRequest",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "14": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "15": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 36,\n
++            "type": "-&gt;"\n
++        },\n
++        "16": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "17": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 74,\n
++            "type": "-&gt;"\n
++        },\n
++        "18": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\EncryptCookies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "19": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "2": {\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\app\\Http\\Middleware\\EnsureUserHasRole.php",\n
++            "function": "abort_unless",\n
++            "line": 22\n
++        },\n
++        "20": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "then",\n
++            "line": 821,\n
++            "type": "-&gt;"\n
++        },\n
++        "21": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRouteWithinStack",\n
++            "line": 800,\n
++            "type": "-&gt;"\n
++        },\n
++        "22": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRoute",\n
++            "line": 764,\n
++            "type": "-&gt;"\n
++        },\n
++        "23": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "dispatchToRoute",\n
++            "line": 753,\n
++            "type": "-&gt;"\n
++        },\n
++        "24": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "dispatch",\n
++            "line": 200,\n
++            "type": "-&gt;"\n
++        },\n
++        "25": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Foundation\\Http\\{closure}",\n
++            "line": 180,\n
++            "type": "-&gt;"\n
++        },\n
++        "26": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "27": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",\n
++            "function": "handle",\n
++            "line": 31,\n
++            "type": "-&gt;"\n
++        },\n
++        "28": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "29": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "3": {\n
++            "class": "App\\Http\\Middleware\\EnsureUserHasRole",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "30": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",\n
++            "function": "handle",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "31": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "32": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "33": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "34": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 109,\n
++            "type": "-&gt;"\n
++        },\n
++        "35": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "36": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 61,\n
++            "type": "-&gt;"\n
++        },\n
++        "37": {\n
++            "class": "Illuminate\\Http\\Middleware\\HandleCors",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "38": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 58,\n
++            "type": "-&gt;"\n
++        },\n
++        "39": {\n
++            "class": "Illuminate\\Http\\Middleware\\TrustProxies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "4": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 50,\n
++            "type": "-&gt;"\n
++        },\n
++        "40": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 22,\n
++            "type": "-&gt;"\n
++        },\n
++        "41": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "42": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePathEncoding.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 26,\n
++            "type": "-&gt;"\n
++        },\n
++        "43": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePathEncoding",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "44": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "45": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "then",\n
++            "line": 175,\n
++            "type": "-&gt;"\n
++        },\n
++        "46": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "sendRequestThroughRouter",\n
++            "line": 144,\n
++            "type": "-&gt;"\n
++        },\n
++        "47": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "handle",\n
++            "line": 607,\n
++            "type": "-&gt;"\n
++        },\n
++        "48": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "call",\n
++            "line": 573,\n
++            "type": "-&gt;"\n
++        },\n
++        "49": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\tests\\Feature\\IdorIntegrationTest.php",\n
++            "function": "json",\n
++            "line": 187,\n
++            "type": "-&gt;"\n
++        },\n
++        "5": {\n
++            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "50": {\n
++            "class": "Tests\\Feature\\IdorIntegrationTest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "test_student_role_cannot_create_update_delete_or_grade",\n
++            "line": 1667,\n
++            "type": "-&gt;"\n
++        },\n
++        "51": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "runTest",\n
++            "line": 519,\n
++            "type": "-&gt;"\n
++        },\n
++        "52": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestRunner\\TestRunner.php",\n
++            "function": "runBare",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "53": {\n
++            "class": "PHPUnit\\Framework\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "run",\n
++            "line": 365,\n
++            "type": "-&gt;"\n
++        },\n
++        "54": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "55": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "56": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "57": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "58": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\TestRunner.php",\n
++            "function": "run",\n
++            "line": 64,\n
++            "type": "-&gt;"\n
++        },\n
++        "59": {\n
++            "class": "PHPUnit\\TextUI\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\Application.php",\n
++            "function": "run",\n
++            "line": 211,\n
++            "type": "-&gt;"\n
++        },\n
++        "6": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "60": {\n
++            "class": "PHPUnit\\TextUI\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\phpunit",\n
++            "function": "run",\n
++            "line": 104,\n
++            "type": "-&gt;"\n
++        },\n
++        "7": {\n
++            "class": "Illuminate\\Auth\\Middleware\\Authenticate",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "8": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "9": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        }\n
++    }\n
+ }'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\AssertableJsonString.php:102
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:907
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:38
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:188</failure>
+          </testcase>
+          <testcase name="test_student_role_cannot_create_update_delete_or_grade with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="164" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="5492" time="0.091480">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_student_role_cannot_create_update_delete_or_grade with data set "B to A"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+ '{\n
+-    "message": "Anda tidak memiliki akses ke sumber daya ini."\n
++    "exception": "Symfony\\Component\\HttpKernel\\Exception\\HttpException",\n
++    "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php",\n
++    "line": 1440,\n
++    "message": "",\n
++    "trace": {\n
++        "0": {\n
++            "class": "Illuminate\\Foundation\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php",\n
++            "function": "abort",\n
++            "line": 67,\n
++            "type": "-&gt;"\n
++        },\n
++        "1": {\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\helpers.php",\n
++            "function": "abort",\n
++            "line": 104\n
++        },\n
++        "10": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 48,\n
++            "type": "-&gt;"\n
++        },\n
++        "11": {\n
++            "class": "Illuminate\\View\\Middleware\\ShareErrorsFromSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "12": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 120,\n
++            "type": "-&gt;"\n
++        },\n
++        "13": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "handleStatefulRequest",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "14": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "15": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 36,\n
++            "type": "-&gt;"\n
++        },\n
++        "16": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "17": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 74,\n
++            "type": "-&gt;"\n
++        },\n
++        "18": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\EncryptCookies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "19": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "2": {\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\app\\Http\\Middleware\\EnsureUserHasRole.php",\n
++            "function": "abort_unless",\n
++            "line": 22\n
++        },\n
++        "20": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "then",\n
++            "line": 821,\n
++            "type": "-&gt;"\n
++        },\n
++        "21": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRouteWithinStack",\n
++            "line": 800,\n
++            "type": "-&gt;"\n
++        },\n
++        "22": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRoute",\n
++            "line": 764,\n
++            "type": "-&gt;"\n
++        },\n
++        "23": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "dispatchToRoute",\n
++            "line": 753,\n
++            "type": "-&gt;"\n
++        },\n
++        "24": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "dispatch",\n
++            "line": 200,\n
++            "type": "-&gt;"\n
++        },\n
++        "25": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Foundation\\Http\\{closure}",\n
++            "line": 180,\n
++            "type": "-&gt;"\n
++        },\n
++        "26": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "27": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",\n
++            "function": "handle",\n
++            "line": 31,\n
++            "type": "-&gt;"\n
++        },\n
++        "28": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "29": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "3": {\n
++            "class": "App\\Http\\Middleware\\EnsureUserHasRole",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "30": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",\n
++            "function": "handle",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "31": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "32": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "33": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "34": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 109,\n
++            "type": "-&gt;"\n
++        },\n
++        "35": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "36": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 61,\n
++            "type": "-&gt;"\n
++        },\n
++        "37": {\n
++            "class": "Illuminate\\Http\\Middleware\\HandleCors",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "38": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 58,\n
++            "type": "-&gt;"\n
++        },\n
++        "39": {\n
++            "class": "Illuminate\\Http\\Middleware\\TrustProxies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "4": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 50,\n
++            "type": "-&gt;"\n
++        },\n
++        "40": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 22,\n
++            "type": "-&gt;"\n
++        },\n
++        "41": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "42": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePathEncoding.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 26,\n
++            "type": "-&gt;"\n
++        },\n
++        "43": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePathEncoding",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "44": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "45": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "then",\n
++            "line": 175,\n
++            "type": "-&gt;"\n
++        },\n
++        "46": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "sendRequestThroughRouter",\n
++            "line": 144,\n
++            "type": "-&gt;"\n
++        },\n
++        "47": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "handle",\n
++            "line": 607,\n
++            "type": "-&gt;"\n
++        },\n
++        "48": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "call",\n
++            "line": 573,\n
++            "type": "-&gt;"\n
++        },\n
++        "49": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\tests\\Feature\\IdorIntegrationTest.php",\n
++            "function": "json",\n
++            "line": 187,\n
++            "type": "-&gt;"\n
++        },\n
++        "5": {\n
++            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "50": {\n
++            "class": "Tests\\Feature\\IdorIntegrationTest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "test_student_role_cannot_create_update_delete_or_grade",\n
++            "line": 1667,\n
++            "type": "-&gt;"\n
++        },\n
++        "51": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "runTest",\n
++            "line": 519,\n
++            "type": "-&gt;"\n
++        },\n
++        "52": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestRunner\\TestRunner.php",\n
++            "function": "runBare",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "53": {\n
++            "class": "PHPUnit\\Framework\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "run",\n
++            "line": 365,\n
++            "type": "-&gt;"\n
++        },\n
++        "54": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "55": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "56": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "57": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "58": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\TestRunner.php",\n
++            "function": "run",\n
++            "line": 64,\n
++            "type": "-&gt;"\n
++        },\n
++        "59": {\n
++            "class": "PHPUnit\\TextUI\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\Application.php",\n
++            "function": "run",\n
++            "line": 211,\n
++            "type": "-&gt;"\n
++        },\n
++        "6": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "60": {\n
++            "class": "PHPUnit\\TextUI\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\phpunit",\n
++            "function": "run",\n
++            "line": 104,\n
++            "type": "-&gt;"\n
++        },\n
++        "7": {\n
++            "class": "Illuminate\\Auth\\Middleware\\Authenticate",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "8": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "9": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        }\n
++    }\n
+ }'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\AssertableJsonString.php:102
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:907
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:38
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:188</failure>
+          </testcase>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_lecturer_reads_only_assigned_course_resources" tests="2" assertions="3601" errors="0" failures="0" skipped="0" time="0.336518">
+          <testcase name="test_lecturer_reads_only_assigned_course_resources with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="196" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="1913" time="0.177596"/>
+          <testcase name="test_lecturer_reads_only_assigned_course_resources with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="196" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="1688" time="0.158922"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_lecturer_foreign_writes_preserve_database_grades_and_files" tests="2" assertions="11308" errors="0" failures="2" skipped="0" time="0.179550">
+          <testcase name="test_lecturer_foreign_writes_preserve_database_grades_and_files with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="239" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="5654" time="0.089912">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_lecturer_foreign_writes_preserve_database_grades_and_files with data set "A to B"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+ '{\n
+-    "message": "Anda tidak memiliki akses ke sumber daya ini."\n
++    "exception": "Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException",\n
++    "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",\n
++    "line": 672,\n
++    "message": "This action is unauthorized.",\n
++    "trace": {\n
++        "0": {\n
++            "class": "Illuminate\\Foundation\\Exceptions\\Handler",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",\n
++            "function": "prepareException",\n
++            "line": 616,\n
++            "type": "-&gt;"\n
++        },\n
++        "1": {\n
++            "class": "Illuminate\\Foundation\\Exceptions\\Handler",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",\n
++            "function": "render",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "10": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "11": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 48,\n
++            "type": "-&gt;"\n
++        },\n
++        "12": {\n
++            "class": "Illuminate\\View\\Middleware\\ShareErrorsFromSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "13": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 120,\n
++            "type": "-&gt;"\n
++        },\n
++        "14": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "handleStatefulRequest",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "15": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "16": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 36,\n
++            "type": "-&gt;"\n
++        },\n
++        "17": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "18": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 74,\n
++            "type": "-&gt;"\n
++        },\n
++        "19": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\EncryptCookies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "2": {\n
++            "class": "Illuminate\\Routing\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handleException",\n
++            "line": 182,\n
++            "type": "-&gt;"\n
++        },\n
++        "20": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "21": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "then",\n
++            "line": 821,\n
++            "type": "-&gt;"\n
++        },\n
++        "22": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRouteWithinStack",\n
++            "line": 800,\n
++            "type": "-&gt;"\n
++        },\n
++        "23": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRoute",\n
++            "line": 764,\n
++            "type": "-&gt;"\n
++        },\n
++        "24": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "dispatchToRoute",\n
++            "line": 753,\n
++            "type": "-&gt;"\n
++        },\n
++        "25": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "dispatch",\n
++            "line": 200,\n
++            "type": "-&gt;"\n
++        },\n
++        "26": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Foundation\\Http\\{closure}",\n
++            "line": 180,\n
++            "type": "-&gt;"\n
++        },\n
++        "27": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "28": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",\n
++            "function": "handle",\n
++            "line": 31,\n
++            "type": "-&gt;"\n
++        },\n
++        "29": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "3": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\app\\Http\\Middleware\\EnsureUserHasRole.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "30": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "31": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",\n
++            "function": "handle",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "32": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "33": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "34": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "35": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 109,\n
++            "type": "-&gt;"\n
++        },\n
++        "36": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "37": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 61,\n
++            "type": "-&gt;"\n
++        },\n
++        "38": {\n
++            "class": "Illuminate\\Http\\Middleware\\HandleCors",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "39": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 58,\n
++            "type": "-&gt;"\n
++        },\n
++        "4": {\n
++            "class": "App\\Http\\Middleware\\EnsureUserHasRole",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "40": {\n
++            "class": "Illuminate\\Http\\Middleware\\TrustProxies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "41": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 22,\n
++            "type": "-&gt;"\n
++        },\n
++        "42": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "43": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePathEncoding.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 26,\n
++            "type": "-&gt;"\n
++        },\n
++        "44": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePathEncoding",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "45": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "46": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "then",\n
++            "line": 175,\n
++            "type": "-&gt;"\n
++        },\n
++        "47": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "sendRequestThroughRouter",\n
++            "line": 144,\n
++            "type": "-&gt;"\n
++        },\n
++        "48": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "handle",\n
++            "line": 607,\n
++            "type": "-&gt;"\n
++        },\n
++        "49": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "call",\n
++            "line": 573,\n
++            "type": "-&gt;"\n
++        },\n
++        "5": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 50,\n
++            "type": "-&gt;"\n
++        },\n
++        "50": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\tests\\Feature\\IdorIntegrationTest.php",\n
++            "function": "json",\n
++            "line": 266,\n
++            "type": "-&gt;"\n
++        },\n
++        "51": {\n
++            "class": "Tests\\Feature\\IdorIntegrationTest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "test_lecturer_foreign_writes_preserve_database_grades_and_files",\n
++            "line": 1667,\n
++            "type": "-&gt;"\n
++        },\n
++        "52": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "runTest",\n
++            "line": 519,\n
++            "type": "-&gt;"\n
++        },\n
++        "53": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestRunner\\TestRunner.php",\n
++            "function": "runBare",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "54": {\n
++            "class": "PHPUnit\\Framework\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "run",\n
++            "line": 365,\n
++            "type": "-&gt;"\n
++        },\n
++        "55": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "56": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "57": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "58": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "59": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\TestRunner.php",\n
++            "function": "run",\n
++            "line": 64,\n
++            "type": "-&gt;"\n
++        },\n
++        "6": {\n
++            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "60": {\n
++            "class": "PHPUnit\\TextUI\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\Application.php",\n
++            "function": "run",\n
++            "line": 211,\n
++            "type": "-&gt;"\n
++        },\n
++        "61": {\n
++            "class": "PHPUnit\\TextUI\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\phpunit",\n
++            "function": "run",\n
++            "line": 104,\n
++            "type": "-&gt;"\n
++        },\n
++        "7": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "8": {\n
++            "class": "Illuminate\\Auth\\Middleware\\Authenticate",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "9": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        }\n
++    }\n
+ }'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\AssertableJsonString.php:102
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:907
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:38
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:267</failure>
+          </testcase>
+          <testcase name="test_lecturer_foreign_writes_preserve_database_grades_and_files with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="239" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="5654" time="0.089638">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_lecturer_foreign_writes_preserve_database_grades_and_files with data set "B to A"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+ '{\n
+-    "message": "Anda tidak memiliki akses ke sumber daya ini."\n
++    "exception": "Symfony\\Component\\HttpKernel\\Exception\\AccessDeniedHttpException",\n
++    "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",\n
++    "line": 672,\n
++    "message": "This action is unauthorized.",\n
++    "trace": {\n
++        "0": {\n
++            "class": "Illuminate\\Foundation\\Exceptions\\Handler",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Exceptions\\Handler.php",\n
++            "function": "prepareException",\n
++            "line": 616,\n
++            "type": "-&gt;"\n
++        },\n
++        "1": {\n
++            "class": "Illuminate\\Foundation\\Exceptions\\Handler",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Pipeline.php",\n
++            "function": "render",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "10": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "11": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 48,\n
++            "type": "-&gt;"\n
++        },\n
++        "12": {\n
++            "class": "Illuminate\\View\\Middleware\\ShareErrorsFromSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "13": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 120,\n
++            "type": "-&gt;"\n
++        },\n
++        "14": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php",\n
++            "function": "handleStatefulRequest",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "15": {\n
++            "class": "Illuminate\\Session\\Middleware\\StartSession",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "16": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 36,\n
++            "type": "-&gt;"\n
++        },\n
++        "17": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "18": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 74,\n
++            "type": "-&gt;"\n
++        },\n
++        "19": {\n
++            "class": "Illuminate\\Cookie\\Middleware\\EncryptCookies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "2": {\n
++            "class": "Illuminate\\Routing\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handleException",\n
++            "line": 182,\n
++            "type": "-&gt;"\n
++        },\n
++        "20": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "21": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "then",\n
++            "line": 821,\n
++            "type": "-&gt;"\n
++        },\n
++        "22": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRouteWithinStack",\n
++            "line": 800,\n
++            "type": "-&gt;"\n
++        },\n
++        "23": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "runRoute",\n
++            "line": 764,\n
++            "type": "-&gt;"\n
++        },\n
++        "24": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php",\n
++            "function": "dispatchToRoute",\n
++            "line": 753,\n
++            "type": "-&gt;"\n
++        },\n
++        "25": {\n
++            "class": "Illuminate\\Routing\\Router",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "dispatch",\n
++            "line": 200,\n
++            "type": "-&gt;"\n
++        },\n
++        "26": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Foundation\\Http\\{closure}",\n
++            "line": 180,\n
++            "type": "-&gt;"\n
++        },\n
++        "27": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "28": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php",\n
++            "function": "handle",\n
++            "line": 31,\n
++            "type": "-&gt;"\n
++        },\n
++        "29": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "3": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\app\\Http\\Middleware\\EnsureUserHasRole.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "30": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 21,\n
++            "type": "-&gt;"\n
++        },\n
++        "31": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php",\n
++            "function": "handle",\n
++            "line": 51,\n
++            "type": "-&gt;"\n
++        },\n
++        "32": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "33": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 27,\n
++            "type": "-&gt;"\n
++        },\n
++        "34": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "35": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 109,\n
++            "type": "-&gt;"\n
++        },\n
++        "36": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "37": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 61,\n
++            "type": "-&gt;"\n
++        },\n
++        "38": {\n
++            "class": "Illuminate\\Http\\Middleware\\HandleCors",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "39": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 58,\n
++            "type": "-&gt;"\n
++        },\n
++        "4": {\n
++            "class": "App\\Http\\Middleware\\EnsureUserHasRole",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "40": {\n
++            "class": "Illuminate\\Http\\Middleware\\TrustProxies",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "41": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 22,\n
++            "type": "-&gt;"\n
++        },\n
++        "42": {\n
++            "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "43": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePathEncoding.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 26,\n
++            "type": "-&gt;"\n
++        },\n
++        "44": {\n
++            "class": "Illuminate\\Http\\Middleware\\ValidatePathEncoding",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "45": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 137,\n
++            "type": "-&gt;"\n
++        },\n
++        "46": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "then",\n
++            "line": 175,\n
++            "type": "-&gt;"\n
++        },\n
++        "47": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php",\n
++            "function": "sendRequestThroughRouter",\n
++            "line": 144,\n
++            "type": "-&gt;"\n
++        },\n
++        "48": {\n
++            "class": "Illuminate\\Foundation\\Http\\Kernel",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "handle",\n
++            "line": 607,\n
++            "type": "-&gt;"\n
++        },\n
++        "49": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Testing\\Concerns\\MakesHttpRequests.php",\n
++            "function": "call",\n
++            "line": 573,\n
++            "type": "-&gt;"\n
++        },\n
++        "5": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 50,\n
++            "type": "-&gt;"\n
++        },\n
++        "50": {\n
++            "class": "Illuminate\\Foundation\\Testing\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\tests\\Feature\\IdorIntegrationTest.php",\n
++            "function": "json",\n
++            "line": 266,\n
++            "type": "-&gt;"\n
++        },\n
++        "51": {\n
++            "class": "Tests\\Feature\\IdorIntegrationTest",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "test_lecturer_foreign_writes_preserve_database_grades_and_files",\n
++            "line": 1667,\n
++            "type": "-&gt;"\n
++        },\n
++        "52": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "runTest",\n
++            "line": 519,\n
++            "type": "-&gt;"\n
++        },\n
++        "53": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestRunner\\TestRunner.php",\n
++            "function": "runBare",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        },\n
++        "54": {\n
++            "class": "PHPUnit\\Framework\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestCase.php",\n
++            "function": "run",\n
++            "line": 365,\n
++            "type": "-&gt;"\n
++        },\n
++        "55": {\n
++            "class": "PHPUnit\\Framework\\TestCase",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "56": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "57": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "58": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\Framework\\TestSuite.php",\n
++            "function": "run",\n
++            "line": 369,\n
++            "type": "-&gt;"\n
++        },\n
++        "59": {\n
++            "class": "PHPUnit\\Framework\\TestSuite",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\TestRunner.php",\n
++            "function": "run",\n
++            "line": 64,\n
++            "type": "-&gt;"\n
++        },\n
++        "6": {\n
++            "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "60": {\n
++            "class": "PHPUnit\\TextUI\\TestRunner",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\src\\TextUI\\Application.php",\n
++            "function": "run",\n
++            "line": 211,\n
++            "type": "-&gt;"\n
++        },\n
++        "61": {\n
++            "class": "PHPUnit\\TextUI\\Application",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\phpunit\\phpunit\\phpunit",\n
++            "function": "run",\n
++            "line": 104,\n
++            "type": "-&gt;"\n
++        },\n
++        "7": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 63,\n
++            "type": "-&gt;"\n
++        },\n
++        "8": {\n
++            "class": "Illuminate\\Auth\\Middleware\\Authenticate",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php",\n
++            "function": "handle",\n
++            "line": 219,\n
++            "type": "-&gt;"\n
++        },\n
++        "9": {\n
++            "class": "Illuminate\\Pipeline\\Pipeline",\n
++            "file": "C:\\Users\\eagan\\OneDrive\\Documents\\SMT 5\\web\\kampuslms-kelompok-03\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php",\n
++            "function": "Illuminate\\Pipeline\\{closure}",\n
++            "line": 87,\n
++            "type": "-&gt;"\n
++        }\n
++    }\n
+ }'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\AssertableJsonString.php:102
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:907
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:38
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:267</failure>
+          </testcase>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_lecturer_ownership_payload_cannot_move_resources_to_foreign_course" tests="2" assertions="34" errors="0" failures="2" skipped="0" time="0.176838">
+          <testcase name="test_lecturer_ownership_payload_cannot_move_resources_to_foreign_course with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="279" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="17" time="0.099363">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_lecturer_ownership_payload_cannot_move_resources_to_foreign_course with data set "A to B"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'http://localhost/dosen/courses/145/materials'
++'http://localhost/dosen/materials/99'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:432
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:206
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:303</failure>
+          </testcase>
+          <testcase name="test_lecturer_ownership_payload_cannot_move_resources_to_foreign_course with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="279" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="17" time="0.077476">
+            <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\IdorIntegrationTest::test_lecturer_ownership_payload_cannot_move_resources_to_foreign_course with data set "B to A"&#13;
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'http://localhost/dosen/courses/149/materials'
++'http://localhost/dosen/materials/102'
+&#13;
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponseAssert.php:45
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:432
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\vendor\laravel\framework\src\Illuminate\Testing\TestResponse.php:206
+C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php:303</failure>
+          </testcase>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_student_submission_payload_uses_authenticated_user_and_route_assignment" tests="2" assertions="28" errors="0" failures="0" skipped="0" time="0.228536">
+          <testcase name="test_student_submission_payload_uses_authenticated_user_and_route_assignment with data set &quot;A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="310" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="14" time="0.128398"/>
+          <testcase name="test_student_submission_payload_uses_authenticated_user_and_route_assignment with data set &quot;B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="310" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="14" time="0.100138"/>
+        </testsuite>
+        <testsuite name="Tests\Feature\IdorIntegrationTest::test_notification_uuid_is_authorized_for_each_of_four_identities" tests="4" assertions="176" errors="0" failures="0" skipped="0" time="0.361124">
+          <testcase name="test_notification_uuid_is_authorized_for_each_of_four_identities with data set &quot;student A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="350" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="44" time="0.090670"/>
+          <testcase name="test_notification_uuid_is_authorized_for_each_of_four_identities with data set &quot;student B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="350" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="44" time="0.090602"/>
+          <testcase name="test_notification_uuid_is_authorized_for_each_of_four_identities with data set &quot;lecturer A to B&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="350" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="44" time="0.089661"/>
+          <testcase name="test_notification_uuid_is_authorized_for_each_of_four_identities with data set &quot;lecturer B to A&quot;" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\IdorIntegrationTest.php" line="350" class="Tests\Feature\IdorIntegrationTest" classname="Tests.Feature.IdorIntegrationTest" assertions="44" time="0.090191"/>
+        </testsuite>
+      </testsuite>
+      <testsuite name="Tests\Feature\Week6RegressionTest" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" tests="8" assertions="226" errors="0" failures="0" skipped="0" time="0.923521">
+        <testcase name="test_real_bearer_login_me_logout_and_revoked_token_contract" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="27" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="22" time="0.115702"/>
+        <testcase name="test_login_failure_is_generic_and_sixth_attempt_is_rate_limited" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="47" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="12" time="0.078510"/>
+        <testcase name="test_protected_api_sixty_request_rate_limit_is_preserved" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="62" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="62" time="0.119272"/>
+        <testcase name="test_assignment_submission_grade_and_delete_lifecycle" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="71" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="39" time="0.132566"/>
+        <testcase name="test_material_pagination_and_user_resource_shape_remain_scoped" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="104" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="32" time="0.118061"/>
+        <testcase name="test_draft_filter_and_counts_do_not_disclose_unpublished_assignments" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="126" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="14" time="0.098524"/>
+        <testcase name="test_invalid_requests_keep_standard_errors_and_do_not_write" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="141" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="30" time="0.123520"/>
+        <testcase name="test_rejected_submission_states_do_not_store_rows_or_files" file="C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\tests\Feature\Week6RegressionTest.php" line="160" class="Tests\Feature\Week6RegressionTest" classname="Tests.Feature.Week6RegressionTest" assertions="15" time="0.137367"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

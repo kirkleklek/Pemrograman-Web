@@ -12,14 +12,14 @@
                 </p>
             </div>
 
-            @if(auth()->user()->role === 'dosen')
+            @can('create', [\App\Models\Material::class, $course])
                 <a
                     href="{{ route('dosen.courses.materials.create', $course) }}"
                     class="px-4 py-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700"
                 >
                     Tambah Materi
                 </a>
-            @endif
+            @endcan
         </div>
 
         @if(session('success'))
@@ -80,23 +80,27 @@
                                 </td>
 
                                 <td class="px-6 py-4 text-right">
-                                    <a
-                                        href="{{ auth()->user()->role === 'dosen'
-                                            ? route('dosen.materials.show', $material)
-                                            : route('mahasiswa.materials.show', $material) }}"
-                                        class="text-sm font-medium text-blue-600 hover:text-blue-800"
-                                    >
-                                        Lihat
-                                    </a>
+                                    @can('view', $material)
+                                        <a
+                                            href="{{ auth()->user()->role === 'dosen'
+                                                ? route('dosen.materials.show', $material)
+                                                : route('mahasiswa.materials.show', $material) }}"
+                                            class="text-sm font-medium text-blue-600 hover:text-blue-800"
+                                        >
+                                            Lihat
+                                        </a>
+                                    @endcan
 
-                                    @if(auth()->user()->role === 'dosen')
+                                    @can('update', $material)
                                         <a
                                             href="{{ route('dosen.materials.edit', $material) }}"
                                             class="ml-3 text-sm font-medium text-amber-600 hover:text-amber-800"
                                         >
                                             Edit
                                         </a>
+                                    @endcan
 
+                                    @can('delete', $material)
                                         <form
                                             action="{{ route('dosen.materials.destroy', $material) }}"
                                             method="POST"
@@ -108,12 +112,11 @@
                                             <button
                                                 type="submit"
                                                 class="ml-3 text-sm font-medium text-red-600 hover:text-red-800"
-                                                onclick="return confirm('Yakin ingin menghapus materi ini?')"
                                             >
                                                 Hapus
                                             </button>
                                         </form>
-                                    @endif
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

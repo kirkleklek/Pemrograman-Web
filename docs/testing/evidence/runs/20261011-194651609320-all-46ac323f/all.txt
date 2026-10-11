@@ -1,0 +1,20 @@
+Run ID: 20261011-194651609320-all-46ac323f
+Stage: all
+Time (Asia/Makassar): 2026-10-11 19:46:51.609320 +08:00
+Evidence: docs/testing/evidence/runs/20261011-194651609320-all-46ac323f
+PHP: 8.3.26; DB: 8.4.3; database: kampuslms_testing; APP_ENV: testing
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.26
+Configuration: C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\phpunit.xml
+
+...............................................................  63 / 236 ( 26%)
+............................................................... 126 / 236 ( 53%)
+............................................................... 189 / 236 ( 80%)
+...............................................                 236 / 236 (100%)
+
+Time: 00:20.600, Memory: 62.00 MB
+
+OK (236 tests, 3686 assertions)
+
+Exit code: 0

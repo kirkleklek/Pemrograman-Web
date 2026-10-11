@@ -6,15 +6,17 @@ KampusLMS adalah sistem Learning Management System (LMS) yang dikembangkan untuk
 
 ---
 
-## Daftar Anggota Kelompok
+## Daftar Anggota dan Pembagian Tugas
 
-| No | Nama | NIM |
-|----|------|-----|
-| 1 | Devin Raditya P | 10241021 |
-| 2 | Dewi Bulan Purnama | 10241023 |
-| 3 | Eagan Ferdian | 10241025 |
-| 4 | Fabyo Nathanael Suoth | 10241027 |
-| 5 | Fariz Daffa Abbiyu Rahmatullah | 10241029 |
+| No. | Nama | NIM | Tanggung Jawab Utama |
+|---|---|---|---|
+| 1 | Devin Raditya P | 10241021 | Ketua kelompok, koordinasi pengerjaan, pengumpulan dan penyerahan tugas kelompok, integrasi kode, pemeriksaan kualitas, serta backup pekerjaan yang belum selesai. |
+| 2 | Fariz Daffa Abbiyu Rahmatullah | 10241029 | Pengelolaan mata kuliah, termasuk CRUD, pencarian, filter, dan paginasi. |
+| 3 | Fabyo Nathanael Suoth | 10241027 | Pengelolaan materi pembelajaran dan tugas, termasuk CRUD dan validasi data. |
+| 4 | Eagan Ferdian | 10241025 | Pengelolaan nilai dan rekap nilai, serta pengujian fitur terkait. |
+| 5 | Dewi Bulan Purnama | 10241023 | Pengelolaan pengguna, termasuk CRUD pengguna, pencarian, dan filter. |
+
+Ketua kelompok bertanggung jawab memantau progres, mengoordinasikan integrasi pekerjaan, dan memastikan tugas kelompok diserahkan sesuai tenggat. Apabila ada pekerjaan yang belum selesai, ketua membantu mengambil alih agar progres kelompok tetap berjalan.
 
 ---
 

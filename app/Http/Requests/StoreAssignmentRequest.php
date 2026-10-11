@@ -2,12 +2,16 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\ReturnsApiValidationErrors;
+use App\Rules\MaxTextBytes;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreAssignmentRequest extends FormRequest
 {
+    use ReturnsApiValidationErrors;
+
     public function authorize(): bool
     {
         return $this->user()?->role === 'dosen';
@@ -36,6 +40,7 @@ class StoreAssignmentRequest extends FormRequest
             'instructions' => [
                 'required',
                 'string',
+                new MaxTextBytes,
             ],
             'due_at' => [
                 'required',

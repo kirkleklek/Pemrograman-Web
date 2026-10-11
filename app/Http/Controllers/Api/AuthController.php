@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -18,9 +17,12 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Email atau kata sandi salah.'],
-            ]);
+            return response()->json([
+                'message' => 'Data yang diberikan tidak valid.',
+                'errors' => [
+                    'email' => ['Email atau kata sandi salah.'],
+                ],
+            ], 422);
         }
 
         $token = $user->createToken(

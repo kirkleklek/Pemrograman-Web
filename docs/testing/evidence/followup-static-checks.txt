@@ -1,0 +1,21 @@
+﻿Pint --test (five follow-up PHP files): exit 0
+{"tool":"pint","result":"passed"}
+php -l tests/Feature/AccessIntegrationTest.php : exit 0
+No syntax errors detected in tests/Feature/AccessIntegrationTest.php
+php -l tests/Feature/IdorIntegrationTest.php : exit 0
+No syntax errors detected in tests/Feature/IdorIntegrationTest.php
+php -l tests/Support/AssertsPrivateResponse.php : exit 0
+No syntax errors detected in tests/Support/AssertsPrivateResponse.php
+php -l tests/Unit/JsonPrivacyAssertionTest.php : exit 0
+No syntax errors detected in tests/Unit/JsonPrivacyAssertionTest.php
+php -l scripts/run-bulan-tests.php : exit 0
+No syntax errors detected in scripts/run-bulan-tests.php
+git diff --check: exit 0
+Untracked file whitespace check: PASS (21 files, no diagnostics). Exit 1 means content differs from NUL.
+Preservation SHA256: PASS (83 application/configuration/migration/historical evidence files unchanged).
+Run 20261011-194440685217-new-39e929fd: exit 1, artifact SHA256 PASS; source hashes retain the earlier failed revision and are not compared to current corrected files.
+Run 20261011-194601459725-new-4d0666db: exit 0, artifact SHA256 PASS; successful run source SHA256 matches current files.
+Run 20261011-194633102201-regression-d0f79478: exit 0, artifact SHA256 PASS; successful run source SHA256 matches current files.
+Run 20261011-194651609320-all-46ac323f: exit 0, artifact SHA256 PASS; successful run source SHA256 matches current files.
+Baseline list-only verification: exit 0; 164 unchanged legacy test cases.
+Tracked-file diff against HEAD: empty; legacy tests and app files unchanged.

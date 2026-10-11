@@ -15,7 +15,13 @@ class CourseController extends Controller
 
         $courses = Course::query()
             ->with('lecturer')
-            ->withCount(['materials', 'assignments'])
+            ->withCount([
+                'materials',
+                'assignments' => fn ($query) => $query->when(
+                    $user->role === 'mahasiswa',
+                    fn ($query) => $query->where('status', 'published')
+                ),
+            ])
             ->when(
                 $user->role === 'dosen',
                 fn ($query) => $query->where('lecturer_id', $user->id)
@@ -47,15 +53,7 @@ class CourseController extends Controller
     {
         $user = $request->user();
 
-        $hasAccess =
-            $user->role === 'admin'
-            || $course->lecturer_id === $user->id
-            || (
-                $user->role === 'mahasiswa'
-                && $course->students()
-                    ->where('users.id', $user->id)
-                    ->exists()
-            );
+        $hasAccess = $user->can('view', $course);
 
         abort_unless(
             $hasAccess,
@@ -64,7 +62,13 @@ class CourseController extends Controller
         );
 
         $course->load('lecturer')
-            ->loadCount(['materials', 'assignments']);
+            ->loadCount([
+                'materials',
+                'assignments' => fn ($query) => $query->when(
+                    $user->role === 'mahasiswa',
+                    fn ($query) => $query->where('status', 'published')
+                ),
+            ]);
 
         return new CourseResource($course);
     }

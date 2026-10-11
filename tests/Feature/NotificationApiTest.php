@@ -78,4 +78,84 @@ class NotificationApiTest extends TestCase
             $notification->fresh()->read_at
         );
     }
+
+    public function test_user_hanya_melihat_notification_miliknya_dengan_pagination(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'mahasiswa',
+        ]);
+
+        $otherUser = User::factory()->create([
+            'role' => 'mahasiswa',
+        ]);
+
+        $ownNotificationIds = [];
+
+        foreach (range(1, 16) as $number) {
+            $notification = $user->notifications()->create([
+                'id' => (string) Str::uuid(),
+                'type' => 'TestNotification',
+                'data' => [
+                    'message' => "Notifikasi {$number}",
+                ],
+            ]);
+
+            $ownNotificationIds[] = $notification->id;
+        }
+
+        $otherNotification = $otherUser->notifications()->create([
+            'id' => (string) Str::uuid(),
+            'type' => 'TestNotification',
+            'data' => [
+                'message' => 'Notifikasi milik orang lain',
+            ],
+        ]);
+
+        Sanctum::actingAs($user);
+
+        $response = $this->getJson('/api/v1/notifications')
+            ->assertOk()
+            ->assertJsonCount(15, 'data')
+            ->assertJsonPath('meta.current_page', 1)
+            ->assertJsonPath('meta.last_page', 2)
+            ->assertJsonPath('meta.total', 16);
+
+        $firstPageIds = collect($response->json('data'))
+            ->pluck('id')
+            ->all();
+
+        $this->assertNotContains(
+            $otherNotification->id,
+            $firstPageIds
+        );
+
+        foreach ($firstPageIds as $id) {
+            $this->assertContains($id, $ownNotificationIds);
+        }
+
+        $response = $this->getJson('/api/v1/notifications?page=2')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('meta.current_page', 2)
+            ->assertJsonPath('meta.total', 16);
+
+        $secondPageIds = collect($response->json('data'))
+            ->pluck('id')
+            ->all();
+
+        $this->assertNotContains(
+            $otherNotification->id,
+            $secondPageIds
+        );
+
+        foreach ($secondPageIds as $id) {
+            $this->assertContains($id, $ownNotificationIds);
+        }
+    }
+
+    public function test_daftar_notification_memerlukan_authentication(): void
+    {
+        $this->getJson('/api/v1/notifications')
+            ->assertUnauthorized();
+    }
 }

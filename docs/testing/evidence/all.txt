@@ -1,0 +1,18 @@
+Stage: all
+Time (Asia/Makassar): 2026-10-11 18:52:26 +08:00
+PHP: 8.3.26; DB: 8.4.3; database: kampuslms_testing; APP_ENV: testing
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.26
+Configuration: C:\Users\eagan\OneDrive\Documents\SMT 5\web\kampuslms-kelompok-03\phpunit.xml
+
+...............................................................  63 / 228 ( 27%)
+............................................................... 126 / 228 ( 55%)
+............................................................... 189 / 228 ( 82%)
+.......................................                         228 / 228 (100%)
+
+Time: 00:18.295, Memory: 60.00 MB
+
+OK (228 tests, 2459 assertions)
+
+Exit code: 0

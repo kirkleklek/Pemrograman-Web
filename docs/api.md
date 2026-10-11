@@ -91,6 +91,7 @@ curl.exe "http://kampuslms-kelompok-03.test/api/v1/me" -H "Accept: application/j
 
 Menampilkan mata kuliah sesuai pengguna:
 
+- Admin: semua mata kuliah.
 - Dosen: mata kuliah yang diajar.
 - Mahasiswa: mata kuliah yang diikuti.
 

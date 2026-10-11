@@ -13,15 +13,7 @@ class MaterialController extends Controller
     {
         $user = $request->user();
 
-        $hasAccess =
-            $user->role === 'admin'
-            || $course->lecturer_id === $user->id
-            || (
-                $user->role === 'mahasiswa'
-                && $course->students()
-                    ->where('users.id', $user->id)
-                    ->exists()
-            );
+        $hasAccess = $user->can('view', $course);
 
         abort_unless(
             $hasAccess,
