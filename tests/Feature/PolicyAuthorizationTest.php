@@ -31,6 +31,7 @@ class PolicyAuthorizationTest extends TestCase
             'lecturer_id' => $owner->id,
         ]);
 
+        // Admin boleh melihat daftar dan membuat mata kuliah.
         $this->assertTrue(
             Gate::forUser($admin)->allows('viewAny', Course::class)
         );
@@ -39,22 +40,33 @@ class PolicyAuthorizationTest extends TestCase
             Gate::forUser($admin)->allows('create', Course::class)
         );
 
+        // Admin boleh melihat, mengubah, dan menghapus mata kuliah.
         $this->assertTrue(
             Gate::forUser($admin)->allows('view', $course)
         );
 
         $this->assertTrue(
+            Gate::forUser($admin)->allows('update', $course)
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows('delete', $course)
+        );
+
+        // Dosen pemilik hanya boleh melihat mata kuliahnya.
+        $this->assertTrue(
             Gate::forUser($owner)->allows('view', $course)
         );
 
-        $this->assertTrue(
+        $this->assertFalse(
             Gate::forUser($owner)->allows('update', $course)
         );
 
-        $this->assertTrue(
+        $this->assertFalse(
             Gate::forUser($owner)->allows('delete', $course)
         );
 
+        // Dosen lain tidak boleh melihat, mengubah, atau menghapus.
         $this->assertFalse(
             Gate::forUser($otherLecturer)->allows('view', $course)
         );
@@ -99,8 +111,12 @@ class PolicyAuthorizationTest extends TestCase
         );
     }
 
-    public function test_only_course_owner_can_manage_materials(): void
+    public function test_admin_and_course_owner_can_manage_materials(): void
     {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
         $owner = User::factory()->create([
             'role' => 'dosen',
         ]);
@@ -122,6 +138,34 @@ class PolicyAuthorizationTest extends TestCase
             'external_url' => 'https://example.com/materi',
         ]);
 
+        // Admin boleh melihat dan mengelola materi.
+        $this->assertTrue(
+            Gate::forUser($admin)->allows(
+                'viewAny',
+                [Material::class, $course]
+            )
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows(
+                'create',
+                [Material::class, $course]
+            )
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows('view', $material)
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows('update', $material)
+        );
+
+        $this->assertTrue(
+            Gate::forUser($admin)->allows('delete', $material)
+        );
+
+        // Dosen pemilik boleh mengelola materi mata kuliahnya.
         $this->assertTrue(
             Gate::forUser($owner)->allows(
                 'viewAny',
@@ -148,6 +192,7 @@ class PolicyAuthorizationTest extends TestCase
             Gate::forUser($owner)->allows('delete', $material)
         );
 
+        // Dosen lain tidak boleh mengakses atau mengelola materi.
         $this->assertFalse(
             Gate::forUser($otherLecturer)->allows(
                 'viewAny',

@@ -47,27 +47,22 @@ class CoursePolicy
     }
 
     /**
-     * Admin atau dosen pemilik dapat memperbarui mata kuliah.
+         * Admin atau dosen pemilik dapat memperbarui mata kuliah.
+         */
+        /**
+     * Hanya admin yang dapat memperbarui mata kuliah.
      */
     public function update(User $user, Course $course): bool
     {
-        return $user->role === 'admin'
-            || (
-                $user->role === 'dosen'
-                && (int) $course->lecturer_id === (int) $user->id
-            );
+        return $user->role === 'admin';
     }
 
     /**
-     * Admin atau dosen pemilik dapat menghapus mata kuliah.
+     * Hanya admin yang dapat menghapus mata kuliah.
      */
     public function delete(User $user, Course $course): bool
     {
-        return $user->role === 'admin'
-            || (
-                $user->role === 'dosen'
-                && (int) $course->lecturer_id === (int) $user->id
-            );
+        return $user->role === 'admin';
     }
 
     public function manageEnrollments(User $user, Course $course): bool

@@ -231,4 +231,55 @@ class MaterialWebTest extends TestCase
         $this->delete(route('dosen.materials.destroy', $material))->assertForbidden();
         $this->assertDatabaseCount('materials', 1);
     }
+
+    public function test_admin_can_create_view_update_and_delete_materials(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
+
+        $payload = $this->payload();
+
+        // Admin membuat materi.
+        $this->post(
+            route('admin.courses.materials.store', $this->course),
+            $payload
+        )->assertRedirect(route('admin.courses.materials.index', $this->course));
+
+        $material = Material::query()
+            ->where('course_id', $this->course->id)
+            ->where('title', $payload['title'])
+            ->firstOrFail();
+
+        $this->assertDatabaseHas('materials', [
+            'id' => $material->id,
+            'course_id' => $this->course->id,
+            'uploaded_by' => $admin->id,
+        ]);
+
+        // Admin melihat detail dan halaman edit.
+        $this->get(route('admin.materials.show', $material))
+            ->assertOk();
+
+        $this->get(route('admin.materials.edit', $material))
+            ->assertOk();
+
+        // Admin mengubah materi.
+        $this->put(
+            route('admin.materials.update', $material),
+            array_replace($payload, ['title' => 'Materi Admin Revisi'])
+        )->assertRedirect(route('admin.materials.show', $material));
+
+        $this->assertDatabaseHas('materials', [
+            'id' => $material->id,
+            'title' => 'Materi Admin Revisi',
+        ]);
+
+        // Admin menghapus materi.
+        $this->delete(route('admin.materials.destroy', $material))
+            ->assertRedirect(route('admin.courses.materials.index', $this->course));
+
+        $this->assertDatabaseMissing('materials', [
+            'id' => $material->id,
+        ]);
+    }
 }

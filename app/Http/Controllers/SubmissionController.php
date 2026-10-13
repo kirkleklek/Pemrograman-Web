@@ -5,18 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SubmissionController extends Controller
 {
     public function index(Assignment $assignment)
     {
-        $course = $assignment->course;
+        Gate::authorize('viewAny', [Submission::class, $assignment]);
 
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
-        );
+        $course = $assignment->course;
 
         $submissions = $assignment->submissions()
             ->with(['student', 'grade'])
@@ -32,7 +29,7 @@ class SubmissionController extends Controller
 
     public function show(Submission $submission)
     {
-        $user = auth()->user();
+        Gate::authorize('view', $submission);
 
         $submission->load([
             'assignment.course',
@@ -42,19 +39,6 @@ class SubmissionController extends Controller
 
         $course = $submission->assignment->course;
 
-        if ($user->role === 'dosen') {
-            abort_unless(
-                $course->lecturer_id === $user->id,
-                403
-            );
-        } else {
-            abort_unless(
-                $submission->user_id === $user->id
-                    && $user->courses()->whereKey($course->id)->exists(),
-                403
-            );
-        }
-
         return view('submissions.show', compact(
             'submission',
             'course'
@@ -63,28 +47,15 @@ class SubmissionController extends Controller
 
     public function store(Request $request, Assignment $assignment)
     {
+        Gate::authorize('create', [Submission::class, $assignment]);
+
         $user = auth()->user();
-        $course = $assignment->course;
-
-        abort_unless(
-            $user->role === 'mahasiswa'
-                && $user->courses()->whereKey($course->id)->exists(),
-            403
-        );
-
-        abort_unless(
-            $assignment->status === 'published',
-            403
-        );
 
         $existingSubmission = $assignment->submissions()
             ->where('user_id', $user->id)
             ->first();
 
-        abort_unless(
-            $existingSubmission === null,
-            403
-        );
+        abort_unless($existingSubmission === null, 403);
 
         $validated = $request->validate([
             'file' => ['required', 'file'],
