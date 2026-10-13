@@ -2,15 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Course;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCourseRequest extends FormRequest              
 {
     public function authorize(): bool
     {
-        return $this->user()?->can('create', Course::class) ?? false;
+        // TODO: minggu 7 diganti dengan pengecekan hak akses sungguhan
+        return true;
     }
 
     public function rules(): array
@@ -20,13 +19,7 @@ class StoreCourseRequest extends FormRequest
             'name' => ['required', 'string', 'max:150'],
             'description' => ['nullable', 'string'],
             'sks' => ['required', 'integer', 'between:1,6'],
-            'lecturer_id' => [
-                'required',
-                'integer',
-                Rule::exists('users', 'id')
-                    ->where('role', 'dosen')
-                    ->whereNull('deleted_at'),
-            ],
+            'lecturer_id' => ['required', 'exists:users,id'],
             'status' => ['required', 'in:draft,active,archived'],
         ];
     }

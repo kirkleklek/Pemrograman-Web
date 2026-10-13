@@ -225,28 +225,20 @@ class DatabaseSeeder extends Seeder
              * Hanya mahasiswa yang terdaftar di course
              * yang boleh membuat submission.
              *
-             * 5 course x 2 published assignment x 15 mahasiswa = 150 submission
+             * 5 x 3 x 15 = 225 submission
              */
             foreach ($assignments as $assignment) {
-                // Submission hanya dibuat untuk tugas yang sudah dipublikasikan.
-                if ($assignment->status !== 'published') {
-                    continue;
-                }
-
                 foreach ($courseStudents as $student) {
                     $isLate = fake()->boolean(20);
-
                     $submittedAt = $isLate
                         ? $assignment->due_at->copy()->addDays(1)
                         : $assignment->due_at->copy()->subDays(1);
-
                     $submission = Submission::factory()->create([
                         'assignment_id' => $assignment->id,
                         'user_id' => $student->id,
                         'submitted_at' => $submittedAt,
                         'is_late' => $isLate,
                     ]);
-
                     $allSubmissions->push($submission);
                 }
             }
@@ -259,7 +251,7 @@ class DatabaseSeeder extends Seeder
          */
 
         /*
-         * 60% dari 150 submission = 90 grade.
+         * 60% dari 225 submission = 135 grade.
          */
         $gradedCount = (int) floor(
             $allSubmissions->count() * 0.60

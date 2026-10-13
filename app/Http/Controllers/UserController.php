@@ -73,20 +73,6 @@ class UserController extends Controller
     {
         $validated = $request->validate($this->rules($user));
 
-        if (
-            $user->role === 'dosen'
-            && $validated['role'] !== 'dosen'
-            && $user->taughtCourses()->exists()
-        ) {
-            return redirect()
-                ->route('admin.users.edit', $user)
-                ->withErrors([
-                    'role' => 'Role dosen tidak dapat diubah karena masih '
-                        . 'mengampu mata kuliah. Alihkan mata kuliah ke '
-                        . 'dosen lain terlebih dahulu.',
-                ]);
-        }
-
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->nim_nip = $validated['nim_nip'] ?? null;
@@ -105,19 +91,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if (
-            $user->role === 'dosen'
-            && $user->taughtCourses()->exists()
-        ) {
-            return redirect()
-                ->route('admin.users.index')
-                ->with(
-                    'error',
-                    'Dosen tidak dapat dihapus karena masih mengampu mata kuliah. '
-                    . 'Alihkan mata kuliah ke dosen lain terlebih dahulu.'
-                );
-        }
-
         $user->delete();
 
         return redirect()

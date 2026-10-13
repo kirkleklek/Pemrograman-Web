@@ -9,10 +9,8 @@ class UpdateCourseRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        $course = $this->route('course');
-
-        return $course !== null
-            && ($this->user()?->can('update', $course) ?? false);
+        // TODO: minggu 7 diganti dengan pengecekan hak akses sungguhan
+        return true;
     }
 
     public function rules(): array
@@ -30,13 +28,7 @@ class UpdateCourseRequest extends FormRequest
             'name' => ['required', 'string', 'max:150'],
             'description' => ['nullable', 'string'],
             'sks' => ['required', 'integer', 'between:1,6'],
-            'lecturer_id' => [
-                'required',
-                'integer',
-                Rule::exists('users', 'id')
-                    ->where('role', 'dosen')
-                    ->whereNull('deleted_at'),
-            ],
+            'lecturer_id' => ['required', 'exists:users,id'],
             'status' => ['required', 'in:draft,active,archived'],
         ];
     }
