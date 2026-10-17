@@ -8,6 +8,7 @@ use App\Http\Resources\GradeResource;
 use App\Models\Grade;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class GradeController extends Controller
 {
@@ -19,14 +20,17 @@ class GradeController extends Controller
 
         $submission->load('assignment.course');
 
-        $course = $submission->assignment->course;
+        //$course = $submission->assignment->course;
 
-        abort_unless(
-            $user->role === 'dosen'
-                && $course->lecturer_id === $user->id,
-            403,
-            'Anda tidak memiliki akses ke sumber daya ini.'
-        );
+        $existingGrade = Grade::query()
+            ->where('submission_id', $submission->id)
+            ->first();
+
+        if ($existingGrade) {
+            Gate::authorize('update', $existingGrade);
+        } else {
+            Gate::authorize('create', [Grade::class, $submission]);
+        }
 
         $validated = $request->validated();
 

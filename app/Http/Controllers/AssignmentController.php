@@ -6,55 +6,49 @@ use App\Models\Assignment;
 use App\Models\Course;
 use App\Rules\MaxTextBytes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AssignmentController extends Controller
 {
     public function index(Course $course)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
-        if ($user->role === 'dosen') {
-            abort_unless(
-                $course->lecturer_id === $user->id,
-                403
-            );
-        } else {
-            abort_unless(
-                $user->courses()->whereKey($course->id)->exists(),
-                403
-            );
-        }
+        Gate::authorize('viewAny', [Assignment::class, $course]);
 
         $assignments = $course->assignments()
-            ->when($user->role === 'mahasiswa', fn ($query) => $query->where('status', 'published'))
+            ->when(
+                $user->role === 'mahasiswa',
+                fn ($query) => $query->where('status', 'published')
+            )
             ->orderBy('due_at')
             ->get();
 
-        return view('assignments.index', compact('course', 'assignments'));
+        return view(
+            'assignments.index',
+            compact('course', 'assignments')
+        );
     }
 
     public function create(Course $course)
     {
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('create', [Assignment::class, $course]);
 
         return view('assignments.create', compact('course'));
     }
 
     public function store(Request $request, Course $course)
     {
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('create', [Assignment::class, $course]);
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'instructions' => ['required', 'string', new MaxTextBytes],
+            'instructions' => [
+                'required',
+                'string',
+                new MaxTextBytes,
+            ],
             'due_at' => ['required', 'date'],
             'max_score' => ['required', 'integer', 'between:0,100'],
             'allow_late' => ['required', 'boolean'],
@@ -62,7 +56,7 @@ class AssignmentController extends Controller
         ]);
 
         $assignment = $course->assignments()->create([
-            'created_by' => auth()->id(),
+            'created_by' => Auth::id(),
             'title' => $validated['title'],
             'instructions' => $validated['instructions'],
             'due_at' => $validated['due_at'],
@@ -71,59 +65,50 @@ class AssignmentController extends Controller
             'status' => $validated['status'],
         ]);
 
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
+
         return redirect()
-            ->route('dosen.assignments.show', $assignment)
+            ->route("{$routePrefix}.assignments.show", $assignment)
             ->with('success', 'Tugas berhasil ditambahkan.');
     }
 
     public function show(Assignment $assignment)
     {
-        $user = auth()->user();
+        Gate::authorize('view', $assignment);
+
         $course = $assignment->course;
 
-        if ($user->role === 'dosen') {
-            abort_unless(
-                $course->lecturer_id === $user->id,
-                403
-            );
-        } else {
-            abort_unless(
-                $user->courses()->whereKey($course->id)->exists(),
-                403
-            );
-        }
-
-        abort_if($user->role === 'mahasiswa' && $assignment->status !== 'published', 403);
-
-        return view('assignments.show', compact('course', 'assignment'));
+        return view(
+            'assignments.show',
+            compact('course', 'assignment')
+        );
     }
 
     public function edit(Assignment $assignment)
     {
+        Gate::authorize('update', $assignment);
+
         $course = $assignment->course;
 
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
+        return view(
+            'assignments.edit',
+            compact('course', 'assignment')
         );
-
-        return view('assignments.edit', compact('course', 'assignment'));
     }
 
     public function update(Request $request, Assignment $assignment)
     {
-        $course = $assignment->course;
-
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
-        );
+        Gate::authorize('update', $assignment);
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'instructions' => ['required', 'string', new MaxTextBytes],
+            'instructions' => [
+                'required',
+                'string',
+                new MaxTextBytes,
+            ],
             'due_at' => ['required', 'date'],
             'max_score' => ['required', 'integer', 'between:0,100'],
             'allow_late' => ['required', 'boolean'],
@@ -139,25 +124,29 @@ class AssignmentController extends Controller
             'status' => $validated['status'],
         ]);
 
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
+
         return redirect()
-            ->route('dosen.assignments.show', $assignment)
+            ->route("{$routePrefix}.assignments.show", $assignment)
             ->with('success', 'Tugas berhasil diperbarui.');
     }
 
     public function destroy(Assignment $assignment)
     {
-        $course = $assignment->course;
+        Gate::authorize('delete', $assignment);
 
-        abort_unless(
-            auth()->user()->role === 'dosen'
-                && $course->lecturer_id === auth()->id(),
-            403
-        );
+        $course = $assignment->course;
 
         $assignment->delete();
 
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
+
         return redirect()
-            ->route('dosen.courses.assignments.index', $course)
+            ->route("{$routePrefix}.courses.assignments.index", $course)
             ->with('success', 'Tugas berhasil dihapus.');
     }
 }

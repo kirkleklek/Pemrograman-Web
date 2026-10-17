@@ -77,6 +77,21 @@ Route::middleware('auth')->group(function () {
             Route::resource('courses', CourseController::class);
 
             Route::scopeBindings()->group(function () {
+                // Admin mengelola materi pada mata kuliah.
+                Route::resource(
+                    'courses.materials',
+                    MaterialController::class
+                )->shallow();
+
+                // Admin mengelola tugas pada mata kuliah.
+                Route::resource(
+                    'courses.assignments',
+                    AssignmentController::class
+                )->shallow();
+            });
+
+
+            Route::scopeBindings()->group(function () {
                 Route::get(
                     'courses/{course}/enrollments',
                     [EnrollmentController::class, 'index']

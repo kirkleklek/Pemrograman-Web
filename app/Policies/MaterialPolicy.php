@@ -9,11 +9,16 @@ use App\Models\User;
 class MaterialPolicy
 {
     /**
-     * Dosen pemilik atau mahasiswa yang terdaftar
-     * dapat melihat daftar materi suatu mata kuliah.
+     * Admin dapat melihat seluruh materi.
+     * Dosen hanya dapat melihat materi di mata kuliah yang diampu.
+     * Mahasiswa hanya dapat melihat materi mata kuliah yang diikuti.
      */
     public function viewAny(User $user, Course $course): bool
     {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         if ($user->role === 'dosen') {
             return (int) $course->lecturer_id === (int) $user->id;
         }
@@ -28,7 +33,7 @@ class MaterialPolicy
     }
 
     /**
-     * Aturan melihat materi mengikuti akses terhadap mata kuliahnya.
+     * Hak melihat materi mengikuti akses mata kuliahnya.
      */
     public function view(User $user, Material $material): bool
     {
@@ -36,28 +41,40 @@ class MaterialPolicy
     }
 
     /**
-     * Hanya dosen pemilik mata kuliah yang dapat membuat materi.
+     * Admin dan dosen pengampu dapat membuat materi.
      */
     public function create(User $user, Course $course): bool
     {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return $user->role === 'dosen'
             && (int) $course->lecturer_id === (int) $user->id;
     }
 
     /**
-     * Hanya dosen pemilik mata kuliah yang dapat memperbarui materi.
+     * Admin dan dosen pengampu dapat memperbarui materi.
      */
     public function update(User $user, Material $material): bool
     {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return $user->role === 'dosen'
             && (int) $material->course->lecturer_id === (int) $user->id;
     }
 
     /**
-     * Hanya dosen pemilik mata kuliah yang dapat menghapus materi.
+     * Admin dan dosen pengampu dapat menghapus materi.
      */
     public function delete(User $user, Material $material): bool
     {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return $user->role === 'dosen'
             && (int) $material->course->lecturer_id === (int) $user->id;
     }

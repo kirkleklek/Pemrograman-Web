@@ -39,8 +39,18 @@ class MaterialController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', new MaxTextBytes],
             'type' => ['required', 'in:file,link'],
-            'file' => ['required_if:type,file', 'nullable', 'file', 'mimes:pdf,pptx'],
-            'external_url' => ['required_if:type,link', 'nullable', 'url', 'max:255'],
+            'file' => [
+                'required_if:type,file',
+                'nullable',
+                'file',
+                'mimes:pdf,pptx',
+            ],
+            'external_url' => [
+                'required_if:type,link',
+                'nullable',
+                'url',
+                'max:255',
+            ],
         ]);
 
         $data = [
@@ -62,10 +72,14 @@ class MaterialController extends Controller
             $data['external_url'] = $validated['external_url'];
         }
 
-        $material = Material::create($data);
+        Material::create($data);
+
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
 
         return redirect()
-            ->route('dosen.courses.materials.index', $course)
+            ->route("{$routePrefix}.courses.materials.index", $course)
             ->with('success', 'Materi berhasil ditambahkan.');
     }
 
@@ -80,17 +94,15 @@ class MaterialController extends Controller
 
     public function edit(Material $material)
     {
-        $course = $material->course;
-
         Gate::authorize('update', $material);
+
+        $course = $material->course;
 
         return view('materials.edit', compact('material', 'course'));
     }
 
     public function update(Request $request, Material $material)
     {
-        $course = $material->course;
-
         Gate::authorize('update', $material);
 
         $validated = $request->validate([
@@ -98,12 +110,20 @@ class MaterialController extends Controller
             'description' => ['nullable', 'string', new MaxTextBytes],
             'type' => ['required', 'in:file,link'],
             'file' => [
-                Rule::requiredIf($request->input('type') === 'file' && ! $material->file_path),
+                Rule::requiredIf(
+                    $request->input('type') === 'file'
+                    && ! $material->file_path
+                ),
                 'nullable',
                 'file',
                 'mimes:pdf,pptx',
             ],
-            'external_url' => ['required_if:type,link', 'nullable', 'url', 'max:255'],
+            'external_url' => [
+                'required_if:type,link',
+                'nullable',
+                'url',
+                'max:255',
+            ],
         ]);
 
         $material->title = $validated['title'];
@@ -139,16 +159,20 @@ class MaterialController extends Controller
 
         $material->save();
 
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
+
         return redirect()
-            ->route('dosen.materials.show', $material)
+            ->route("{$routePrefix}.materials.show", $material)
             ->with('success', 'Materi berhasil diperbarui.');
     }
 
     public function destroy(Material $material)
     {
-        $course = $material->course;
-
         Gate::authorize('delete', $material);
+
+        $course = $material->course;
 
         if ($material->file_path) {
             Storage::delete($material->file_path);
@@ -156,8 +180,12 @@ class MaterialController extends Controller
 
         $material->delete();
 
+        $routePrefix = Auth::user()->role === 'admin'
+            ? 'admin'
+            : 'dosen';
+
         return redirect()
-            ->route('dosen.courses.materials.index', $course)
+            ->route("{$routePrefix}.courses.materials.index", $course)
             ->with('success', 'Materi berhasil dihapus.');
     }
 }

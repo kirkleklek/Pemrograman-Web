@@ -188,4 +188,55 @@ class AssignmentWebTest extends TestCase
         $this->actingAs($student)->get(route('mahasiswa.submissions.show', $submission))->assertOk();
         $this->assertEquals($original, $submission->fresh()->getAttributes());
     }
+
+    public function test_admin_can_create_view_update_and_delete_assignments(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin);
+
+        $payload = $this->payload();
+
+        // Admin membuat tugas.
+        $this->post(
+            route('admin.courses.assignments.store', $this->course),
+            $payload
+        )->assertRedirect();
+
+        $assignment = Assignment::query()
+            ->where('course_id', $this->course->id)
+            ->where('title', $payload['title'])
+            ->firstOrFail();
+
+        $this->assertDatabaseHas('assignments', [
+            'id' => $assignment->id,
+            'course_id' => $this->course->id,
+            'created_by' => $admin->id,
+        ]);
+
+        // Admin melihat detail dan halaman edit.
+        $this->get(route('admin.assignments.show', $assignment))
+            ->assertOk();
+
+        $this->get(route('admin.assignments.edit', $assignment))
+            ->assertOk();
+
+        // Admin mengubah tugas.
+        $this->put(
+            route('admin.assignments.update', $assignment),
+            array_replace($payload, ['title' => 'Tugas Admin Revisi'])
+        )->assertRedirect(route('admin.assignments.show', $assignment));
+
+        $this->assertDatabaseHas('assignments', [
+            'id' => $assignment->id,
+            'title' => 'Tugas Admin Revisi',
+        ]);
+
+        // Admin menghapus tugas.
+        $this->delete(route('admin.assignments.destroy', $assignment))
+            ->assertRedirect(route('admin.courses.assignments.index', $this->course));
+
+        $this->assertDatabaseMissing('assignments', [
+            'id' => $assignment->id,
+        ]);
+    }
 }
