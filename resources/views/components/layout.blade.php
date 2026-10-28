@@ -1,3 +1,6 @@
+
+@props(['title' => 'KampusLMS'])
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,7 +15,7 @@
 <body class="min-h-screen bg-slate-100 text-slate-800">
 
     <nav class="border-b border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
 
             <a
                 href="{{ route('dashboard') }}"
@@ -24,7 +27,8 @@
                 KampusLMS
             </a>
 
-            <div class="flex items-center gap-6 text-sm font-medium">
+            <div class="flex flex-wrap items-center gap-4 text-sm font-medium sm:gap-6">
+
                 <a
                     href="{{ route('dashboard') }}"
                     class="text-slate-600 transition hover:text-slate-900"
@@ -51,6 +55,7 @@
                         >
                             Pengguna
                         </a>
+
                     @elseif (auth()->user()->role === 'dosen')
                         <a
                             href="{{ route('dosen.courses.index') }}"
@@ -59,6 +64,25 @@
                                 : 'text-slate-600 hover:text-slate-900' }} transition"
                         >
                             Mata Kuliah Saya
+                        </a>
+
+                    @elseif (auth()->user()->role === 'mahasiswa')
+                        <a
+                            href="{{ route('mahasiswa.courses.index') }}"
+                            class="{{ request()->routeIs('mahasiswa.courses.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Mata Kuliah Saya
+                        </a>
+
+                        <a
+                            href="{{ route('mahasiswa.grades.index') }}"
+                            class="{{ request()->routeIs('mahasiswa.grades.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Nilai Saya
                         </a>
                     @endif
                 @endauth
@@ -73,6 +97,10 @@
                 </a>
 
                 @auth
+                    @if (auth()->user()->role === 'mahasiswa')
+                        <livewire:mahasiswa.notification-bell />
+                    @endif
+
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
 
@@ -84,8 +112,8 @@
                         </button>
                     </form>
                 @endauth
-            </div>
 
+            </div>
         </div>
     </nav>
 

@@ -33,7 +33,8 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Akses berkas privat harus melalui controller yang memeriksa policy.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Submission extends Model
 {
     use HasFactory;
+    use DeletesStoredFiles;
 
     protected $fillable = [
         'assignment_id',
@@ -17,6 +19,7 @@ class Submission extends Model
         'file_path',
         'original_name',
         'file_size',
+        'mime_type',
         'note',
         'submitted_at',
         'is_late',
@@ -27,6 +30,7 @@ class Submission extends Model
         return [
             'submitted_at' => 'datetime',
             'is_late' => 'boolean',
+            'file_size' => 'integer',
         ];
     }
 

@@ -70,6 +70,15 @@
                         <p class="mt-1 text-sm text-slate-500">
                             {{ number_format($submission->file_size / 1024, 1) }} KB
                         </p>
+
+                        @can('download', $submission)
+                            <a
+                                href="{{ route('submissions.download', $submission) }}"
+                                class="mt-2 inline-block text-sm font-medium text-blue-600 hover:text-blue-800"
+                            >
+                                Unduh berkas
+                            </a>
+                        @endcan
                     </div>
 
                     <div class="mt-4">

@@ -33,6 +33,35 @@ Ketua kelompok bertanggung jawab memantau progres, mengoordinasikan integrasi pe
 
 ## Cara Instalasi
 
+### Worker notifikasi — Milestone M3
+
+Notifikasi tugas baru dan hasil penilaian menggunakan Event → Listener (`ShouldQueue`) → Notification database. Konfigurasi `.env` harus memakai `QUEUE_CONNECTION=database`. Tabel `jobs`, `failed_jobs`, dan `notifications` sudah memiliki migrasi; tidak perlu membuat migrasi tabel queue tambahan.
+
+Setelah instalasi aplikasi dan konfigurasi database selesai, jalankan:
+
+```bash
+php artisan migrate
+php artisan config:clear
+php artisan event:clear
+php artisan event:list
+```
+
+Jalankan worker di terminal terpisah dan biarkan tetap berjalan selama aplikasi dipakai:
+
+```bash
+php artisan queue:work database --sleep=3 --tries=3 --backoff=10
+```
+
+Jika worker mati, tugas/nilai tetap tersimpan tetapi notifikasi menunggu di tabel `jobs`. Listener mencoba tiga kali dengan jeda 10 detik. Periksa kegagalan melalui:
+
+```bash
+php artisan queue:failed
+php artisan queue:retry <uuid-job-yang-gagal>
+php artisan queue:restart
+```
+
+Lihat `storage/logs/laravel.log` untuk penyebab kegagalan. Jalankan `queue:restart` setelah perubahan kode; mulai lagi `queue:work` jika worker dijalankan manual. [Panduan materi, navbar, notifikasi, dan demo M3](docs/materials-notifications.md) menjelaskan pemicu, kepemilikan, dan batas cakupan bagian ini.
+
 ### 1. Clone Repository
 
 Clone repository proyek ini:

@@ -282,4 +282,173 @@ class MaterialWebTest extends TestCase
             'id' => $material->id,
         ]);
     }
+
+    public function test_valid_pdf_pptx_and_docx_uploads_are_stored_privately(): void
+    {
+        $files = [
+            UploadedFile::fake()->create('materi.pdf', 1, 'application/pdf'),
+            UploadedFile::fake()->create('materi.pptx', 1, 'application/vnd.openxmlformats-officedocument.presentationml.presentation'),
+            UploadedFile::fake()->create('materi.docx', 1, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+        ];
+
+        foreach ($files as $file) {
+            $this->post(route('dosen.courses.materials.store', $this->course), [
+                'title' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                'type' => 'file',
+                'file' => $file,
+            ])->assertRedirect(route('dosen.courses.materials.index', $this->course))
+                ->assertSessionHasNoErrors();
+        }
+
+        $this->assertDatabaseCount('materials', 3);
+        foreach (Material::query()->get() as $material) {
+            $this->assertNotNull($material->file_path);
+            Storage::disk('local')->assertExists($material->file_path);
+        }
+    }
+
+    public function test_file_over_20_mb_is_rejected_on_create_and_update(): void
+    {
+        $material = $this->material();
+        $tooLarge = UploadedFile::fake()->create('large.pdf', 20481, 'application/pdf');
+
+        $this->post(route('dosen.courses.materials.store', $this->course), [
+            'title' => 'File besar',
+            'type' => 'file',
+            'file' => $tooLarge,
+        ])->assertSessionHasErrors('file');
+
+        $this->put(route('dosen.materials.update', $material), [
+            'title' => 'Materi revisi',
+            'type' => 'file',
+            'file' => UploadedFile::fake()->create('large.pdf', 20481, 'application/pdf'),
+        ])->assertSessionHasErrors('file');
+
+        $this->assertDatabaseCount('materials', 1);
+        $this->assertSame('link', $material->fresh()->type);
+    }
+
+    public function test_enrolled_student_can_download_private_material(): void
+    {
+        $path = 'materials/materi.pdf';
+        Storage::disk('local')->put($path, 'isi materi');
+        $material = $this->course->materials()->create([
+            'uploaded_by' => $this->owner->id,
+            'title' => 'Materi PDF',
+            'type' => 'file',
+            'file_path' => $path,
+            'original_name' => 'materi.pdf',
+            'file_size' => strlen('isi materi'),
+            'mime_type' => 'application/pdf',
+        ]);
+        $student = User::factory()->create(['role' => 'mahasiswa']);
+        $student->courses()->attach($this->course, ['enrolled_at' => now()]);
+
+        $this->actingAs($student)
+            ->get(route('materials.download', $material))
+            ->assertOk()
+            ->assertDownload('materi.pdf');
+    }
+
+    public function test_unenrolled_student_cannot_download_private_material(): void
+    {
+        $path = 'materials/rahasia.pdf';
+        Storage::disk('local')->put($path, 'isi rahasia');
+        $material = $this->course->materials()->create([
+            'uploaded_by' => $this->owner->id,
+            'title' => 'Materi Rahasia',
+            'type' => 'file',
+            'file_path' => $path,
+            'original_name' => 'rahasia.pdf',
+            'file_size' => strlen('isi rahasia'),
+            'mime_type' => 'application/pdf',
+        ]);
+        $student = User::factory()->create(['role' => 'mahasiswa']);
+
+        $this->actingAs($student)
+            ->get(route('materials.download', $material))
+            ->assertForbidden();
+    }
+
+    public function test_guest_cannot_download_material(): void
+    {
+        $path = 'materials/materi.pdf';
+        Storage::disk('local')->put($path, 'isi materi');
+        $material = $this->course->materials()->create([
+            'uploaded_by' => $this->owner->id,
+            'title' => 'Materi PDF',
+            'type' => 'file',
+            'file_path' => $path,
+            'original_name' => 'materi.pdf',
+            'file_size' => strlen('isi materi'),
+            'mime_type' => 'application/pdf',
+        ]);
+
+        auth()->logout();
+        $this->get(route('materials.download', $material))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_admin_and_course_lecturer_can_download_private_material(): void
+    {
+        $path = 'materials/materi.pdf';
+        Storage::disk('local')->put($path, 'isi materi');
+        $material = $this->course->materials()->create([
+            'uploaded_by' => $this->owner->id,
+            'title' => 'Materi PDF',
+            'type' => 'file',
+            'file_path' => $path,
+            'original_name' => 'materi.pdf',
+            'file_size' => strlen('isi materi'),
+            'mime_type' => 'application/pdf',
+        ]);
+
+        $this->actingAs($this->owner)
+            ->get(route('materials.download', $material))
+            ->assertOk()
+            ->assertDownload('materi.pdf');
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin)
+            ->get(route('materials.download', $material))
+            ->assertOk()
+            ->assertDownload('materi.pdf');
+    }
+
+    public function test_missing_file_and_link_material_cannot_be_downloaded(): void
+    {
+        $link = $this->material();
+        $this->get(route('materials.download', $link))->assertNotFound();
+
+        $missing = $this->course->materials()->create([
+            'uploaded_by' => $this->owner->id,
+            'title' => 'Berkas hilang',
+            'type' => 'file',
+            'file_path' => 'materials/missing.pdf',
+            'original_name' => 'missing.pdf',
+        ]);
+        $this->get(route('materials.download', $missing))->assertNotFound();
+    }
+
+    public function test_record_failure_removes_uploaded_file(): void
+    {
+        Material::creating(function (): void {
+            throw new \RuntimeException('Record failed');
+        });
+        $this->withoutExceptionHandling();
+
+        try {
+            $this->post(route('dosen.courses.materials.store', $this->course), [
+                'title' => 'PDF', 'type' => 'file',
+                'file' => UploadedFile::fake()->create('materi.pdf', 1, 'application/pdf'),
+            ]);
+            $this->fail('The storage exception should be propagated.');
+        } catch (\RuntimeException $exception) {
+            $this->assertSame('Record failed', $exception->getMessage());
+        }
+
+        $this->assertDatabaseCount('materials', 0);
+        $this->assertDatabaseCount('notifications', 0);
+        $this->assertSame([], Storage::disk('local')->allFiles('materials'));
+    }
 }

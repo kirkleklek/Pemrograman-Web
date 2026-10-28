@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\AssignmentPublished;
+use App\Models\Concerns\DeletesStoredFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Assignment extends Model
 {
+    use DeletesStoredFiles;
     use HasFactory;
 
     protected $fillable = [
@@ -31,6 +34,21 @@ class Assignment extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::created(function (Assignment $assignment): void {
+            if ($assignment->status === 'published') {
+                AssignmentPublished::dispatch($assignment->id);
+            }
+        });
+
+        static::updated(function (Assignment $assignment): void {
+            if ($assignment->status === 'published' && $assignment->wasChanged('status')) {
+                AssignmentPublished::dispatch($assignment->id);
+            }
+        });
+    }
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
@@ -47,5 +65,17 @@ class Assignment extends Model
             Grade::class,
             Submission::class
         );
+    }
+
+    /**
+     * File submission ikut dibersihkan ketika tugas dihapus,
+     * termasuk ketika database melakukan cascade.
+     */
+    protected function storedFilePathsForDeletion(): array
+    {
+        return $this->submissions()
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
     }
 }

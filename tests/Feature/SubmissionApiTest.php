@@ -18,6 +18,8 @@ class SubmissionApiTest extends TestCase
 
     public function test_mahasiswa_terdaftar_dapat_mengumpulkan_tugas(): void
     {
+        config(['filesystems.default' => 'public']);
+        Storage::fake('public');
         Storage::fake('local');
 
         $dosen = User::factory()->create([
@@ -93,6 +95,11 @@ class SubmissionApiTest extends TestCase
             ->firstOrFail();
 
         Storage::disk('local')->assertExists($submission->file_path);
+        Storage::disk('public')->assertMissing($submission->file_path);
+
+        $this->actingAs($mahasiswa, 'web')
+            ->get(route('submissions.download', $submission))
+            ->assertOk()->assertDownload('tugas.pdf');
     }
 
     public function test_mahasiswa_yang_tidak_terdaftar_ditolak_mengumpulkan_tugas(): void

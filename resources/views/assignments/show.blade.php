@@ -66,6 +66,12 @@
             @endif
         </div>
 
+        @if(auth()->user()->role === 'mahasiswa' && $assignment->status === 'published')
+            <div class="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+                <livewire:mahasiswa.submission-form :assignment="$assignment" />
+            </div>
+        @endif
+
         <div class="mt-6">
             <a href="{{ route($routePrefix . '.courses.assignments.index', $course) }}"
                class="text-sm font-medium text-slate-600 hover:text-slate-800">

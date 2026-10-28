@@ -16,6 +16,15 @@ class CoursePolicy
     }
 
     /**
+     * Mahasiswa boleh membuka daftar mata kuliah yang diikutinya.
+     * Query daftar tetap harus dibatasi berdasarkan enrollment.
+     */
+    public function viewEnrolledCourses(User $user): bool
+    {
+        return $user->role === 'mahasiswa';
+    }
+
+    /**
      * Admin, dosen pemilik, atau mahasiswa yang terdaftar
      * dapat melihat detail mata kuliah.
      */

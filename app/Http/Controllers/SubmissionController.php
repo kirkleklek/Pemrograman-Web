@@ -4,17 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\Submission;
+use App\Services\AssignmentSubmissionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SubmissionController extends Controller
 {
     public function index(Assignment $assignment)
     {
-        Gate::authorize('viewAny', [Submission::class, $assignment]);
+        Gate::authorize('viewAny', [
+            Submission::class,
+            $assignment,
+        ]);
 
         $course = $assignment->course;
 
+        // Pertahankan variabel ini untuk kompatibilitas tes dan view lama.
         $submissions = $assignment->submissions()
             ->with(['student', 'grade'])
             ->latest('submitted_at')
@@ -45,41 +52,58 @@ class SubmissionController extends Controller
         ));
     }
 
-    public function store(Request $request, Assignment $assignment)
+    public function download(Submission $submission): StreamedResponse
     {
-        Gate::authorize('create', [Submission::class, $assignment]);
+        Gate::authorize('download', $submission);
 
-        $user = auth()->user();
-
-        $existingSubmission = $assignment->submissions()
-            ->where('user_id', $user->id)
-            ->first();
-
-        abort_unless($existingSubmission === null, 403);
-
-        $validated = $request->validate([
-            'file' => ['required', 'file'],
-            'note' => ['nullable', 'string'],
-        ]);
-
-        $isLate = now()->greaterThan($assignment->due_at);
+        $disk = Storage::disk('local');
 
         abort_unless(
-            ! $isLate || $assignment->allow_late,
-            403
+            $disk->exists($submission->file_path),
+            404
         );
 
-        $file = $request->file('file');
+        return $disk->download(
+            $submission->file_path,
+            $submission->original_name,
+            [
+                'Cache-Control' => 'private, no-store',
+                'X-Content-Type-Options' => 'nosniff',
+            ]
+        );
+    }
 
-        $submission = $assignment->submissions()->create([
-            'user_id' => $user->id,
-            'file_path' => $file->store('submissions'),
-            'original_name' => $file->getClientOriginalName(),
-            'file_size' => $file->getSize(),
-            'note' => $validated['note'] ?? null,
-            'submitted_at' => now(),
-            'is_late' => $isLate,
+    public function store(
+        Request $request,
+        Assignment $assignment,
+        AssignmentSubmissionService $service
+    ) {
+        Gate::authorize('create', [
+            Submission::class,
+            $assignment,
         ]);
+
+        $validated = $request->validate([
+            'file' => [
+                'required',
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:5120',
+            ],
+            'note' => [
+                'nullable',
+                'string',
+            ],
+        ]);
+
+        $user = $request->user();
+
+        $submission = $service->submit(
+            $assignment,
+            $user,
+            $validated['file'],
+            $validated['note'] ?? null
+        );
 
         return redirect()
             ->route('mahasiswa.submissions.show', $submission)

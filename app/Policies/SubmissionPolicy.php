@@ -53,6 +53,12 @@ class SubmissionPolicy
         return false;
     }
 
+    public function download(User $user, Submission $submission): bool
+    {
+        return $this->view($user, $submission)
+            && ($user->role !== 'mahasiswa' || $submission->assignment->status === 'published');
+    }
+
     /**
      * Mahasiswa hanya dapat mengumpulkan tugas yang published
      * pada mata kuliah yang diikutinya.

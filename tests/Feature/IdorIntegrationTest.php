@@ -131,8 +131,9 @@ class IdorIntegrationTest extends TestCase
         $coursesResponse = $this->getJson('/api/v1/courses')->assertOk()->assertJsonPath('meta.total', 2)
             ->assertJsonCount(2, 'data')->assertJsonPath('data.0.id', $this->courses[$actor]->id)
             ->assertJsonPath('data.0.lecturer.id', $this->lecturers[$actor]->id)
-            ->assertJsonPath('data.1.id', $this->sharedCourse->id)
-            ->assertJsonMissing(['id' => $this->courses[$target]->id, 'code' => $this->courses[$target]->code]);
+            ->assertJsonPath('data.1.id', $this->sharedCourse->id);
+        $this->assertNotContains($this->courses[$target]->id, array_column($coursesResponse->json('data'), 'id'));
+        $this->assertNotContains($this->courses[$target]->code, array_column($coursesResponse->json('data'), 'code'));
         $this->assertNoTargetData($coursesResponse, $target);
         foreach ([$actor, $target] as $index) {
             $paths = [
@@ -355,8 +356,14 @@ class IdorIntegrationTest extends TestCase
         $foreign = $this->fixtureNotification($foreignOwner);
         Sanctum::actingAs($owner);
         $before = $this->databaseSnapshot();
-        $list = $this->getJson('/api/v1/notifications')->assertOk()->assertJsonCount(1, 'data')
-            ->assertJsonPath('data.0.id', $own)->assertJsonPath('data.0.data.message', 'Notifikasi privat '.$owner->name);
+        $list = $this->getJson('/api/v1/notifications')->assertOk()
+            ->assertJsonFragment(['id' => $own])
+            ->assertJsonFragment(['message' => 'Notifikasi privat '.$owner->name]);
+        // Fixture tugas published kini juga menghasilkan notifikasi M3.
+        $this->assertEqualsCanonicalizing(
+            $owner->notifications()->pluck('id')->all(),
+            array_column($list->json('data'), 'id'),
+        );
         $this->assertResponseExcludesSecrets($list, [$foreign, 'Notifikasi privat '.$foreignOwner->name]);
         $this->postJson('/api/v1/notifications/'.$foreign.'/read')->assertForbidden()
             ->assertExactJson(['message' => 'Anda tidak memiliki akses ke sumber daya ini.']);

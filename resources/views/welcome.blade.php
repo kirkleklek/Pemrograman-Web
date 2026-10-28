@@ -105,14 +105,23 @@
 
                 @elseif (auth()->user()->role === 'mahasiswa')
                     <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2">
+
                         <h2 class="text-lg font-semibold text-slate-900">
-                            Aktivitas Pembelajaran
+                            Mata Kuliah Saya
                         </h2>
 
                         <p class="mt-2 text-sm leading-6 text-slate-500">
-                            Kamu masuk sebagai mahasiswa. Menu admin dan dosen
-                            tidak tersedia untuk role ini.
+                            Lihat mata kuliah yang kamu ikuti, beserta akses ke materi
+                            dan tugas pada setiap mata kuliah.
                         </p>
+
+                        <a
+                            href="{{ route('mahasiswa.courses.index') }}"
+                            class="mt-5 inline-flex rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800"
+                        >
+                            Lihat Mata Kuliah Saya
+                        </a>
+
                     </div>
                 @endif
             </div>

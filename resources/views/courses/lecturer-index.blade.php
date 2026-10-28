@@ -2,7 +2,6 @@
 
     <div class="space-y-6">
 
-        {{-- Header --}}
         <div>
             <p class="text-sm font-medium text-slate-500">
                 Manajemen Akademik
@@ -17,7 +16,6 @@
             </p>
         </div>
 
-        {{-- Pencarian --}}
         <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <form
                 action="{{ route('dosen.courses.index') }}"
@@ -48,10 +46,10 @@
             </form>
         </div>
 
-        {{-- Daftar mata kuliah --}}
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="overflow-x-auto">
                 <table class="min-w-full text-left text-sm">
+
                     <thead class="border-b border-slate-200 bg-slate-50">
                         <tr>
                             <th class="px-6 py-4 font-semibold text-slate-700">
@@ -77,8 +75,10 @@
                     </thead>
 
                     <tbody class="divide-y divide-slate-100">
+
                         @forelse ($courses as $course)
                             <tr class="hover:bg-slate-50">
+
                                 <td class="whitespace-nowrap px-6 py-4 font-medium text-slate-900">
                                     {{ $course->code }}
                                 </td>
@@ -109,6 +109,7 @@
 
                                 <td class="px-6 py-4">
                                     <div class="flex flex-wrap justify-end gap-2">
+
                                         <a
                                             href="{{ route('dosen.courses.enrollments.index', $course) }}"
                                             class="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700"
@@ -129,9 +130,18 @@
                                         >
                                             Tugas
                                         </a>
+
+                                        <a
+                                            href="{{ route('dosen.courses.grades.index', $course) }}"
+                                            class="rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+                                        >
+                                            Rekap Nilai
+                                        </a>
+
                                     </div>
                                 </td>
                             </tr>
+
                         @empty
                             <tr>
                                 <td colspan="5" class="px-6 py-12 text-center">
@@ -145,6 +155,7 @@
                                 </td>
                             </tr>
                         @endforelse
+
                     </tbody>
                 </table>
             </div>
