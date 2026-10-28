@@ -121,6 +121,11 @@ Route::middleware('auth')->group(function () {
         ->name('dosen.')
         ->group(function () {
 
+            Route::view(
+                'feedback-templates',
+                'dosen.feedback-templates'
+            )->name('feedback-templates.index');
+
             Route::get(
                 'courses',
                 [CourseController::class, 'lecturerIndex']
