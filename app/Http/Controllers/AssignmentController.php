@@ -23,7 +23,8 @@ class AssignmentController extends Controller
                 fn ($query) => $query->where('status', 'published')
             )
             ->orderBy('due_at')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view(
             'assignments.index',

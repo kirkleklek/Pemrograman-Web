@@ -11,15 +11,17 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $notifications = $request->user()
+        $notification = $request->user()
             ->notifications()
-            ->latest()
-            ->paginate(15);
+            ->where('id', $id)
+            ->firstOrFail();
 
-        return NotificationResource::collection(
-            $notifications->getCollection()
-        )->additional([
-            'meta' => [
+        return new NotificationResource($notification);
+    }
+
+    public function read(
+        Request $request,
+        DatabaseNotification $notification
                 'current_page' => $notifications->currentPage(),
                 'last_page' => $notifications->lastPage(),
                 'total' => $notifications->total(),

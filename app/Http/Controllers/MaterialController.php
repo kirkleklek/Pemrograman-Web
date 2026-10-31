@@ -21,7 +21,8 @@ class MaterialController extends Controller
 
         $materials = $course->materials()
             ->latest()
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
 
         return view('materials.index', compact('course', 'materials'));
     }
@@ -86,6 +87,7 @@ class MaterialController extends Controller
                 $data['external_url'] = $validated['external_url'];
             }
 
+            // 
             Material::create($data);
         } catch (Throwable $exception) {
             // Hindari file yatim jika penyimpanan record gagal.
