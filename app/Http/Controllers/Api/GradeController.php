@@ -72,12 +72,6 @@ class GradeController extends Controller
     ) {
         Gate::authorize('viewAny', [Grade::class, $course]);
 
-        abort_unless(
-            $request->user()->role === 'dosen',
-            403,
-            'Endpoint ini hanya untuk dosen.'
-        );
-
         $grades = Grade::query()
             ->whereHas('submission.assignment', function ($query) use ($course) {
                 $query->where('course_id', $course->id);

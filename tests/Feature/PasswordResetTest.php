@@ -83,6 +83,35 @@ class PasswordResetTest extends TestCase
         $this->assertGuest('web');
     }
 
+    public function test_password_reset_revokes_all_existing_sanctum_tokens(): void
+    {
+        $user = User::factory()->create([
+            'password' => 'password-lama',
+        ]);
+
+        $oldApiToken = $user->createToken('device-lama')->plainTextToken;
+        $this->assertDatabaseCount('personal_access_tokens', 1);
+
+        $resetToken = Password::broker()->createToken($user);
+        $newPassword = 'password-baru-123';
+
+        $this->post(route('password.store'), [
+            'token' => $resetToken,
+            'email' => $user->email,
+            'password' => $newPassword,
+            'password_confirmation' => $newPassword,
+        ])->assertRedirect(route('login'));
+
+        $user->refresh();
+
+        $this->assertTrue(Hash::check($newPassword, $user->password));
+        $this->assertDatabaseCount('personal_access_tokens', 0);
+
+        $this->withToken($oldApiToken)
+            ->getJson('/api/v1/me')
+            ->assertUnauthorized();
+    }
+
     public function test_user_cannot_reset_password_with_invalid_token(): void
     {
         $user = User::factory()->create([

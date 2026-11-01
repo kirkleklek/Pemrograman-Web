@@ -52,7 +52,7 @@ class MaterialController extends Controller
             'external_url' => [
                 'required_if:type,link',
                 'nullable',
-                'url',
+                'url:http,https,ftp',
                 'max:255',
             ],
         ]);
@@ -87,7 +87,6 @@ class MaterialController extends Controller
                 $data['external_url'] = $validated['external_url'];
             }
 
-            // 
             Material::create($data);
         } catch (Throwable $exception) {
             // Hindari file yatim jika penyimpanan record gagal.
@@ -165,7 +164,7 @@ class MaterialController extends Controller
             'external_url' => [
                 'required_if:type,link',
                 'nullable',
-                'url',
+                'url:http,https,ftp',
                 'max:255',
             ],
         ]);

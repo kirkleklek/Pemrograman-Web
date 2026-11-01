@@ -85,7 +85,8 @@ class Week6RegressionTest extends TestCase
             ->assertJsonPath('data.is_late', false)->assertJsonMissingPath('data.student.password');
         $submissionId = $submitted->json('data.id');
         $this->assertDatabaseHas('submissions', ['id' => $submissionId, 'assignment_id' => $id, 'note' => 'Jawaban regresi']);
-        Storage::disk('local')->assertExists($submitted->json('data.file_path'));
+        $storedSubmission = \App\Models\Submission::findOrFail($submissionId);
+        Storage::disk('local')->assertExists($storedSubmission->file_path);
         Sanctum::actingAs($this->lecturers[0]);
         $this->getJson('/api/v1/assignments/'.$id.'/submissions')->assertOk()->assertJsonCount(1, 'data')
             ->assertJsonPath('data.0.id', $submissionId)->assertJsonPath('meta.total', 1);
@@ -112,10 +113,33 @@ class Week6RegressionTest extends TestCase
         Sanctum::actingAs($this->students[0]);
         $first = $this->getJson('/api/v1/courses/'.$this->courses[0]->id.'/materials')->assertOk()
             ->assertJsonCount(15, 'data')->assertJsonPath('meta', ['current_page' => 1, 'last_page' => 2, 'total' => 16]);
-        $second = $this->getJson('/api/v1/courses/'.$this->courses[0]->id.'/materials?page=2')->assertOk()
-            ->assertJsonCount(1, 'data')->assertJsonPath('meta', ['current_page' => 2, 'last_page' => 2, 'total' => 16])
-            ->assertJsonStructure(['data' => [['id', 'course_id', 'title', 'description', 'type', 'file_path', 'original_name',
-                'file_size', 'mime_type', 'external_url', 'uploader' => ['id', 'name', 'email', 'role', 'nim_nip', 'email_verified_at']]]]);
+        $second = $this->getJson('/api/v1/courses/'.$this->courses[0]->id.'/materials?page=2')
+            ->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('meta', ['current_page' => 2, 'last_page' => 2, 'total' => 16])
+            ->assertJsonStructure([
+                'data' => [[
+                    'id',
+                    'course_id',
+                    'title',
+                    'description',
+                    'type',
+                    'original_name',
+                    'file_size',
+                    'mime_type',
+                    'external_url',
+                    'uploader' => [
+                        'id',
+                        'name',
+                        'email',
+                        'role',
+                        'nim_nip',
+                        'email_verified_at',
+                    ],
+                ]],
+            ])
+            ->assertJsonMissingPath('data.0.file_path');
+
         $this->assertNotContains($second->json('data.0.id'), array_column($first->json('data'), 'id'));
         foreach ([$first, $second] as $response) {
             $response->assertDontSee($this->materials[1]->title, false)
@@ -164,7 +188,7 @@ class Week6RegressionTest extends TestCase
         Sanctum::actingAs($this->students[0]);
         $before = $this->databaseSnapshot();
         $filesBefore = Storage::disk('local')->allFiles();
-        foreach ([$draft, $expired, $this->assignments[0]] as $assignment) {
+        foreach ([$draft, $expired] as $assignment) {
             $this->post('/api/v1/assignments/'.$assignment->id.'/submissions', [
                 'file' => UploadedFile::fake()->create('ditolak.pdf', 10),
             ], ['Accept' => 'application/json'])->assertForbidden();

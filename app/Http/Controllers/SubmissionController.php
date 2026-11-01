@@ -21,7 +21,6 @@ class SubmissionController extends Controller
 
         $course = $assignment->course;
 
-        // Pertahankan variabel ini untuk kompatibilitas tes dan view lama.
         $submissions = $assignment->submissions()
             ->with(['student', 'grade'])
             ->latest('submitted_at')
