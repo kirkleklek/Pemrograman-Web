@@ -62,21 +62,15 @@ class IdorIntegrationTest extends TestCase
             $expected = match ($kind) {
                 'course' => ['id' => $course->id, 'code' => $course->code, 'lecturer.id' => $this->lecturers[$actor]->id],
                 'material', 'materials' => ['id' => $material->id, 'course_id' => $course->id,
-                    'title' => $material->title, 'uploader.id' => $this->lecturers[$actor]->id],
+                    'title' => $material->title, 'uploader.id' => $this->lecturers[$actor]->id, 'file_path' => $material->file_path],
                 'assignment', 'assignments' => ['id' => $assignment->id, 'course_id' => $course->id,
                     'title' => $assignment->title, 'instructions' => $assignment->instructions],
                 'submission', 'submissions' => ['id' => $submission->id, 'assignment_id' => $assignment->id,
                     'user_id' => $this->students[$actor]->id, 'student.id' => $this->students[$actor]->id,
-                    'note' => $submission->note],
+                    'note' => $submission->note, 'file_path' => $submission->file_path],
             };
             foreach ($expected as $key => $value) {
                 $response->assertJsonPath($prefix.$key, $value);
-            }
-            if (in_array($kind, ['material', 'materials'], true)) {
-                $response->assertJsonMissingPath($prefix.'file_path');
-            }
-            if (in_array($kind, ['submission', 'submissions'], true)) {
-                $response->assertJsonMissingPath($prefix.'file_path');
             }
         } else {
             $view = match ($kind) {

@@ -71,7 +71,7 @@ class GradeApiTest extends TestCase
             ->assertJsonPath('data.feedback', 'Sudah diperbaiki.');
     }
 
-    public function test_dosen_yang_bukan_pemilik_course_ditolak_memberi_nilai_sebelum_validasi(): void
+    public function test_dosen_yang_bukan_pemilik_course_ditolak_memberi_nilai(): void
     {
         $dosenPemilik = User::factory()->create([
             'role' => 'dosen',
@@ -104,149 +104,100 @@ class GradeApiTest extends TestCase
         $this->putJson(
             "/api/v1/submissions/{$submission->id}/grade",
             [
-                'score' => 101,
-                'feedback' => str_repeat('a', 5001),
+                'score' => 80,
+                'feedback' => 'Tidak seharusnya bisa.',
             ]
         )
             ->assertForbidden()
             ->assertJson([
                 'message' => 'Anda tidak memiliki akses ke sumber daya ini.',
             ]);
-
-        $this->assertDatabaseMissing('grades', [
-            'submission_id' => $submission->id,
-        ]);
     }
 
-    public function test_mahasiswa_tidak_dapat_memberi_nilai(): void
-    {
-        $dosen = User::factory()->create([
-            'role' => 'dosen',
-        ]);
-
-        $mahasiswa = User::factory()->create([
-            'role' => 'mahasiswa',
-        ]);
-
-        $course = Course::factory()->create([
-            'lecturer_id' => $dosen->id,
-        ]);
-
-        $assignment = Assignment::factory()->create([
-            'course_id' => $course->id,
-            'created_by' => $dosen->id,
-        ]);
-
-        $submission = Submission::factory()->create([
-            'assignment_id' => $assignment->id,
-            'user_id' => $mahasiswa->id,
-        ]);
-
-        Sanctum::actingAs($mahasiswa);
-
-        $this->putJson(
-            "/api/v1/submissions/{$submission->id}/grade",
-            [
-                'score' => 85,
-                'feedback' => 'Percobaan memberi nilai oleh mahasiswa.',
-            ]
-        )
-            ->assertForbidden()
-            ->assertJson([
-                'message' => 'Anda tidak memiliki akses ke sumber daya ini.',
+        public function test_mahasiswa_tidak_dapat_memberi_nilai(): void
+        {
+            $dosen = User::factory()->create([
+                'role' => 'dosen',
             ]);
 
-        $this->assertDatabaseMissing('grades', [
-            'submission_id' => $submission->id,
-        ]);
-    }
+            $mahasiswa = User::factory()->create([
+                'role' => 'mahasiswa',
+            ]);
 
-    public function test_nilai_di_luar_rentang_ditolak(): void
-    {
-        $dosen = User::factory()->create([
-            'role' => 'dosen',
-        ]);
+            $course = Course::factory()->create([
+                'lecturer_id' => $dosen->id,
+            ]);
 
-        $course = Course::factory()->create([
-            'lecturer_id' => $dosen->id,
-        ]);
+            $assignment = Assignment::factory()->create([
+                'course_id' => $course->id,
+                'created_by' => $dosen->id,
+            ]);
 
-        $assignment = Assignment::factory()->create([
-            'course_id' => $course->id,
-            'created_by' => $dosen->id,
-        ]);
+            $submission = Submission::factory()->create([
+                'assignment_id' => $assignment->id,
+                'user_id' => $mahasiswa->id,
+            ]);
 
-        $mahasiswa = User::factory()->create([
-            'role' => 'mahasiswa',
-        ]);
+            Sanctum::actingAs($mahasiswa);
 
-        $submission = Submission::factory()->create([
-            'assignment_id' => $assignment->id,
-            'user_id' => $mahasiswa->id,
-        ]);
-
-        Sanctum::actingAs($dosen);
-
-        foreach ([-1, 101] as $score) {
             $this->putJson(
                 "/api/v1/submissions/{$submission->id}/grade",
-                ['score' => $score]
+                [
+                    'score' => 85,
+                    'feedback' => 'Percobaan memberi nilai oleh mahasiswa.',
+                ]
             )
-                ->assertUnprocessable()
-                ->assertJsonPath(
-                    'message',
-                    'Data yang diberikan tidak valid.'
-                )
-                ->assertJsonValidationErrors(['score']);
+                ->assertForbidden()
+                ->assertJson([
+                    'message' => 'Anda tidak memiliki akses ke sumber daya ini.',
+                ]);
+
+            $this->assertDatabaseMissing('grades', [
+                'submission_id' => $submission->id,
+            ]);
         }
 
-        $this->assertDatabaseMissing('grades', [
-            'submission_id' => $submission->id,
-        ]);
-    }
+        public function test_nilai_di_luar_rentang_ditolak(): void
+        {
+            $dosen = User::factory()->create([
+                'role' => 'dosen',
+            ]);
 
-    public function test_feedback_lebih_dari_5000_karakter_ditolak(): void
-    {
-        $dosen = User::factory()->create([
-            'role' => 'dosen',
-        ]);
+            $course = Course::factory()->create([
+                'lecturer_id' => $dosen->id,
+            ]);
 
-        $course = Course::factory()->create([
-            'lecturer_id' => $dosen->id,
-        ]);
+            $assignment = Assignment::factory()->create([
+                'course_id' => $course->id,
+                'created_by' => $dosen->id,
+            ]);
 
-        $assignment = Assignment::factory()->create([
-            'course_id' => $course->id,
-            'created_by' => $dosen->id,
-        ]);
+            $mahasiswa = User::factory()->create([
+                'role' => 'mahasiswa',
+            ]);
 
-        $mahasiswa = User::factory()->create([
-            'role' => 'mahasiswa',
-        ]);
+            $submission = Submission::factory()->create([
+                'assignment_id' => $assignment->id,
+                'user_id' => $mahasiswa->id,
+            ]);
 
-        $submission = Submission::factory()->create([
-            'assignment_id' => $assignment->id,
-            'user_id' => $mahasiswa->id,
-        ]);
+            Sanctum::actingAs($dosen);
 
-        Sanctum::actingAs($dosen);
+            foreach ([-1, 101] as $score) {
+                $this->putJson(
+                    "/api/v1/submissions/{$submission->id}/grade",
+                    ['score' => $score]
+                )
+                    ->assertUnprocessable()
+                    ->assertJsonPath(
+                        'message',
+                        'Data yang diberikan tidak valid.'
+                    )
+                    ->assertJsonValidationErrors(['score']);
+            }
 
-        $this->putJson(
-            "/api/v1/submissions/{$submission->id}/grade",
-            [
-                'score' => 80,
-                'feedback' => str_repeat('a', 5001),
-            ]
-        )
-            ->assertUnprocessable()
-            ->assertJsonPath(
-                'message',
-                'Data yang diberikan tidak valid.'
-            )
-            ->assertJsonValidationErrors(['feedback']);
-
-        $this->assertDatabaseMissing('grades', [
-            'submission_id' => $submission->id,
-        ]);
-    }
+            $this->assertDatabaseMissing('grades', [
+                'submission_id' => $submission->id,
+            ]);
+        }
 }

@@ -15,6 +15,7 @@ class MaterialResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'type' => $this->type,
+            'file_path' => $this->file_path,
             'original_name' => $this->original_name,
             'file_size' => $this->file_size,
             'mime_type' => $this->mime_type,

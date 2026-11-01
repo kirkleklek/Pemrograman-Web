@@ -90,9 +90,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-4">
-                {{ $materials->links() }}
-            </div>
         @endif
     </div>
 </x-layout>
