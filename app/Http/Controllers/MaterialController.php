@@ -21,8 +21,7 @@ class MaterialController extends Controller
 
         $materials = $course->materials()
             ->latest()
-            ->paginate(15)
-            ->withQueryString();
+            ->get();
 
         return view('materials.index', compact('course', 'materials'));
     }
@@ -52,7 +51,7 @@ class MaterialController extends Controller
             'external_url' => [
                 'required_if:type,link',
                 'nullable',
-                'url:http,https,ftp',
+                'url',
                 'max:255',
             ],
         ]);
@@ -164,7 +163,7 @@ class MaterialController extends Controller
             'external_url' => [
                 'required_if:type,link',
                 'nullable',
-                'url:http,https,ftp',
+                'url',
                 'max:255',
             ],
         ]);

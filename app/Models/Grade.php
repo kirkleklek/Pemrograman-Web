@@ -29,9 +29,7 @@ class Grade extends Model
 
     protected static function booted(): void
     {
-        static::created(
-            fn (Grade $grade) => GradeGiven::dispatch($grade->id)
-        );
+        static::created(fn (Grade $grade) => GradeGiven::dispatch($grade->id));
 
         static::updated(function (Grade $grade): void {
             if ($grade->wasChanged(['score', 'feedback'])) {

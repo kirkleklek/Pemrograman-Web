@@ -4,396 +4,324 @@ namespace Database\Seeders;
 
 use App\Models\Assignment;
 use App\Models\Course;
-use App\Models\FeedbackTemplate;
 use App\Models\Grade;
 use App\Models\Submission;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\FeedbackTemplate;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed data demo KampusLMS.
-     *
-     * Seeder ini dirancang agar aman dijalankan berulang kali:
-     * - Akun dicari berdasarkan email.
-     * - Template feedback dicari berdasarkan dosen dan judul.
-     * - Course dicari berdasarkan kode.
-     * - Relasi mahasiswa disinkronkan melalui sync().
-     * - Assignment dicari berdasarkan course dan judul.
-     * - Submission dicari berdasarkan assignment dan mahasiswa.
-     * - Grade dicari berdasarkan submission.
-     *
-     * Event model dinonaktifkan selama proses seeding agar pembuatan
-     * data demo tidak mengirim notifikasi ke mahasiswa.
+     * Seed the application's database.
      */
     public function run(): void
     {
-        $admin = null;
-        $lecturers = collect();
-        $students = collect();
-        $courses = collect();
-        $allAssignments = collect();
-        $allSubmissions = collect();
-        $gradedCount = 0;
+        /*
+         * ============================================================
+         * 1. USERS
+         * ============================================================
+         */
 
-        Model::withoutEvents(function () use (
-            &$admin,
-            &$lecturers,
-            &$students,
-            &$courses,
-            &$allAssignments,
-            &$allSubmissions,
-            &$gradedCount
-        ): void {
-            /* =========================================================
-             * 1. USERS
-             * ======================================================= */
+        // 1 Admin
+        $admin = User::factory()->create([
+            'name' => 'Admin KampusLMS',
+            'email' => 'admin@kampuslms.test',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'nim_nip' => null,
+        ]);
 
-            $password = Hash::make('password');
-
-            // Memperbarui akun demo yang sudah ada, termasuk yang soft-deleted.
-            $upsertUser = function (array $identity, array $attributes) use ($password): User {
-                $user = User::withTrashed()->updateOrCreate(
-                    $identity,
-                    array_merge($attributes, ['password' => $password])
-                );
-
-                if ($user->trashed()) {
-                    $user->restore();
-                }
-
-                return $user;
-            };
-
-            // 1 Admin.
-            $admin = $upsertUser(
-                ['email' => 'admin@kampuslms.test'],
-                [
-                    'name' => 'Admin KampusLMS',
-                    'role' => 'admin',
-                    'nim_nip' => null,
-                ]
-            );
-
-            // 3 Dosen.
-            $lecturerData = [
+        // 3 Dosen
+        $lecturers = User::factory()
+            ->count(3)
+            ->sequence(
                 [
                     'name' => 'Dosen Demo 1',
                     'email' => 'dosen@kampuslms.test',
+                    'password' => Hash::make('password'),
+                    'role' => 'dosen',
                     'nim_nip' => '198001001',
                 ],
                 [
                     'name' => 'Dosen Demo 2',
                     'email' => 'dosen2@kampuslms.test',
+                    'password' => Hash::make('password'),
+                    'role' => 'dosen',
                     'nim_nip' => '198001002',
                 ],
                 [
                     'name' => 'Dosen Demo 3',
                     'email' => 'dosen3@kampuslms.test',
+                    'password' => Hash::make('password'),
+                    'role' => 'dosen',
                     'nim_nip' => '198001003',
                 ],
-            ];
+            )
+            ->create();
 
-            $lecturers = collect($lecturerData)
-                ->map(fn (array $data): User => $upsertUser(
-                    ['email' => $data['email']],
-                    [
-                        'name' => $data['name'],
-                        'role' => 'dosen',
-                        'nim_nip' => $data['nim_nip'],
-                    ]
-                ))
-                ->values();
-
-            // 1 Mahasiswa demo.
-            $demoStudent = $upsertUser(
-                ['email' => 'mahasiswa@kampuslms.test'],
-                [
-                    'name' => 'Mahasiswa Demo',
-                    'role' => 'mahasiswa',
-                    'nim_nip' => '202500001',
-                ]
-            );
-
-            // 29 Mahasiswa lainnya dengan identitas yang konsisten.
-            $otherStudents = collect(range(2, 30))->map(
-                function (int $number) use ($upsertUser): User {
-                    $suffix = str_pad(
-                        (string) $number,
-                        3,
-                        '0',
-                        STR_PAD_LEFT
-                    );
-
-                    return $upsertUser(
-                        ['email' => "mahasiswa{$suffix}@kampuslms.test"],
-                        [
-                            'name' => "Mahasiswa Demo {$number}",
-                            'role' => 'mahasiswa',
-                            'nim_nip' => (string) (202500000 + $number),
-                        ]
-                    );
-                }
-            );
-
-            $students = $otherStudents
-                ->prepend($demoStudent)
-                ->values();
-
-            /* =========================================================
-             * 2. FEEDBACK TEMPLATES
-             * ======================================================= */
-
-            $feedbackTemplates = [
-                [
-                    'title' => 'Jawaban Sudah Baik',
-                    'content' => 'Jawaban sudah baik dan menunjukkan pemahaman yang tepat terhadap materi.',
-                ],
-                [
-                    'title' => 'Perlu Menambahkan Contoh',
-                    'content' => 'Penjelasan sudah cukup baik, tetapi perlu menambahkan contoh agar konsep lebih mudah dipahami.',
-                ],
-                [
-                    'title' => 'Perlu Penjelasan Lebih Rinci',
-                    'content' => 'Beberapa bagian jawaban perlu dijelaskan lebih rinci agar alur pemikiran mudah diikuti.',
-                ],
-            ];
-
-            foreach ($lecturers as $lecturer) {
-                foreach ($feedbackTemplates as $template) {
-                    FeedbackTemplate::updateOrCreate(
-                        [
-                            'lecturer_id' => $lecturer->id,
-                            'title' => $template['title'],
-                        ],
-                        [
-                            'content' => $template['content'],
-                        ]
-                    );
-                }
+        $feedbackTemplates = [
+            [
+                'title' => 'Jawaban Sudah Baik',
+                'content' => 'Jawaban sudah baik dan menunjukkan pemahaman yang tepat terhadap materi.',
+            ],
+            [
+                'title' => 'Perlu Menambahkan Contoh',
+                'content' => 'Penjelasan sudah cukup baik, tetapi perlu menambahkan contoh agar konsep lebih mudah dipahami.',
+            ],
+            [
+                'title' => 'Perlu Penjelasan Lebih Rinci',
+                'content' => 'Beberapa bagian jawaban perlu dijelaskan lebih rinci agar alur pemikiran mudah diikuti.',
+            ],
+        ];
+        foreach ($lecturers as $lecturer) {
+            foreach ($feedbackTemplates as $template) {
+                FeedbackTemplate::factory()->create([
+                    'lecturer_id' => $lecturer->id,
+                    'title' => $template['title'],
+                    'content' => $template['content'],
+                ]);
             }
+        }
 
-            /* =========================================================
-             * 3. COURSES AND ENROLLMENTS
-             * ======================================================= */
+        // 1 Mahasiswa Demo
+        $demoStudent = User::factory()->create([
+            'name' => 'Mahasiswa Demo',
+            'email' => 'mahasiswa@kampuslms.test',
+            'password' => Hash::make('password'),
+            'role' => 'mahasiswa',
+            'nim_nip' => '202500001',
+        ]);
 
-            $courseNames = [
-                'Pemrograman Web',
-                'Basis Data',
-                'Rekayasa Perangkat Lunak',
-                'Jaringan Komputer',
-                'Analisis dan Perancangan Sistem',
-            ];
+        // 29 Mahasiswa lainnya
+        $otherStudents = User::factory()
+            ->count(29)
+            ->create([
+                'role' => 'mahasiswa',
+            ]);
 
-            foreach ($courseNames as $index => $courseName) {
-                $courseCode = 'MK' . str_pad(
+        // Total mahasiswa = 30
+        $students = $otherStudents->prepend($demoStudent);
+
+        /*
+         * ============================================================
+         * 2. COURSES
+         * ============================================================
+         */
+
+        $courseNames = [
+            'Pemrograman Web',
+            'Basis Data',
+            'Rekayasa Perangkat Lunak',
+            'Jaringan Komputer',
+            'Analisis dan Perancangan Sistem',
+        ];
+
+        $courses = collect();
+
+        foreach ($courseNames as $index => $courseName) {
+            $course = Course::factory()->create([
+                'code' => 'MK' . str_pad(
                     (string) ($index + 1),
                     5,
                     '0',
                     STR_PAD_LEFT
-                );
+                ),
+                'name' => $courseName,
+                'description' => 'Mata kuliah ' . $courseName,
+                'sks' => 3,
+                'lecturer_id' => $lecturers[$index % 3]->id,
+                'status' => 'active',
+            ]);
 
-                $course = Course::updateOrCreate(
-                    ['code' => $courseCode],
-                    [
-                        'name' => $courseName,
-                        'description' => 'Mata kuliah ' . $courseName,
-                        'sks' => 3,
-                        'lecturer_id' => $lecturers[$index % 3]->id,
-                        'status' => 'active',
-                    ]
-                );
+            /*
+             * Setiap course memiliki 15 mahasiswa.
+             */
+            $courseStudents = $students
+                ->shuffle()
+                ->take(15);
 
-                // Pilih 15 mahasiswa secara konsisten untuk setiap course.
-                $courseStudents = collect(range(0, 14))->map(
-                    fn (int $offset): User => $students->get(
-                        ($index * 5 + $offset) % $students->count()
-                    )
-                );
-
-                // Sinkronkan pivot agar tidak membuat relasi duplikat.
-                $studentPivot = $courseStudents->mapWithKeys(
-                    fn (User $student): array => [
-                        $student->id => ['enrolled_at' => now()],
-                    ]
-                )->all();
-
-                $course->students()->sync($studentPivot);
-
-                $courses->push([
-                    'course' => $course,
-                    'students' => $courseStudents,
+            /*
+             * Masukkan mahasiswa ke tabel course_user.
+             */
+            foreach ($courseStudents as $student) {
+                DB::table('course_user')->insert([
+                    'course_id' => $course->id,
+                    'user_id' => $student->id,
+                    'enrolled_at' => now(),
                 ]);
             }
 
-            /* =========================================================
-             * 4. ASSIGNMENTS AND SUBMISSIONS
-             * ======================================================= */
+            $courses->push([
+                'course' => $course,
+                'students' => $courseStudents,
+            ]);
+        }
 
-            foreach ($courses as $courseData) {
-                /** @var Course $course */
-                $course = $courseData['course'];
-                $courseStudents = $courseData['students'];
+        /*
+         * ============================================================
+         * 3. ASSIGNMENTS + SUBMISSIONS
+         * ============================================================
+         */
 
-                $assignmentDefinitions = [
-                    [
-                        'title' => 'Tugas 1 - Materi Dasar',
-                        'instructions' => 'Kerjakan tugas materi dasar sesuai instruksi dosen.',
-                        'due_at' => now()->copy()->subDays(7),
-                        'status' => 'published',
-                    ],
-                    [
-                        'title' => 'Tugas 2 - Implementasi',
-                        'instructions' => 'Kerjakan tugas implementasi sesuai materi perkuliahan.',
-                        'due_at' => now()->copy()->addDays(7),
-                        'status' => 'published',
-                    ],
-                    [
-                        'title' => 'Tugas 3 - Project',
-                        'instructions' => 'Kerjakan project sesuai ketentuan yang diberikan dosen.',
-                        'due_at' => now()->copy()->addDays(14),
-                        'status' => 'draft',
-                    ],
-                ];
+        $allSubmissions = collect();
 
-                foreach ($assignmentDefinitions as $definition) {
-                    $assignment = Assignment::updateOrCreate(
-                        [
-                            'course_id' => $course->id,
-                            'title' => $definition['title'],
-                        ],
-                        [
-                            'created_by' => $course->lecturer_id,
-                            'instructions' => $definition['instructions'],
-                            'due_at' => $definition['due_at'],
-                            'max_score' => 100,
-                            'allow_late' => true,
-                            'status' => $definition['status'],
-                        ]
-                    );
+        foreach ($courses as $courseData) {
+            $course = $courseData['course'];
+            $courseStudents = $courseData['students'];
 
-                    $allAssignments->push($assignment);
+            /*
+             * Setiap course memiliki 3 assignment.
+             *
+             * 5 course x 3 assignment = 15 assignment
+             */
+            $assignments = collect();
 
-                    // Submission hanya dibuat untuk tugas yang dipublikasikan.
-                    if ($assignment->status !== 'published') {
-                        continue;
-                    }
-
-                    foreach ($courseStudents as $student) {
-                        // Maksimal sekitar 20% submission terlambat,
-                        // dan hanya pada tugas yang deadline-nya sudah lewat.
-                        $isLate = $assignment->due_at->isPast()
-                            && (($student->id + $assignment->id) % 5 === 0);
-
-                        if ($isLate) {
-                            $submittedAt = $assignment->due_at->copy()->addDay();
-                        } elseif ($assignment->due_at->isPast()) {
-                            $submittedAt = $assignment->due_at->copy()->subDay();
-                        } else {
-                            $submittedAt = now()->copy()->subDays(
-                                ($student->id % 6) + 1
-                            );
-                        }
-
-                        Submission::updateOrCreate(
-                            [
-                                'assignment_id' => $assignment->id,
-                                'user_id' => $student->id,
-                            ],
-                            [
-                                'file_path' => "submissions/demo/assignment-{$assignment->id}/student-{$student->id}.pdf",
-                                'original_name' => "jawaban-{$student->id}.pdf",
-                                'file_size' => 250000 + (($student->id * 1000) % 4500000),
-                                'mime_type' => 'application/pdf',
-                                'note' => null,
-                                'submitted_at' => $submittedAt,
-                                'is_late' => $isLate,
-                            ]
-                        );
-                    }
-                }
-            }
-
-            // Ambil kembali submission demo berdasarkan assignment demo.
-            $seededAssignmentIds = $allAssignments->pluck('id');
-            $allSubmissions = Submission::query()
-                ->whereIn('assignment_id', $seededAssignmentIds)
-                ->whereHas('assignment.course', function ($query): void {
-                    $query->whereIn('code', [
-                        'MK00001',
-                        'MK00002',
-                        'MK00003',
-                        'MK00004',
-                        'MK00005',
-                    ]);
-                })
-                ->orderBy('id')
-                ->get();
-
-            /* =========================================================
-             * 5. GRADES
-             * ======================================================= */
-
-            // 60% dari submission demo mendapatkan nilai.
-            $gradedCount = (int) floor(
-                $allSubmissions->count() * 0.60
+            /*
+            * Assignment 1:
+            * Sudah lewat deadline
+            */
+            $assignments->push(
+                Assignment::factory()->create([
+                    'course_id' => $course->id,
+                    'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 1 - Materi Dasar',
+                    'due_at' => now()->subDays(7),
+                    'status' => 'published',
+                ])
             );
 
-            $submissionsToGrade = $allSubmissions->take($gradedCount);
-            $gradedSubmissionIds = $submissionsToGrade->pluck('id');
+            /*
+            * Assignment 2:
+            * Masih aktif
+            */
+            $assignments->push(
+                Assignment::factory()->create([
+                    'course_id' => $course->id,
+                    'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 2 - Implementasi',
+                    'due_at' => now()->addDays(7),
+                    'status' => 'published',
+                ])
+            );
 
-            // Hapus nilai demo yang tidak lagi termasuk dalam 60% terpilih.
-            $gradeCleanupQuery = Grade::query()
-                ->whereIn('submission_id', $allSubmissions->pluck('id'));
+            /*
+            * Assignment 3:
+            * Draft
+            */
+            $assignments->push(
+                Assignment::factory()->create([
+                    'course_id' => $course->id,
+                    'created_by' => $course->lecturer_id,
+                    'title' => 'Tugas 3 - Project',
+                    'due_at' => now()->addDays(14),
+                    'status' => 'draft',
+                ])
+            );
 
-            if ($gradedSubmissionIds->isNotEmpty()) {
-                $gradeCleanupQuery->whereNotIn(
-                    'submission_id',
-                    $gradedSubmissionIds
-                );
-            }
-
-            $gradeCleanupQuery->delete();
-
-            $assignmentById = $allAssignments->keyBy('id');
-
-            foreach ($submissionsToGrade as $submission) {
-                $assignment = $assignmentById->get($submission->assignment_id);
-
-                if (! $assignment) {
+            /*
+             * Hanya mahasiswa yang terdaftar di course
+             * yang boleh membuat submission.
+             *
+             * 5 course x 2 published assignment x 15 mahasiswa = 150 submission
+             */
+            foreach ($assignments as $assignment) {
+                // Submission hanya dibuat untuk tugas yang sudah dipublikasikan.
+                if ($assignment->status !== 'published') {
                     continue;
                 }
 
-                Grade::updateOrCreate(
-                    ['submission_id' => $submission->id],
-                    [
-                        'graded_by' => $assignment->created_by,
-                        'score' => 60 + (($submission->id * 7) % 41),
-                        'feedback' => 'Jawaban sudah diperiksa. Terus tingkatkan pemahaman materi.',
-                        'graded_at' => now(),
-                    ]
-                );
-            }
-        });
+                foreach ($courseStudents as $student) {
+                    $isLate = fake()->boolean(20);
 
-        /* =============================================================
-         * 6. OUTPUT
-         * =========================================================== */
+                    $submittedAt = $isLate
+                        ? $assignment->due_at->copy()->addDays(1)
+                        : $assignment->due_at->copy()->subDays(1);
+
+                    $submission = Submission::factory()->create([
+                        'assignment_id' => $assignment->id,
+                        'user_id' => $student->id,
+                        'submitted_at' => $submittedAt,
+                        'is_late' => $isLate,
+                    ]);
+
+                    $allSubmissions->push($submission);
+                }
+            }
+        }
+
+        /*
+         * ============================================================
+         * 4. GRADES
+         * ============================================================
+         */
+
+        /*
+         * 60% dari 150 submission = 90 grade.
+         */
+        $gradedCount = (int) floor(
+            $allSubmissions->count() * 0.60
+        );
+
+        $submissionsToGrade = $allSubmissions
+            ->shuffle()
+            ->take($gradedCount);
+
+        foreach ($submissionsToGrade as $submission) {
+            $assignment = Assignment::findOrFail(
+                $submission->assignment_id
+            );
+
+            Grade::create([
+                'submission_id' => $submission->id,
+                'graded_by' => $assignment->created_by,
+                'score' => fake()->numberBetween(60, 100),
+                'feedback' => fake()->sentence(),
+                'graded_at' => now(),
+            ]);
+        }
+
+        /*
+         * ============================================================
+         * 5. OUTPUT
+         * ============================================================
+         */
 
         $this->command?->info('');
         $this->command?->info('==========================================');
         $this->command?->info('KampusLMS seeding selesai!');
         $this->command?->info('==========================================');
-        $this->command?->info('Admin      : ' . $admin->email);
-        $this->command?->info('Dosen      : ' . $lecturers->count());
-        $this->command?->info('Mahasiswa  : ' . $students->count());
-        $this->command?->info('Course     : ' . $courses->count());
-        $this->command?->info('Assignment : ' . $allAssignments->count());
-        $this->command?->info('Submission : ' . $allSubmissions->count());
-        $this->command?->info('Graded     : ' . $gradedCount);
+
+        $this->command?->info(
+            'Admin      : ' . $admin->email
+        );
+
+        $this->command?->info(
+            'Dosen      : ' . $lecturers->count()
+        );
+
+        $this->command?->info(
+            'Mahasiswa  : ' . $students->count()
+        );
+
+        $this->command?->info(
+            'Course     : ' . $courses->count()
+        );
+
+        $this->command?->info(
+            'Assignment : ' . Assignment::count()
+        );
+
+        $this->command?->info(
+            'Submission : ' . $allSubmissions->count()
+        );
+
+        $this->command?->info(
+            'Graded     : ' . $gradedCount
+        );
+
         $this->command?->info('==========================================');
         $this->command?->info('');
     }

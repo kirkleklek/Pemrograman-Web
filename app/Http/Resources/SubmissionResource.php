@@ -18,6 +18,7 @@ class SubmissionResource extends JsonResource
                 $this->whenLoaded('student')
             ),
 
+            'file_path' => $this->file_path,
             'original_name' => $this->original_name,
             'file_size' => $this->file_size,
             'note' => $this->note,

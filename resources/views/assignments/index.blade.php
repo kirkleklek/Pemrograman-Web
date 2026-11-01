@@ -95,9 +95,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-4">
-                {{ $assignments->links() }}
-            </div>
         @endif
     </div>
 </x-layout>

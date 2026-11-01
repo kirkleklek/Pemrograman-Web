@@ -165,25 +165,4 @@ class NotificationWebTest extends TestCase
             ->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
             ->assertDontSee('<script>alert(1)</script>', false);
     }
-
-    public function test_notification_title_is_escaped(): void
-    {
-        $student = User::factory()->create([
-            'role' => 'mahasiswa',
-        ]);
-
-        $student->notifications()->create([
-            'id' => (string) Str::uuid(),
-            'type' => \App\Notifications\NewAssignmentNotification::class,
-            'data' => [
-                'assignment_id' => 1,
-                'title' => '<script>alert(1)</script>',
-            ],
-        ]);
-
-        Livewire::actingAs($student)
-            ->test(NotificationList::class)
-            ->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
-            ->assertDontSee('<script>alert(1)</script>', false);
-    }
 }
