@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     env:
       DB_CONNECTION: mysql
@@ -32,14 +32,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Check .env is not tracked
+      - name: Check environment files are not tracked
+        shell: bash
         run: |
-          if git ls-files --error-unmatch .env > /dev/null 2>&1; then
-            echo ".env must not be committed"
-            exit 1
-          fi
+          for file in .env .env.testing; do
+            if git ls-files --error-unmatch "$file" > /dev/null 2>&1; then
+              echo "$file must not be committed"
+              exit 1
+            fi
+          done
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -49,7 +52,7 @@ jobs:
           coverage: none
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '20'
           cache: npm

@@ -1,4 +1,3 @@
-
 <x-layout title="KampusLMS">
 
     <div class="space-y-6">
@@ -28,6 +27,7 @@
             <div class="grid gap-5 md:grid-cols-2">
 
                 @if (auth()->user()->role === 'admin')
+
                     <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
                         <h2 class="text-lg font-semibold text-slate-900">
                             Mata Kuliah
@@ -85,6 +85,7 @@
                     </div>
 
                 @elseif (auth()->user()->role === 'dosen')
+
                     <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2">
                         <h2 class="text-lg font-semibold text-slate-900">
                             Mata Kuliah Saya
@@ -104,6 +105,95 @@
                     </div>
 
                 @elseif (auth()->user()->role === 'mahasiswa')
+
+                    {{-- Ringkasan dashboard mahasiswa --}}
+                    @isset($totalAssignments)
+
+                        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 md:col-span-2">
+
+                            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <p class="text-sm text-slate-500">Mata Kuliah</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900">
+                                    {{ $courses->count() }}
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <p class="text-sm text-slate-500">Total Tugas</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900">
+                                    {{ $totalAssignments }}
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <p class="text-sm text-slate-500">Sudah Dikumpulkan</p>
+                                <p class="mt-2 text-2xl font-bold text-green-700">
+                                    {{ $submittedAssignments }}
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <p class="text-sm text-slate-500">Belum Dikumpulkan</p>
+                                <p class="mt-2 text-2xl font-bold text-amber-600">
+                                    {{ $pendingAssignments }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {{-- Daftar tugas terdekat --}}
+                        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2">
+
+                            <h2 class="text-lg font-semibold text-slate-900">
+                                Tugas Terdekat
+                            </h2>
+
+                            @forelse ($upcomingAssignments as $assignment)
+
+                                <div class="flex flex-col gap-2 border-b border-slate-100 py-4 last:border-0 sm:flex-row sm:items-center sm:justify-between">
+
+                                    <div>
+                                        <p class="font-medium text-slate-800">
+                                            {{ $assignment->title }}
+                                        </p>
+
+                                        <p class="text-sm text-slate-500">
+                                            {{ $assignment->course->code }}
+                                            —
+                                            {{ $assignment->course->name }}
+                                        </p>
+
+                                        <p class="text-xs text-slate-500">
+                                            Batas pengumpulan:
+                                            {{ $assignment->due_at->format('d/m/Y H:i') }}
+                                        </p>
+                                    </div>
+
+                                    @if ($assignment->is_submitted)
+                                        <span class="text-sm font-medium text-green-700">
+                                            Sudah dikumpulkan
+                                        </span>
+                                    @else
+                                        <span class="text-sm font-medium text-amber-600">
+                                            Belum dikumpulkan
+                                        </span>
+                                    @endif
+
+                                </div>
+
+                            @empty
+
+                                <p class="mt-3 text-sm text-slate-500">
+                                    Belum ada tugas yang dipublikasikan.
+                                </p>
+
+                            @endforelse
+
+                        </div>
+
+                    @endisset
+
+                    {{-- Akses mata kuliah mahasiswa --}}
                     <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2">
 
                         <h2 class="text-lg font-semibold text-slate-900">
@@ -123,12 +213,16 @@
                         </a>
 
                     </div>
+
                 @endif
+
             </div>
 
         @else
-            {{-- Halaman untuk pengunjung yang belum login --}}
+
+            {{-- Halaman pengunjung yang belum login --}}
             <div class="rounded-2xl bg-slate-900 px-6 py-8 text-white shadow-sm sm:px-8">
+
                 <p class="text-sm font-medium text-slate-300">
                     Learning Management System
                 </p>
@@ -141,9 +235,11 @@
                     Platform untuk mendukung pengelolaan kegiatan pembelajaran
                     dan data akademik.
                 </p>
+
             </div>
 
             <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+
                 <h2 class="text-lg font-semibold text-slate-900">
                     Selamat datang
                 </h2>
@@ -158,7 +254,9 @@
                 >
                     Login
                 </a>
+
             </div>
+
         @endauth
 
     </div>

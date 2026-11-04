@@ -1,3 +1,4 @@
+
 @props(['title' => 'KampusLMS'])
 
 <!DOCTYPE html>
@@ -27,6 +28,7 @@
             </a>
 
             <div class="flex flex-wrap items-center gap-4 text-sm font-medium sm:gap-6">
+
                 <a
                     href="{{ route('dashboard') }}"
                     class="text-slate-600 transition hover:text-slate-900"
@@ -53,6 +55,7 @@
                         >
                             Pengguna
                         </a>
+
                     @elseif (auth()->user()->role === 'dosen')
                         <a
                             href="{{ route('dosen.courses.index') }}"
@@ -62,6 +65,7 @@
                         >
                             Mata Kuliah Saya
                         </a>
+
                     @elseif (auth()->user()->role === 'mahasiswa')
                         <a
                             href="{{ route('mahasiswa.courses.index') }}"
@@ -70,6 +74,15 @@
                                 : 'text-slate-600 hover:text-slate-900' }} transition"
                         >
                             Mata Kuliah Saya
+                        </a>
+
+                        <a
+                            href="{{ route('mahasiswa.grades.index') }}"
+                            class="{{ request()->routeIs('mahasiswa.grades.*')
+                                ? 'font-semibold text-slate-900'
+                                : 'text-slate-600 hover:text-slate-900' }} transition"
+                        >
+                            Nilai Saya
                         </a>
                     @endif
                 @endauth
@@ -99,8 +112,8 @@
                         </button>
                     </form>
                 @endauth
-            </div>
 
+            </div>
         </div>
     </nav>
 

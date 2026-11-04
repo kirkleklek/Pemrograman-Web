@@ -22,8 +22,16 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/courses', [CourseController::class, 'index']);
         Route::get('/courses/{course}', [CourseController::class, 'show']);
-        Route::get('/courses/{course}/materials', [MaterialController::class, 'index']);
-        Route::get('/courses/{course}/assignments', [AssignmentController::class, 'index']);
+
+        Route::get(
+            '/courses/{course}/materials',
+            [MaterialController::class, 'index']
+        );
+
+        Route::get(
+            '/courses/{course}/assignments',
+            [AssignmentController::class, 'index']
+        );
 
         Route::post('/assignments', [AssignmentController::class, 'store']);
 
@@ -43,14 +51,33 @@ Route::prefix('v1')->group(function () {
             [SubmissionController::class, 'store']
         );
 
+        // Memberikan atau memperbarui nilai.
         Route::put(
             '/submissions/{submission}/grade',
             [GradeController::class, 'update']
         );
 
-        Route::delete('/assignments/{assignment}', [AssignmentController::class, 'destroy']);
+        // Rekap nilai mata kuliah untuk dosen pengampu.
+        Route::get(
+            '/courses/{course}/grades',
+            [GradeController::class, 'courseRecap']
+        );
 
-        Route::get('/notifications', [NotificationController::class, 'index']);
+        // Nilai mahasiswa yang sedang login.
+        Route::get(
+            '/my/grades',
+            [GradeController::class, 'myGrades']
+        );
+
+        Route::delete(
+            '/assignments/{assignment}',
+            [AssignmentController::class, 'destroy']
+        );
+
+        Route::get(
+            '/notifications',
+            [NotificationController::class, 'index']
+        );
 
         Route::post(
             '/notifications/{notification}/read',
