@@ -79,61 +79,59 @@
 
                     <tbody class="divide-y divide-slate-100">
                         @forelse ($courses as $course)
-                            @can('view', $course)
-                                <tr class="hover:bg-slate-50">
+                            <tr class="hover:bg-slate-50">
 
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-slate-900">
-                                        {{ $course->code }}
-                                    </td>
+                                <td class="whitespace-nowrap px-6 py-4 font-medium text-slate-900">
+                                    {{ $course->code }}
+                                </td>
 
-                                    <td class="px-6 py-4 text-slate-700">
-                                        {{ $course->name }}
-                                    </td>
+                                <td class="px-6 py-4 text-slate-700">
+                                    {{ $course->name }}
+                                </td>
 
-                                    <td class="px-6 py-4 text-slate-700">
-                                        {{ $course->sks }}
-                                    </td>
+                                <td class="px-6 py-4 text-slate-700">
+                                    {{ $course->sks }}
+                                </td>
 
-                                    <td class="px-6 py-4 text-slate-700">
-                                        {{ $course->lecturer?->name ?? '-' }}
-                                    </td>
+                                <td class="px-6 py-4 text-slate-700">
+                                    {{ $course->lecturer?->name ?? '-' }}
+                                </td>
 
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        @if ($course->status === 'active')
-                                            <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                                                Active
-                                            </span>
-                                        @elseif ($course->status === 'draft')
-                                            <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                                                Draft
-                                            </span>
-                                        @else
-                                            <span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
-                                                Archived
-                                            </span>
-                                        @endif
-                                    </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    @if ($course->status === 'active')
+                                        <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                                            Active
+                                        </span>
+                                    @elseif ($course->status === 'draft')
+                                        <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                                            Draft
+                                        </span>
+                                    @else
+                                        <span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                                            Archived
+                                        </span>
+                                    @endif
+                                </td>
 
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        <div class="flex justify-end gap-2">
-                                            <a
-                                                href="{{ route('mahasiswa.courses.materials.index', $course) }}"
-                                                class="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                                            >
-                                                Materi
-                                            </a>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <div class="flex justify-end gap-2">
+                                        <a
+                                            href="{{ route('mahasiswa.courses.materials.index', $course) }}"
+                                            class="rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                                        >
+                                            Materi
+                                        </a>
 
-                                            <a
-                                                href="{{ route('mahasiswa.courses.assignments.index', $course) }}"
-                                                class="rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800"
-                                            >
-                                                Tugas
-                                            </a>
-                                        </div>
-                                    </td>
+                                        <a
+                                            href="{{ route('mahasiswa.courses.assignments.index', $course) }}"
+                                            class="rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800"
+                                        >
+                                            Tugas
+                                        </a>
+                                    </div>
+                                </td>
 
-                                </tr>
-                            @endcan
+                            </tr>
                         @empty
                             <tr>
                                 <td colspan="6" class="px-6 py-12 text-center">

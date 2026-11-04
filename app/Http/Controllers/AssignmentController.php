@@ -12,24 +12,33 @@ use Illuminate\Support\Facades\Gate;
 class AssignmentController extends Controller
 {
     public function index(Course $course)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        Gate::authorize('viewAny', [Assignment::class, $course]);
-
-        $assignments = $course->assignments()
-            ->when(
-                $user->role === 'mahasiswa',
-                fn ($query) => $query->where('status', 'published')
-            )
-            ->orderBy('due_at')
-            ->get();
-
-        return view(
-            'assignments.index',
-            compact('course', 'assignments')
-        );
+    if ($user->role === 'mahasiswa') {
+        $course->loadMissing([
+            'students' => fn ($students) =>
+                $students->whereKey($user->getKey()),
+        ]);
     }
+
+    Gate::authorize('viewAny', [Assignment::class, $course]);
+
+    $assignments = $course->assignments()
+        ->when(
+            $user->role === 'mahasiswa',
+            fn ($query) => $query->where('status', 'published')
+        )
+        ->orderBy('due_at')
+        ->paginate(15)
+        ->withQueryString();
+
+    $assignments->getCollection()->each(function ($assignment) use ($course) {
+        $assignment->setRelation('course', $course);
+    });
+
+    return view('assignments.index', compact('course', 'assignments'));
+}
 
     public function create(Course $course)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -73,11 +74,60 @@ class UserController extends Controller
     {
         $validated = $request->validate($this->rules($user));
 
-        if (
-            $user->role === 'dosen'
-            && $validated['role'] !== 'dosen'
-            && $user->taughtCourses()->exists()
-        ) {
+        $blockedReason = DB::transaction(function () use ($user, $validated): ?string {
+            // Kunci daftar admin aktif terlebih dahulu agar dua request
+            // bersamaan tidak dapat sama-sama menurunkan admin terakhir.
+            $activeAdminIds = User::query()
+                ->where('role', 'admin')
+                ->orderBy('id')
+                ->lockForUpdate()
+                ->pluck('id');
+
+            // Muat ulang target agar keputusan menggunakan data terbaru.
+            $target = User::query()
+                ->lockForUpdate()
+                ->findOrFail($user->id);
+
+            if (
+                $target->role === 'admin'
+                && $validated['role'] !== 'admin'
+                && $activeAdminIds->count() <= 1
+            ) {
+                return 'last_admin';
+            }
+
+            if (
+                $target->role === 'dosen'
+                && $validated['role'] !== 'dosen'
+                && $target->taughtCourses()->exists()
+            ) {
+                return 'lecturer_has_courses';
+            }
+
+            $target->name = $validated['name'];
+            $target->email = $validated['email'];
+            $target->nim_nip = $validated['nim_nip'] ?? null;
+            $target->role = $validated['role'];
+
+            if (! empty($validated['password'])) {
+                $target->password = $validated['password'];
+            }
+
+            $target->save();
+
+            return null;
+        }, 3);
+
+        if ($blockedReason === 'last_admin') {
+            return redirect()
+                ->route('admin.users.edit', $user)
+                ->withErrors([
+                    'role' => 'Role admin terakhir tidak dapat diubah. '
+                        . 'Tambahkan admin lain sebelum mengubah role akun ini.',
+                ]);
+        }
+
+        if ($blockedReason === 'lecturer_has_courses') {
             return redirect()
                 ->route('admin.users.edit', $user)
                 ->withErrors([
@@ -87,17 +137,6 @@ class UserController extends Controller
                 ]);
         }
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        $user->nim_nip = $validated['nim_nip'] ?? null;
-        $user->role = $validated['role'];
-
-        if (! empty($validated['password'])) {
-            $user->password = $validated['password'];
-        }
-
-        $user->save();
-
         return redirect()
             ->route('admin.users.show', $user)
             ->with('success', 'Pengguna berhasil diperbarui.');
@@ -105,10 +144,48 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if (
-            $user->role === 'dosen'
-            && $user->taughtCourses()->exists()
-        ) {
+        $blockedReason = DB::transaction(function () use ($user): ?string {
+            // Kunci seluruh admin aktif sebelum menghitung admin yang tersisa.
+            $activeAdminIds = User::query()
+                ->where('role', 'admin')
+                ->orderBy('id')
+                ->lockForUpdate()
+                ->pluck('id');
+
+            $target = User::query()
+                ->lockForUpdate()
+                ->findOrFail($user->id);
+
+            if (
+                $target->role === 'admin'
+                && $activeAdminIds->count() <= 1
+            ) {
+                return 'last_admin';
+            }
+
+            if (
+                $target->role === 'dosen'
+                && $target->taughtCourses()->exists()
+            ) {
+                return 'lecturer_has_courses';
+            }
+
+            $target->delete();
+
+            return null;
+        }, 3);
+
+        if ($blockedReason === 'last_admin') {
+            return redirect()
+                ->route('admin.users.index')
+                ->with(
+                    'error',
+                    'Admin terakhir tidak dapat dihapus. '
+                    . 'Tambahkan admin lain sebelum menghapus akun ini.'
+                );
+        }
+
+        if ($blockedReason === 'lecturer_has_courses') {
             return redirect()
                 ->route('admin.users.index')
                 ->with(
@@ -117,8 +194,6 @@ class UserController extends Controller
                     . 'Alihkan mata kuliah ke dosen lain terlebih dahulu.'
                 );
         }
-
-        $user->delete();
 
         return redirect()
             ->route('admin.users.index')

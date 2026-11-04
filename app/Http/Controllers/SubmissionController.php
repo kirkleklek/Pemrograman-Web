@@ -21,10 +21,8 @@ class SubmissionController extends Controller
 
         $course = $assignment->course;
 
-        // Pertahankan variabel ini untuk kompatibilitas tes dan view lama.
         $submissions = $assignment->submissions()
             ->with(['student', 'grade'])
-            ->latest('submitted_at')
             ->get();
 
         return view('submissions.index', compact(
@@ -38,6 +36,7 @@ class SubmissionController extends Controller
     {
         Gate::authorize('view', $submission);
 
+        // Mengambil relasi sekaligus untuk menghindari N+1 query.
         $submission->load([
             'assignment.course',
             'student',

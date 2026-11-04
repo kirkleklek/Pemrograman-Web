@@ -67,6 +67,7 @@ class MaterialWebTest extends TestCase
             'missing link URL' => ['external_url', ''],
             'invalid URL' => ['external_url', 'invalid'],
             'long URL' => ['external_url', 'https://example.com/'.str_repeat('a', 256)],
+            'javascript scheme' => ['external_url', 'javascript://comment%0aalert(1)'],
         ];
     }
 

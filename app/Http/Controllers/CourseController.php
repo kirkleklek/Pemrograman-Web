@@ -20,6 +20,7 @@ class CourseController extends Controller
 
         $courses = Course::query()
             ->with('lecturer')
+            ->withCount(['students', 'materials', 'assignments'])
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('code', 'like', "%{$search}%")
@@ -45,6 +46,7 @@ class CourseController extends Controller
         $courses = auth()->user()
             ->taughtCourses()
             ->with('lecturer')
+            ->withCount(['students', 'materials', 'assignments'])
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('code', 'like', "%{$search}%")
@@ -67,6 +69,7 @@ class CourseController extends Controller
         $courses = auth()->user()
             ->courses()
             ->with('lecturer')
+            ->withCount(['materials', 'assignments'])
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('code', 'like', "%{$search}%")
