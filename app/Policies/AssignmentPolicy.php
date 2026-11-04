@@ -13,23 +13,27 @@ class AssignmentPolicy
      * boleh melihat daftar tugas suatu mata kuliah.
      */
     public function viewAny(User $user, Course $course): bool
-    {
-        if ($user->role === 'admin') {
-            return true;
-        }
-
-        if ($user->role === 'dosen') {
-            return (int) $course->lecturer_id === (int) $user->id;
-        }
-
-        if ($user->role === 'mahasiswa') {
-            return $user->courses()
-                ->whereKey($course->getKey())
-                ->exists();
-        }
-
-        return false;
+{
+    if ($user->role === 'admin') {
+        return true;
     }
+
+    if ($user->role === 'dosen') {
+        return (int) $course->lecturer_id === (int) $user->id;
+    }
+
+    if ($user->role === 'mahasiswa') {
+        if ($course->relationLoaded('students')) {
+            return $course->students->contains('id', $user->getKey());
+        }
+
+        return $user->courses()
+            ->whereKey($course->getKey())
+            ->exists();
+    }
+
+    return false;
+}
 
     /**
      * Admin dan dosen pemilik dapat melihat tugas.
@@ -42,17 +46,27 @@ class AssignmentPolicy
             return true;
         }
 
+        $assignment->loadMissing('course');
+
         $course = $assignment->course;
+
+        if (! $course) {
+            return false;
+        }
 
         if ($user->role === 'dosen') {
             return (int) $course->lecturer_id === (int) $user->id;
         }
 
         if ($user->role === 'mahasiswa') {
-            return $assignment->status === 'published'
-                && $user->courses()
+            $isEnrolled = $course->relationLoaded('students')
+                ? $course->students->contains('id', $user->getKey())
+                : $user->courses()
                     ->whereKey($course->getKey())
                     ->exists();
+
+            return $assignment->status === 'published'
+                && $isEnrolled;
         }
 
         return false;
@@ -75,11 +89,15 @@ class AssignmentPolicy
      */
     public function update(User $user, Assignment $assignment): bool
     {
-        return $user->role === 'admin'
-            || (
-                $user->role === 'dosen'
-                && (int) $assignment->course->lecturer_id === (int) $user->id
-            );
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        $assignment->loadMissing('course');
+
+        return $user->role === 'dosen'
+            && $assignment->course !== null
+            && (int) $assignment->course->lecturer_id === (int) $user->id;
     }
 
     /**
@@ -87,10 +105,14 @@ class AssignmentPolicy
      */
     public function delete(User $user, Assignment $assignment): bool
     {
-        return $user->role === 'admin'
-            || (
-                $user->role === 'dosen'
-                && (int) $assignment->course->lecturer_id === (int) $user->id
-            );
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        $assignment->loadMissing('course');
+
+        return $user->role === 'dosen'
+            && $assignment->course !== null
+            && (int) $assignment->course->lecturer_id === (int) $user->id;
     }
 }

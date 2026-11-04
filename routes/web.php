@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\MaterialController;
@@ -61,6 +62,11 @@ Route::post('/logout', [
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/dashboard', [
+        DashboardController::class,
+        'index',
+    ])->name('dashboard');
+
     Route::get('/submissions/{submission}/download', [
         SubmissionController::class,
         'download',
@@ -71,9 +77,10 @@ Route::middleware('auth')->group(function () {
         'download',
     ])->name('materials.download');
 
-    Route::get('/dashboard', function () {
-        return view('welcome');
-    })->name('dashboard');
+    Route::get('/dashboard', [
+        DashboardController::class,
+        'index',
+    ])->name('dashboard');
 
     // ADMIN.
     Route::middleware('role:admin')

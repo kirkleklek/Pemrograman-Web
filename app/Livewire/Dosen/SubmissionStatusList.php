@@ -19,7 +19,7 @@ class SubmissionStatusList extends Component
     public string $status = 'semua';
 
     /**
-     * Memastikan pengguna berhak melihat daftar submission tugas.
+     * Memastikan pengguna berhak melihat daftar submission.
      */
     public function mount(Assignment $assignment): void
     {
@@ -56,8 +56,7 @@ class SubmissionStatusList extends Component
     }
 
     /**
-     * Mengambil mahasiswa yang terdaftar pada mata kuliah,
-     * beserta submission dan nilai untuk tugas yang sedang dibuka.
+     * Mengambil mahasiswa beserta submission dan nilai.
      */
     public function render()
     {
@@ -65,12 +64,13 @@ class SubmissionStatusList extends Component
             ->with('course')
             ->findOrFail($this->assignmentId);
 
-        // Periksa kembali izin pada setiap permintaan Livewire.
+        // Memeriksa izin setiap permintaan Livewire.
         Gate::authorize('viewAny', [
             Submission::class,
             $assignment,
         ]);
 
+        // Mengambil data mahasiswa menggunakan eager loading.
         $studentsQuery = $assignment->course
             ->students()
             ->select([
@@ -81,13 +81,22 @@ class SubmissionStatusList extends Component
             ->with([
                 'submissions' => function ($query) use ($assignment) {
                     $query
+                        ->select([
+                            'id',
+                            'assignment_id',
+                            'user_id',
+                            'original_name',
+                            'file_size',
+                            'submitted_at',
+                            'is_late',
+                        ])
                         ->where('assignment_id', $assignment->id)
-                        ->with('grade')
+                        ->with('grade:id,submission_id,score')
                         ->orderByDesc('submitted_at');
                 },
             ]);
 
-        // Pencarian berdasarkan nama atau email mahasiswa.
+        // Pencarian berdasarkan nama atau email.
         $search = trim($this->search);
 
         if ($search !== '') {
@@ -98,7 +107,7 @@ class SubmissionStatusList extends Component
             });
         }
 
-        // Filter mahasiswa berdasarkan status pengumpulan.
+        // Filter mahasiswa yang sudah mengumpulkan tugas.
         if ($this->status === 'sudah') {
             $studentsQuery->whereHas(
                 'submissions',
@@ -110,6 +119,8 @@ class SubmissionStatusList extends Component
                 }
             );
         } elseif ($this->status === 'belum') {
+
+            // Filter mahasiswa yang belum mengumpulkan tugas.
             $studentsQuery->whereDoesntHave(
                 'submissions',
                 function ($query) use ($assignment) {
@@ -121,6 +132,7 @@ class SubmissionStatusList extends Component
             );
         }
 
+        // Pagination untuk membatasi data yang ditampilkan.
         $students = $studentsQuery
             ->orderBy('users.name')
             ->paginate(10);
