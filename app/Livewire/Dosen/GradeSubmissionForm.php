@@ -62,12 +62,14 @@ class GradeSubmissionForm extends Component
     {
         $this->authorizeGrading();
 
+        $maxScore = (int) $this->submission->assignment->max_score;
+
         $validated = $this->validate([
             'score' => [
                 'required',
                 'numeric',
                 'min:0',
-                'max:100',
+                'max:' . $maxScore,
             ],
             'feedback' => [
                 'nullable',
@@ -78,7 +80,7 @@ class GradeSubmissionForm extends Component
             'score.required' => 'Nilai wajib diisi.',
             'score.numeric' => 'Nilai harus berupa angka.',
             'score.min' => 'Nilai tidak boleh kurang dari 0.',
-            'score.max' => 'Nilai tidak boleh lebih dari 100.',
+            'score.max' => "Nilai tidak boleh lebih dari {$maxScore}.",
             'feedback.string' => 'Feedback harus berupa teks.',
             'feedback.max' => 'Feedback tidak boleh lebih dari 5000 karakter.',
         ]);

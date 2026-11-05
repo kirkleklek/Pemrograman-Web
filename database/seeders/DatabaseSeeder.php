@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 class DatabaseSeeder extends Seeder
 {
@@ -298,16 +300,34 @@ class DatabaseSeeder extends Seeder
                             );
                         }
 
+                        $filePath = "submissions/demo/assignment-{$assignment->id}/student-{$student->id}.pdf";
+
+                        $pdfContent = $this->createDemoPdf(
+                            $student->name,
+                            $assignment->title
+                        );
+
+                        // Simpan file PDF pada disk privat.
+                        $stored = Storage::disk('local')->put(
+                            $filePath,
+                            $pdfContent
+                        );
+
+                        if (! $stored) {
+                            throw new RuntimeException(
+                                "Gagal membuat file demo: {$filePath}"
+                            );
+                        }
+
                         Submission::updateOrCreate(
                             [
                                 'assignment_id' => $assignment->id,
                                 'user_id' => $student->id,
                             ],
                             [
-                                'file_path' => "submissions/demo/assignment-{$assignment->id}/student-{$student->id}.pdf",
+                                'file_path' => $filePath,
                                 'original_name' => "jawaban-{$student->id}.pdf",
-                                'file_size' => 250000 + (($student->id * 1000) % 4500000),
-                                'mime_type' => 'application/pdf',
+                                'file_size' => strlen($pdfContent),
                                 'note' => null,
                                 'submitted_at' => $submittedAt,
                                 'is_late' => $isLate,
@@ -396,5 +416,68 @@ class DatabaseSeeder extends Seeder
         $this->command?->info('Graded     : ' . $gradedCount);
         $this->command?->info('==========================================');
         $this->command?->info('');
+    }
+
+    private function createDemoPdf(
+        string $studentName,
+        string $assignmentTitle
+    ): string {
+        $escape = static fn (string $text): string => str_replace(
+            ['\\', '(', ')'],
+            ['\\\\', '\\(', '\\)'],
+            $text
+        );
+
+        $content = implode("\n", [
+            'BT',
+            '/F1 12 Tf',
+            '50 790 Td',
+            '(' . $escape('Contoh Submission KampusLMS') . ') Tj',
+            '0 -24 Td',
+            '(' . $escape('Mahasiswa: ' . $studentName) . ') Tj',
+            '0 -24 Td',
+            '(' . $escape('Tugas: ' . $assignmentTitle) . ') Tj',
+            'ET',
+            '',
+        ]);
+
+        $objects = [
+            '<< /Type /Catalog /Pages 2 0 R >>',
+            '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+            '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>',
+            '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+            '<< /Length ' . strlen($content) . " >>\nstream\n" . $content . 'endstream',
+        ];
+
+        $pdf = "%PDF-1.4\n";
+        $offsets = [0];
+
+        foreach ($objects as $index => $object) {
+            $offsets[] = strlen($pdf);
+
+            $objectNumber = $index + 1;
+
+            $pdf .= "{$objectNumber} 0 obj\n";
+            $pdf .= $object . "\n";
+            $pdf .= "endobj\n";
+        }
+
+        $xrefOffset = strlen($pdf);
+
+        $pdf .= "xref\n";
+        $pdf .= '0 ' . (count($objects) + 1) . "\n";
+        $pdf .= "0000000000 65535 f \n";
+
+        foreach (array_slice($offsets, 1) as $offset) {
+            $pdf .= sprintf("%010d 00000 n \n", $offset);
+        }
+
+        $pdf .= 'trailer' . "\n";
+        $pdf .= '<< /Size ' . (count($objects) + 1) . " /Root 1 0 R >>\n";
+        $pdf .= "startxref\n";
+        $pdf .= $xrefOffset . "\n";
+        $pdf .= "%%EOF\n";
+
+        return $pdf;
     }
 }

@@ -19,7 +19,6 @@ class Submission extends Model
         'file_path',
         'original_name',
         'file_size',
-        'mime_type',
         'note',
         'submitted_at',
         'is_late',

@@ -77,11 +77,6 @@ Route::middleware('auth')->group(function () {
         'download',
     ])->name('materials.download');
 
-    Route::get('/dashboard', [
-        DashboardController::class,
-        'index',
-    ])->name('dashboard');
-
     // ADMIN.
     Route::middleware('role:admin')
         ->prefix('admin')

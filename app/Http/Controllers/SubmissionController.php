@@ -21,14 +21,9 @@ class SubmissionController extends Controller
 
         $course = $assignment->course;
 
-        $submissions = $assignment->submissions()
-            ->with(['student', 'grade'])
-            ->get();
-
         return view('submissions.index', compact(
             'assignment',
             'course',
-            'submissions'
         ));
     }
 

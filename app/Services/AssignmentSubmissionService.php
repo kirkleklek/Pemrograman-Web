@@ -53,7 +53,6 @@ class AssignmentSubmissionService
                     'file_path' => $newFilePath,
                     'original_name' => $file->getClientOriginalName(),
                     'file_size' => $file->getSize(),
-                    'mime_type' => $file->getMimeType(),
                     'note' => $note,
                     'submitted_at' => $submittedAt,
                     'is_late' => $isLate,

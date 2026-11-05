@@ -86,7 +86,21 @@ class IdorIntegrationTest extends TestCase
             };
             $response->assertViewIs($view)->assertViewHas('course', fn ($actual) => $actual->id === $course->id);
             if ($isList) {
-                $response->assertViewHas($kind, fn ($actual) => $actual->modelKeys() === [$resource->id]);
+                if ($kind === 'submissions') {
+                    // Daftar submission ditampilkan melalui komponen Livewire.
+                    $response->assertViewHas(
+                        'assignment',
+                        fn ($actual) => $actual->id === $assignment->id
+                    );
+
+                    $response->assertSeeLivewire('dosen.submission-status-list');
+                } else {
+                    // Daftar material dan assignment menggunakan collection dari controller.
+                    $response->assertViewHas(
+                        $kind,
+                        fn ($actual) => $actual->modelKeys() === [$resource->id]
+                    );
+                }
             } else {
                 $expected = match ($kind) {
                     'material' => ['id' => $material->id, 'course_id' => $course->id, 'uploaded_by' => $this->lecturers[$actor]->id],

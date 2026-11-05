@@ -57,24 +57,57 @@ SEARCH assignments USING INDEX assignments_course_status_due_index (course_id=? 
 
 Hasil membuktikan SQLite menggunakan index gabungan yang baru.
 
-## 5. Cache
+## 5. Cache Dashboard
 
-Data Course dan Assignment tidak diberi cache karena bergantung pada status publikasi, enrollment, dan hak akses pengguna.
+Caching diterapkan pada dashboard mahasiswa dan dosen menggunakan Laravel Cache dengan cache driver database.
 
-Optimisasi cache konfigurasi, route, dan view Laravel dapat dilakukan melalui `php artisan optimize`.
+Implementasi menggunakan `DashboardCacheService` dengan masa berlaku cache selama 300 detik (5 menit).
+
+Cache menggunakan key terpisah untuk setiap pengguna:
+
+- `dashboard:student:{id}` untuk dashboard mahasiswa.
+- `dashboard:lecturer:{id}` untuk dashboard dosen.
+
+### Mekanisme Invalidasi
+
+Cache dihapus ketika terjadi perubahan data yang memengaruhi dashboard.
+
+| Komponen | Mekanisme invalidasi |
+|---|---|
+| CourseObserver | Perubahan mata kuliah |
+| AssignmentObserver | Perubahan tugas |
+| SubmissionObserver | Pengumpulan dan perubahan submission |
+| GradeObserver | Pembuatan dan perubahan nilai |
+| EnrollmentController | Pendaftaran dan pengeluaran mahasiswa |
+
+Observer didaftarkan melalui AppServiceProvider agar aktif di semua lingkungan aplikasi.
+
+Operasi enrollment menggunakan invalidasi langsung karena `attach()` dan `detach()` pada relasi pivot tidak memicu event model Eloquent biasa.
+
+Caching hanya diterapkan pada hasil ringkasan dashboard per pengguna, bukan sebagai cache global untuk data Course dan Assignment. Hal ini mempertahankan pemisahan data berdasarkan identitas dan hak akses pengguna.
+
 
 ## 6. Hasil Pengujian
 
-Pengujian menggunakan `php artisan test`:
+Pengujian menggunakan `php artisan test`.
 
-- 337 tests passed.
-- 4.179 assertions.
+Hasil pengujian regresi lengkap:
+
+- 349 tests passed.
+- 4.704 assertions.
 - 0 failed.
-- Durasi 13,23 detik.
+- Durasi 59,79 detik.
 
-Pengujian Assignment setelah perubahan terbaru:
-- 88 tests passed.
-- 637 assertions.
+### Pengujian Invalidasi Cache
+
+Pengujian khusus dilakukan untuk memastikan cache terhapus ketika data berubah.
+
+- DashboardCacheInvalidationTest: 4 tes berhasil, 24 assertions.
+- EnrollmentManagementTest: 9 tes berhasil, 38 assertions.
+
+Pengujian mencakup perubahan submission, nilai, tugas, mata kuliah, serta penambahan dan penghapusan enrollment.
+
+Hasil pengujian membuktikan bahwa mekanisme invalidasi cache bekerja pada skenario yang diuji.
 
 ## 7. Kesimpulan
 
@@ -82,4 +115,6 @@ Optimisasi berhasil mengurangi jumlah query daftar tugas mahasiswa dari 10 menja
 
 Penggunaan composite index juga telah dibuktikan melalui `EXPLAIN QUERY PLAN`.
 
-Seluruh pengujian otomatis berhasil. Namun, pengukuran browser masih menunjukkan variasi sehingga peningkatan kecepatan akses halaman secara keseluruhan belum dapat dipastikan.
+Caching dashboard mahasiswa dan dosen telah diterapkan dengan masa berlaku 5 menit serta mekanisme invalidasi berdasarkan perubahan data terkait.
+
+Seluruh 349 pengujian otomatis berhasil dengan 4.704 assertions. Namun, pengukuran browser masih menunjukkan variasi sehingga peningkatan waktu respons halaman secara keseluruhan belum dapat dipastikan.

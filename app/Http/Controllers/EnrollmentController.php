@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\User;
+use App\Services\DashboardCacheService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -23,7 +24,12 @@ class EnrollmentController extends Controller
         $students = $course->students()
             ->where('users.role', 'mahasiswa')
             ->orderBy('users.name')
-            ->paginate(15);
+            ->paginate(
+                15,
+                ['users.id', 'users.name', 'users.email', 'users.nim_nip'],
+                'students_page'
+            )
+            ->withQueryString();
 
         $availableStudents = User::query()
             ->where('role', 'mahasiswa')
@@ -31,7 +37,12 @@ class EnrollmentController extends Controller
                 $query->where('courses.id', $course->id);
             })
             ->orderBy('name')
-            ->get(['id', 'name', 'email', 'nim_nip']);
+            ->paginate(
+                15,
+                ['id', 'name', 'email', 'nim_nip'],
+                'available_page'
+            )
+            ->withQueryString();
 
         return view('enrollments.index', [
             'course' => $course,
@@ -40,9 +51,6 @@ class EnrollmentController extends Controller
         ]);
     }
 
-    /**
-     * Mendaftarkan mahasiswa ke mata kuliah.
-     */
     public function store(
         Request $request,
         Course $course
@@ -73,9 +81,13 @@ class EnrollmentController extends Controller
                 ->withInput();
         }
 
+        // Mendaftarkan mahasiswa.
         $course->students()->attach($studentId, [
             'enrolled_at' => now(),
         ]);
+
+        // Menghapus cache dashboard dosen dan mahasiswa terkait.
+        $this->dashboardCache->forgetCourse($course->id);
 
         return back()->with(
             'success',
@@ -83,9 +95,6 @@ class EnrollmentController extends Controller
         );
     }
 
-    /**
-     * Menghapus mahasiswa dari mata kuliah.
-     */
     public function destroy(
         Course $course,
         User $student
@@ -100,11 +109,22 @@ class EnrollmentController extends Controller
 
         abort_unless($isEnrolled, 404);
 
+        // Mengeluarkan mahasiswa dari mata kuliah.
         $course->students()->detach($student->id);
+
+        // Menghapus cache mahasiswa yang dikeluarkan.
+        $this->dashboardCache->forgetStudent((int) $student->id);
+
+        // Menghapus cache dosen dan mahasiswa yang masih terdaftar.
+        $this->dashboardCache->forgetCourse($course->id);
 
         return back()->with(
             'success',
             'Mahasiswa berhasil dikeluarkan dari mata kuliah.'
         );
     }
+
+    public function __construct(
+        private DashboardCacheService $dashboardCache
+    ) {}
 }

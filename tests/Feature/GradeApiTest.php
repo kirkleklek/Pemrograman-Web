@@ -205,6 +205,59 @@ class GradeApiTest extends TestCase
         ]);
     }
 
+    public function test_nilai_tidak_boleh_melebihi_max_score_dan_batas_maksimum_diterima(): void
+    {
+        $dosen = User::factory()->create([
+            'role' => 'dosen',
+        ]);
+
+        $course = Course::factory()->create([
+            'lecturer_id' => $dosen->id,
+        ]);
+
+        $assignment = Assignment::factory()->create([
+            'course_id' => $course->id,
+            'created_by' => $dosen->id,
+            'max_score' => 50,
+        ]);
+
+        $mahasiswa = User::factory()->create([
+            'role' => 'mahasiswa',
+        ]);
+
+        $submission = Submission::factory()->create([
+            'assignment_id' => $assignment->id,
+            'user_id' => $mahasiswa->id,
+        ]);
+
+        Sanctum::actingAs($dosen);
+
+        // Nilai 51 harus ditolak karena batasnya 50.
+        $this->putJson(
+            "/api/v1/submissions/{$submission->id}/grade",
+            ['score' => 51]
+        )
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors(['score']);
+
+        $this->assertDatabaseMissing('grades', [
+            'submission_id' => $submission->id,
+        ]);
+
+        // Nilai tepat 50 harus diterima.
+        $this->putJson(
+            "/api/v1/submissions/{$submission->id}/grade",
+            ['score' => 50]
+        )
+            ->assertCreated()
+            ->assertJsonPath('data.score', '50.00');
+
+        $this->assertDatabaseHas('grades', [
+            'submission_id' => $submission->id,
+            'score' => 50,
+        ]);
+    }
+
     public function test_feedback_lebih_dari_5000_karakter_ditolak(): void
     {
         $dosen = User::factory()->create([

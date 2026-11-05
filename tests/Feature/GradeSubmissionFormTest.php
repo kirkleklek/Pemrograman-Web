@@ -19,7 +19,7 @@ class GradeSubmissionFormTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createSubmissionFor(User $dosen): Submission
+    private function createSubmissionFor(User $dosen, int $maxScore = 100): Submission
     {
         $course = Course::factory()->create([
             'lecturer_id' => $dosen->id,
@@ -28,6 +28,7 @@ class GradeSubmissionFormTest extends TestCase
         $assignment = Assignment::factory()->create([
             'course_id' => $course->id,
             'created_by' => $dosen->id,
+            'max_score' => $maxScore,
         ]);
 
         $mahasiswa = User::factory()->create([
@@ -265,6 +266,42 @@ class GradeSubmissionFormTest extends TestCase
 
         $this->assertDatabaseMissing('grades', [
             'submission_id' => $submission->id,
+        ]);
+    }
+
+    public function test_nilai_tidak_boleh_melebihi_max_score_dan_batas_maksimum_diterima(): void
+    {
+        $dosen = User::factory()->create([
+            'role' => 'dosen',
+        ]);
+
+        $submission = $this->createSubmissionFor($dosen, 50);
+
+        // Nilai 51 harus ditolak.
+        Livewire::actingAs($dosen)
+            ->test(GradeSubmissionForm::class, [
+                'submission' => $submission,
+            ])
+            ->set('score', '51')
+            ->call('save')
+            ->assertHasErrors(['score']);
+
+        $this->assertDatabaseMissing('grades', [
+            'submission_id' => $submission->id,
+        ]);
+
+        // Nilai tepat 50 harus diterima.
+        Livewire::actingAs($dosen)
+            ->test(GradeSubmissionForm::class, [
+                'submission' => $submission,
+            ])
+            ->set('score', '50')
+            ->call('save')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('grades', [
+            'submission_id' => $submission->id,
+            'score' => 50,
         ]);
     }
 

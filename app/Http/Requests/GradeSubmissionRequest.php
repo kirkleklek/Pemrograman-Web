@@ -41,21 +41,43 @@ class GradeSubmissionRequest extends FormRequest
         );
     }
 
+    private function assignmentMaxScore(): int
+    {
+        $submission = $this->route('submission');
+
+        if (! $submission instanceof Submission) {
+            return 100;
+        }
+
+        $submission->loadMissing('assignment');
+
+        return (int) $submission->assignment->max_score;
+    }
+
     public function rules(): array
     {
+        $maxScore = $this->assignmentMaxScore();
+
         return [
-            'score' => ['required', 'numeric', 'min:0', 'max:100'],
+            'score' => [
+                'required',
+                'numeric',
+                'min:0',
+                'max:' . $maxScore,
+            ],
             'feedback' => ['nullable', 'string', 'max:5000'],
         ];
     }
 
     public function messages(): array
     {
+        $maxScore = $this->assignmentMaxScore();
+
         return [
             'score.required' => 'Nilai wajib diisi.',
             'score.numeric' => 'Nilai harus berupa angka.',
             'score.min' => 'Nilai tidak boleh kurang dari 0.',
-            'score.max' => 'Nilai tidak boleh lebih dari 100.',
+            'score.max' => "Nilai tidak boleh lebih dari {$maxScore}.",
             'feedback.string' => 'Feedback harus berupa teks.',
             'feedback.max' => 'Feedback maksimal 5000 karakter.',
         ];

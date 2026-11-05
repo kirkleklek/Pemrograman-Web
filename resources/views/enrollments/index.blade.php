@@ -98,14 +98,28 @@
                         Daftarkan Mahasiswa
                     </button>
                 </form>
-            @endif
-        </section>
+                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p class="text-sm text-gray-500">
+                        Menampilkan
+                        {{ $availableStudents->firstItem() ?? 0 }}
+                        sampai
+                        {{ $availableStudents->lastItem() ?? 0 }}
+                        dari
+                        {{ $availableStudents->total() }}
+                        mahasiswa tersedia
+                    </p>
 
-        <section class="rounded-lg border bg-white p-6 shadow-sm">
-            <h2 class="text-lg font-semibold">
-                Mahasiswa Terdaftar
-            </h2>
+                    <div>
+                        {{ $availableStudents->links() }}
+                    </div>
+                </div>
+                            @endif
+                        </section>
 
+                        <section class="rounded-lg border bg-white p-6 shadow-sm">
+                            <h2 class="text-lg font-semibold">
+                                Mahasiswa Terdaftar
+                            </h2>
             <p class="mt-1 text-sm text-gray-600">
                 Total peserta terdaftar:
                 {{ $students->total() }}
