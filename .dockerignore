@@ -1,0 +1,66 @@
+# ==============================================================================
+# Docker Ignore - KampusLMS (Laravel 12 / PHP 8.4 Production Build)
+# ==============================================================================
+
+# Sensitive environment files and credentials
+.env
+.env.*
+!.env.example
+
+# Version Control System
+.git
+.gitignore
+.gitattributes
+.github
+
+# Dependency directories (installed during multi-stage Docker build)
+node_modules/
+vendor/
+
+# Local Frontend Build artifacts (compiled in Stage 1 of Dockerfile)
+public/build/
+public/hot
+public/storage
+
+# Storage, cache, and logs
+storage/*.key
+storage/app/*
+!storage/app/.gitignore
+storage/framework/cache/*
+!storage/framework/cache/.gitignore
+storage/framework/sessions/*
+!storage/framework/sessions/.gitignore
+storage/framework/views/*
+!storage/framework/views/.gitignore
+storage/logs/*
+!storage/logs/.gitignore
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# Test suites and test coverage
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# IDE, Editor, and OS metadata
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Documentation, reports, and scratch files
+docs/
+belajar/
+*.md
+!README.md
+*.pdf
+*.txt
+repomix-output.xml
+
+# Dockerfiles and compose configs
+Dockerfile*
+docker-compose*
+.dockerignore
+
